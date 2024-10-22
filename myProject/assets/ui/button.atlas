@@ -1,0 +1,7 @@
+button.png
+size:16,18
+repeat:none
+button_down
+bounds:0,0,9,9
+button_up
+bounds:0,9,9,9
