@@ -86,9 +86,9 @@ public class MainMenu implements Screen {
 
         buttonPlay.pad(10);
         //heading for our button
-        Label.LabelStyle headingstyle = new Label.LabelStyle(white, Color.RED);
+        Label.LabelStyle headingStyle = new Label.LabelStyle(white, Color.RED);
 
-        heading= new Label(Main.NAME, headingstyle);
+        heading= new Label(Main.NAME, headingStyle);
 //        heading.setFontScale();
         table.add(heading);
         table.getCell(heading).spaceBottom(10);
@@ -115,9 +115,9 @@ public class MainMenu implements Screen {
         batch.begin();
 //        Table.drawDebug(stage);
         splash.draw(batch);
+        batch.end();
         stage.act(delta);
         stage.draw();
-        batch.end();
     }
 
     @Override
@@ -126,6 +126,7 @@ public class MainMenu implements Screen {
 //        table.setClip(true);
 //
 //        table.setSize(width, height);
+        stage.getViewport().update(width, height, true);
     }
 
     @Override

@@ -27,8 +27,8 @@ public class LevelMenu implements Screen {
 
     @Override
     public void show() {
-//        stage= new Stage();
-//        Gdx.input.setInputProcessor(stage);
+        stage= new Stage();
+        Gdx.input.setInputProcessor(stage);
 //
 //        atlas=new TextureAtlas("ui/button.atlas");
 //        skin= new Skin(atlas);
@@ -62,11 +62,11 @@ public class LevelMenu implements Screen {
 
     @Override
     public void render(float delta) {
-//        Gdx.gl.glClearColor(0,0,0,1); //black with 1 alpha
-//        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-//
-//        stage.act(delta);
-//        stage.draw();
+        Gdx.gl.glClearColor(0,0,0,1); //black with 1 alpha
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        stage.act(delta);
+        stage.draw();
 
     }
 
