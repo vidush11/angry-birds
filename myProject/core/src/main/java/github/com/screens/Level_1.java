@@ -6,7 +6,7 @@ public class Level_1 implements Screen {
 
     @Override
     public void show() {
-        
+
     }
 
     @Override
