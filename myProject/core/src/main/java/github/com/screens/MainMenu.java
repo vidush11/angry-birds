@@ -7,21 +7,20 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.physics.bullet.collision.GdxCollisionObjectBridge;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.sun.org.apache.bcel.internal.generic.TABLESWITCH;
 import github.com.FirstScreen;
 import github.com.Main;
+import org.w3c.dom.Text;
 
 import javax.security.auth.login.CredentialException;
 import java.util.function.Predicate;
@@ -30,23 +29,25 @@ import java.util.function.Predicate;
 public class MainMenu implements Screen {
 
     private Stage stage; //done
-    private Main game;
+
     private TextureAtlas atlas; //done
     private Table table; //done
     private TextButton buttonPlay, buttonExit;
     private BitmapFont white, black;
-    private Label heading;
+    private Label heading1,heading2;
     private Skin skin; //appearance of buttons and other things
     private Sprite splash;
     private SpriteBatch batch;
-
+    private Main game;
+    @Override
     public MainMenu(Main game) {
         this.game = game;
     }
-    @Override
+    
     public void show() {
+
         batch= new SpriteBatch();
-        Texture splashTexture= new Texture("img/background.jpg");
+        Texture splashTexture= new Texture("img/pixelated_menu.png");
         splash= new Sprite(splashTexture);
         splash.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -56,7 +57,7 @@ public class MainMenu implements Screen {
         skin=new Skin(atlas);
 
         table= new Table(); // not necessary to put argument here
-        table.setBounds(0,0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        table.setBounds(0,0,Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
         //fonts
         white=new BitmapFont(Gdx.files.internal("font/white.fnt"), false);
@@ -66,9 +67,39 @@ public class MainMenu implements Screen {
         TextButton.TextButtonStyle textButtonStyle = new TextButton.TextButtonStyle();
         textButtonStyle.up=skin.getDrawable("button_up");
         textButtonStyle.down=skin.getDrawable("button_down");
+        textButtonStyle.over=skin.getDrawable("button_pressed");
         textButtonStyle.pressedOffsetX=2;
         textButtonStyle.pressedOffsetY=-2;
         textButtonStyle.font=black;
+//        textButtonStyle.font.setColor(Color.BLUE);
+//        textButtonStyle.overFontColor = Color.WHITE;
+//        Texture buttonTexture = new Texture(Gdx.files.internal("img/background.jpg"));
+
+//        Skin skin1= new Skin(buttonTexture);
+//        ImageButton button =  new ImageButton(new TextureRegionDrawable(new TextureRegion(buttonTexture)));
+//        button.setTransform(true);
+//        button.setPosition(100,-10000);
+//        button.setHeight(10);
+//        button.setWidth(10);
+//        button.setPreferredSize();
+//        button.setSize(10,10);
+//        button.setPosition();
+
+//        button.addListener(new ClickListener(){
+//
+//            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+//                button.setScale(0.5f);
+//
+//            }
+//
+//            @Override
+//            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+//                button.setScale(1f);
+//            }
+//        });
+//                skin.add("honey", new Texture("img/birds.jpeg"));
+//        TextButton button =  new TextButton("honey",skin1);
+//        ImageButton button =  new ImageButton("img/birds.jpeg");
 
         buttonExit= new TextButton("EXIT", textButtonStyle);
         buttonExit.addListener(new ClickListener(){
@@ -76,6 +107,8 @@ public class MainMenu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.exit();
             }
+
+
         });
         buttonExit.pad(10);
 
@@ -90,21 +123,29 @@ public class MainMenu implements Screen {
 
         buttonPlay.pad(10);
         //heading for our button
-        Label.LabelStyle headingStyle = new Label.LabelStyle(white, Color.RED);
+        Label.LabelStyle headingstyle = new Label.LabelStyle(white, Color.RED);
 
-        heading= new Label(Main.NAME, headingStyle);
+        heading1= new Label(Main.NAME, headingstyle);
+//        heading2= new Label("(ANGRY BIRDS)",headingstyle);
 //        heading.setFontScale();
-        table.add(heading);
-        table.getCell(heading).spaceBottom(10);
+        table.add(heading1);
+        table.getCell(heading1).spaceBottom(10);
+//        table.row();
+//        table.add(heading2);
+        table.getCell(heading1).spaceBottom(50);
+
         table.row();
         table.add(buttonPlay);
-
         table.getCell(buttonPlay).spaceBottom(10);
+
         table.row();
-
         table.add(buttonExit);
+        table.getCell(buttonPlay).spaceBottom(10);
 
+        table.row();
+//        table.add(button);
 
+        table.setPosition(0,20);
 //        table.debug();
         stage.addActor(table);
 
@@ -117,20 +158,25 @@ public class MainMenu implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         batch.begin();
-//        Table.drawDebug(stage);
         splash.draw(batch);
         batch.end();
+
+//        Table.drawDebug(stage);
         stage.act(delta);
         stage.draw();
+
+
+
     }
 
     @Override
     public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
+
 //        stage.setViewport(new Viewport());
 //        table.setClip(true);
 //
 //        table.setSize(width, height);
-        stage.getViewport().update(width, height, true);
     }
 
     @Override
