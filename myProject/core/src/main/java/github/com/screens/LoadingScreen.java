@@ -47,7 +47,7 @@ public class LoadingScreen implements Screen {
 
         // Set fade image position dynamically based on screen size
         fadeImageSprite = new Sprite(fadeImageTexture);
-        fadeImageSprite.setPosition(stage.getViewport().getScreenWidth() * 0.1f, stage.getViewport().getScreenHeight() * 0.5f);
+        fadeImageSprite.setPosition((float) (stage.getViewport().getScreenWidth() - fadeImageSprite.getWidth())/2, stage.getViewport().getScreenHeight() * 0.5f);
 
         // Load font once in constructor
         blackFont = new BitmapFont(Gdx.files.internal("font/black.fnt"), false);
@@ -88,6 +88,7 @@ public class LoadingScreen implements Screen {
         // Update and draw the fade animation for the image
         fadeImageSprite.draw(batch);
 
+        blackFont.draw(batch, "LOADING...", 32, (float) stage.getViewport().getScreenHeight()/4 + 64);
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.GRAY);
         shapeRenderer.rect(32, (float) stage.getViewport().getScreenHeight()/4 , stage.getViewport().getScreenWidth() - 64, 16);
