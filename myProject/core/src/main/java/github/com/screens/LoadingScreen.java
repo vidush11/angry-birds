@@ -107,10 +107,17 @@ public class LoadingScreen implements Screen {
         // Simplified fade-in and fade-out logic using delta time
         if (fadingIn) {
             fadeAlpha += delta; // Increase alpha
-            if (fadeAlpha >= 1f) fadingIn = false;
-        } else {
+            if (fadeAlpha >= 1f){
+                fadingIn = false;
+                fadeAlpha = 1f;
+            }
+        }
+        else {
             fadeAlpha -= delta; // Decrease alpha
-            if (fadeAlpha <= 0f) fadingIn = true;
+            if (fadeAlpha <= 0f){
+                fadingIn = true;
+                fadeAlpha = 0f;
+            }
         }
         fadeImageSprite.setAlpha(fadeAlpha);
     }
