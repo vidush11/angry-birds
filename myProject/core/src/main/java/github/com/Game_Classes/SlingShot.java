@@ -25,7 +25,7 @@ public class SlingShot extends Actor {
         loadedBird = null;
         trijectory = new Vector2();
         anchorPoint = new Vector2();
-        rubberTexture = new Texture(Gdx.files.internal("slingshot_rubber.png"));
+        rubberTexture = new Texture(Gdx.files.internal("slingshotRubber.png"));
         anchorPoint = new Vector2(5, 2);  // Fixed position of the slingshot (you can adjust this)
     }
 
