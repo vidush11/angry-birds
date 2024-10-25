@@ -39,11 +39,12 @@ public class MainMenu implements Screen {
     private Sprite splash;
     private SpriteBatch batch;
     private Main game;
-    @Override
+
     public MainMenu(Main game) {
         this.game = game;
     }
-    
+
+    @Override
     public void show() {
 
         batch= new SpriteBatch();
