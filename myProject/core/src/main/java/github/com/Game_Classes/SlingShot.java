@@ -18,7 +18,7 @@ public class SlingShot extends Actor {
     private Vector2 trijectory;     // Position where the bird is being launched
 
     // Constructor for slingshot
-    public Slingshot(World world, float x, float y) {
+    public SlingShot(World world, float x, float y) {
         slingshotTexture = new Texture("slingshot.png"); // Placeholder texture
         createBody(world, x, y);
         isLoaded = false;
