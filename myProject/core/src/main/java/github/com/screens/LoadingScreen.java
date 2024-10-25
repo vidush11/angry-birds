@@ -93,7 +93,7 @@ public class LoadingScreen implements Screen {
         shapeRenderer.setColor(Color.GRAY);
         shapeRenderer.rect(32, (float) stage.getViewport().getScreenHeight()/4 , stage.getViewport().getScreenWidth() - 64, 16);
 
-        shapeRenderer.setColor(Color.GREEN);
+        shapeRenderer.setColor(Color.GOLD);
         shapeRenderer.rect(32, (float) stage.getViewport().getScreenHeight()/4 , progress * (stage.getViewport().getScreenWidth() - 64), 16);
 
         batch.end();
@@ -106,19 +106,20 @@ public class LoadingScreen implements Screen {
     private void updateFadeImage(float delta) {
         // Simplified fade-in and fade-out logic using delta time
         if (fadingIn) {
-            fadeAlpha += delta; // Increase alpha
+//            fadeAlpha += delta * 0.5; // Increase alpha
+            fadeAlpha = (float) (progress * 2);
             if (fadeAlpha >= 1f){
                 fadingIn = false;
                 fadeAlpha = 1f;
             }
         }
-        else {
-            fadeAlpha -= delta; // Decrease alpha
-            if (fadeAlpha <= 0f){
-                fadingIn = true;
-                fadeAlpha = 0f;
-            }
-        }
+//        else {
+//            fadeAlpha -= delta; // Decrease alpha
+//            if (fadeAlpha <= 0f){
+//                fadingIn = true;
+//                fadeAlpha = 0f;
+//            }
+//        }
         fadeImageSprite.setAlpha(fadeAlpha);
     }
 
