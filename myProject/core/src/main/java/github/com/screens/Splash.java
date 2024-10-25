@@ -7,11 +7,16 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import github.com.Main;
 
 public class Splash implements Screen {
     private Sprite splash;
     private SpriteBatch batch;
+    private Main game;
 
+    public Splash(Main game) {
+        this.game = game;
+    }
     @Override
     public void show() {
         //add fading in and out
@@ -22,7 +27,7 @@ public class Splash implements Screen {
         splash.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 
-        ((Game) Gdx.app.getApplicationListener()).setScreen(new LoadingScreen());
+        ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu(game));
     }
 
     @Override

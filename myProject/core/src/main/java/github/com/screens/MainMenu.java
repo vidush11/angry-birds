@@ -30,7 +30,7 @@ import java.util.function.Predicate;
 public class MainMenu implements Screen {
 
     private Stage stage; //done
-
+    private Main game;
     private TextureAtlas atlas; //done
     private Table table; //done
     private TextButton buttonPlay, buttonExit;
@@ -39,6 +39,10 @@ public class MainMenu implements Screen {
     private Skin skin; //appearance of buttons and other things
     private Sprite splash;
     private SpriteBatch batch;
+
+    public MainMenu(Main game) {
+        this.game = game;
+    }
     @Override
     public void show() {
         batch= new SpriteBatch();
