@@ -73,8 +73,8 @@ public class LevelMenu implements Screen {
         l1.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
 
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu());
-                splash.setRegion(new Texture("img/color_birds.png"));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1());
+//                splash.setRegion(new Texture("img/color_birds.png"));
 //                stage.getViewport().update(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight());
 
             }

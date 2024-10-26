@@ -20,6 +20,7 @@ img/levels_menu.jpeg
 img/levels_menu.png
 img/levels_pixelated.jpeg
 img/loading_bar.png
+img/pause_menu.png
 img/pixelated_background.png
 img/pixelated_bird.png
 img/pixelated_menu.png
@@ -32,6 +33,7 @@ skin/font-title.fnt
 skin/uiskin.atlas
 skin/uiskin.json
 skin/uiskin.png
+sounds/angry_birds_theme.mp3
 ui/button.atlas
 ui/button.png
 ui/button_down.png
@@ -42,3 +44,13 @@ ui/green/button.png
 ui/green/button_down.png
 ui/green/button_pressed.png
 ui/green/button_up.png
+ui/home.png
+ui/home_over.png
+ui/home_up.png
+ui/pause.png
+ui/play.png
+ui/play_over.png
+ui/play_up.png
+ui/volulme.png
+ui/volume_over.png
+ui/volume_up.png

@@ -55,7 +55,7 @@ public class LoadingScreen implements Screen {
         updateFadeImage(delta);
         if(progress == 1 ) {
             if (game.assetManager.update()) {
-                game.setScreen(new Level_1(game));
+                game.setScreen(new Splash(game));
                 dispose();
             }
         }

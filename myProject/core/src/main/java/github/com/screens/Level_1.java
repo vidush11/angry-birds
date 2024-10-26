@@ -16,7 +16,6 @@ import java.util.ArrayList;
 
 public class Level_1 implements Screen {
 
-    private final Main game;
     private Stage stage;
     private ShapeRenderer shapeRenderer;
     private SpriteBatch batch;
@@ -28,8 +27,7 @@ public class Level_1 implements Screen {
     private Ground ground;
     private World world;
 
-    public Level_1(Main game) {
-        this.game = game;
+    public Level_1() {
         this.stage = new Stage();
         this.shapeRenderer = new ShapeRenderer();
         this.batch = new SpriteBatch();
