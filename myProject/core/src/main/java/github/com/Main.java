@@ -16,4 +16,10 @@ public class Main extends Game {
     public void create() {
         setScreen(new LoadingScreen(this));
     }
+
+      Music music = Gdx.audio.newMusic(Gdx.files.internal("sounds/angry_birds_theme.mp3"));
+
+        music.setVolume(200f);
+        music.setLooping(true);
+        music.play();
 }
