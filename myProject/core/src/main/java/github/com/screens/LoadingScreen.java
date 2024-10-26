@@ -18,7 +18,6 @@ public class LoadingScreen implements Screen {
     private Stage stage;
     private ShapeRenderer shapeRenderer;
     private Texture backgroundTexture;
-    private Texture loadingBarTexture;
     private Texture fadeImageTexture;
     private SpriteBatch batch;
     private BitmapFont blackFont;
@@ -27,11 +26,6 @@ public class LoadingScreen implements Screen {
     private boolean fadingIn = true;
 
     private float progress = 0f;
-
-    // Loading bar parameters for anchoring
-    private float loadingBarWidth;
-    private float loadingBarHeight;
-    private float loadingBarY;
 
     public LoadingScreen(Main game) {
         this.game = game;
@@ -42,7 +36,6 @@ public class LoadingScreen implements Screen {
 
         // Load assets for background, fade image, and loading bar
         backgroundTexture = new Texture("img/backgroundLoading.png");  // Resizable background
-        loadingBarTexture = new Texture("img/loading_bar.png");        // Loading bar
         fadeImageTexture = new Texture("img/fade_image.png");          // Fading image
 
         // Set fade image position dynamically based on screen size
@@ -51,11 +44,6 @@ public class LoadingScreen implements Screen {
 
         // Load font once in constructor
         blackFont = new BitmapFont(Gdx.files.internal("font/black.fnt"), false);
-
-        // Dynamically calculate loading bar dimensions and position
-        loadingBarWidth = stage.getViewport().getScreenWidth() * 0.5f;
-        loadingBarHeight = stage.getViewport().getScreenHeight() * 0.05f;
-        loadingBarY = stage.getViewport().getScreenHeight() * 0.1f;
     }
 
     @Override
@@ -67,7 +55,7 @@ public class LoadingScreen implements Screen {
         updateFadeImage(delta);
         if(progress == 1 ) {
             if (game.assetManager.update()) {
-                game.setScreen(new Splash(game));
+                game.setScreen(new Level_1(game));
                 dispose();
             }
         }
@@ -77,7 +65,6 @@ public class LoadingScreen implements Screen {
     public void render(float delta) {
         // Clear the screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
 
         // Start drawing batch
         batch.begin();
@@ -89,10 +76,10 @@ public class LoadingScreen implements Screen {
         fadeImageSprite.draw(batch);
 
         blackFont.draw(batch, "LOADING...", 32, (float) stage.getViewport().getScreenHeight()/4 + 64);
+
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.GRAY);
         shapeRenderer.rect(32, (float) stage.getViewport().getScreenHeight()/4 , stage.getViewport().getScreenWidth() - 64, 16);
-
         shapeRenderer.setColor(Color.GOLD);
         shapeRenderer.rect(32, (float) stage.getViewport().getScreenHeight()/4 , progress * (stage.getViewport().getScreenWidth() - 64), 16);
 
@@ -106,20 +93,12 @@ public class LoadingScreen implements Screen {
     private void updateFadeImage(float delta) {
         // Simplified fade-in and fade-out logic using delta time
         if (fadingIn) {
-//            fadeAlpha += delta * 0.5; // Increase alpha
             fadeAlpha = (float) (progress * 2);
             if (fadeAlpha >= 1f){
                 fadingIn = false;
                 fadeAlpha = 1f;
             }
         }
-//        else {
-//            fadeAlpha -= delta; // Decrease alpha
-//            if (fadeAlpha <= 0f){
-//                fadingIn = true;
-//                fadeAlpha = 0f;
-//            }
-//        }
         fadeImageSprite.setAlpha(fadeAlpha);
     }
 
@@ -135,9 +114,15 @@ public class LoadingScreen implements Screen {
 
     private void queueAssets() {
         // Queue up assets to be loaded in the asset manager
-        game.assetManager.load("img/background.jpg", Texture.class );
-        game.assetManager.load("ui/button.png", Texture.class );
-        game.assetManager.load("font/white.fnt", BitmapFont.class );
+        Main.assetManager.load("img/background.jpg", Texture.class );
+        Main.assetManager.load("ui/button.png", Texture.class );
+        Main.assetManager.load("font/white.fnt", BitmapFont.class );
+        Main.assetManager.load("img/Background_level_1.png", Texture.class );
+        Main.assetManager.load("img/RedBird.png", Texture.class );
+        Main.assetManager.load("img/basicPig.png", Texture.class );
+        Main.assetManager.load("img/SlingShot.png", Texture.class );
+        Main.assetManager.load("img/woodenBlock.png", Texture.class );
+        Main.assetManager.load("img/ground.png", Texture.class );
     }
 
     @Override
@@ -155,7 +140,6 @@ public class LoadingScreen implements Screen {
         batch.dispose();
         blackFont.dispose();
         backgroundTexture.dispose();
-        loadingBarTexture.dispose();
         fadeImageTexture.dispose();
     }
 }

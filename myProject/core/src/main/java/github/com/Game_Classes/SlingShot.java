@@ -3,15 +3,17 @@ package github.com.Game_Classes;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import github.com.Main;
 
 public class SlingShot extends Actor {
     private Texture slingshotTexture;   // Base of the slingshot (stationary)
+    private Sprite slingshotSprite;
     private Body body;
-    private float width = 1.5f, height = 3f;
-    private Texture rubberTexture; // Rubber band texture for stretching
+    private float width = 64, height = 64;
     private Vector2 anchorPoint;   // Stationary point for the slingshot
     private Bird loadedBird;      // The bird to be launched
     private boolean isLoaded;  // Whether the bird is being dragged
@@ -19,14 +21,13 @@ public class SlingShot extends Actor {
 
     // Constructor for slingshot
     public SlingShot(World world, float x, float y) {
-        slingshotTexture = new Texture("slingshot.png"); // Placeholder texture
+        slingshotTexture = Main.assetManager.get("img/SlingShot.png");
         createBody(world, x, y);
         isLoaded = false;
         loadedBird = null;
-        trijectory = new Vector2();
-        anchorPoint = new Vector2();
-        rubberTexture = new Texture(Gdx.files.internal("slingshotRubber.png"));
-        anchorPoint = new Vector2(5, 2);  // Fixed position of the slingshot (you can adjust this)
+        trijectory = new Vector2(0,0);
+        anchorPoint = new Vector2(x,y);
+        slingshotSprite = new Sprite(slingshotTexture);
     }
 
     private void createBody(World world, float x, float y) {
@@ -52,7 +53,9 @@ public class SlingShot extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         // Draw the base of the slingshot
-        batch.draw(slingshotTexture, anchorPoint.x - 1, anchorPoint.y - 1, 2, 4);
+        slingshotSprite.setPosition(getX(), getY());
+        slingshotSprite.draw(batch, parentAlpha);
+//        batch.draw(slingshotTexture, anchorPoint.x, anchorPoint.y, 64, 64);
     }
 
     @Override
@@ -67,7 +70,6 @@ public class SlingShot extends Actor {
 
     public void dispose() {
         slingshotTexture.dispose();
-        rubberTexture.dispose();
     }
 }
 

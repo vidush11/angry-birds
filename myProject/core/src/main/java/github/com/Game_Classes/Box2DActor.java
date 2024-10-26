@@ -7,11 +7,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public abstract class Box2DActor extends Actor {
     private final Body body;  // Box2D body for physics simulation
-    private Texture texture;
 
     public Box2DActor(Body body) {
         this.body = body;  // Set the body for the actor
-        this.texture = texture; //Set texture for the actor
         setPosition(body.getPosition().x, body.getPosition().y);  // Set initial position
         setRotation((float) Math.toDegrees(body.getAngle()));  // Set initial rotation
     }

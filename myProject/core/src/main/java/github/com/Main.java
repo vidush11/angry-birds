@@ -11,7 +11,7 @@ public class Main extends Game {
 
     public static final String NAME="chidi hui chidiya", VERSION="0.0.0.new";
 
-    public AssetManager assetManager = new AssetManager();
+    public static AssetManager assetManager = new AssetManager();
     @Override
     public void create() {
         setScreen(new LoadingScreen(this));

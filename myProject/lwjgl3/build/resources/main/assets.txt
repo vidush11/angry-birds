@@ -3,14 +3,18 @@ font/black.png
 font/white.fnt
 font/white.png
 img/Angry_birds.png
-img/Background_level_1.jpg
+img/Background_level_1.png
+img/RedBird.png
+img/SlingShot.png
 img/background.jpg
 img/background.webp
 img/backgroundLoading.png
+img/basicPig.png
 img/birds.jpeg
 img/blue_bird.jpg
 img/color_birds.png
 img/fade_image.png
+img/ground.png
 img/level_background.jpg
 img/levels_menu.jpeg
 img/levels_menu.png
@@ -21,6 +25,7 @@ img/pixelated_bird.png
 img/pixelated_menu.png
 img/unnamed.atlas
 img/unnamed.png
+img/woodenBlock.png
 skin/font-button.fnt
 skin/font-label.fnt
 skin/font-title.fnt

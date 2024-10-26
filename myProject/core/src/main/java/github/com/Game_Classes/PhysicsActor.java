@@ -1,6 +1,7 @@
 package github.com.Game_Classes;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.Body;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -11,8 +12,9 @@ import com.badlogic.gdx.physics.box2d.World;
 
 public class PhysicsActor extends Box2DActor {
 
-    private final Texture PhysicsActorTexture; // PhysicsActor's texture (image)
+    private  Texture PhysicsActorTexture; // PhysicsActor's texture (image)
     private int hitPoints;
+    private Sprite sprite;
 
     public PhysicsActor(World world, float x, float y, Texture texture, float width, float height) {
         super(createPhysicsActorBody(world, x, y, width, height));  // Call the parent constructor with the PhysicsActor's body
@@ -21,7 +23,9 @@ public class PhysicsActor extends Box2DActor {
         PhysicsActorTexture = texture;
         this.hitPoints = 0;
         // Set the size of the actor (for rendering)
-        setSize(2f, 2f);  // Example size, can be adjusted
+        this.sprite = new Sprite(PhysicsActorTexture);
+        sprite.setSize(width, height);
+        setPosition(x, y);
     }
 
     public int getHitPoints() { return hitPoints; }
@@ -61,7 +65,8 @@ public class PhysicsActor extends Box2DActor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         // Draw the PhysicsActor's texture at the current position of the actor
-        batch.draw(PhysicsActorTexture, getX(), getY(), getWidth(), getHeight());
+        sprite.setPosition(getX(), getY());
+        sprite.draw(batch);
     }
 
     @Override
