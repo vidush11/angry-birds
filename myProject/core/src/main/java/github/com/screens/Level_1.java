@@ -1,14 +1,21 @@
 package github.com.screens;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import github.com.Game_Classes.*;
 import github.com.Main;
 
@@ -28,6 +35,7 @@ public class Level_1 implements Screen {
 
     public Level_1() {
         this.stage = new Stage();
+        Gdx.input.setInputProcessor(stage);
         this.batch = new SpriteBatch();
         this.birds = new ArrayList<>();
         this.pigs = new ArrayList<>();
@@ -41,12 +49,13 @@ public class Level_1 implements Screen {
     public void show() {
         birds.add(new Bird(world, 32, 32, 40, 40 ));
         pigs.add(new Piggy(world, stage.getWidth() - 64, 32, 40, 40 ));
+
         ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
         imageButtonStyle.up=new TextureRegionDrawable(new TextureRegion(new Texture("ui/pause_up.png")));
         imageButtonStyle.over= new TextureRegionDrawable(new TextureRegion(new Texture("ui/pause_over.png")));
         Button pause= new ImageButton(imageButtonStyle);
         pause.setSize(65,65);
-        pause.setPosition(290,260);
+        pause.setPosition(stage.getWidth() - 64, stage.getHeight() - 64);
 
         pause.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
@@ -56,6 +65,8 @@ public class Level_1 implements Screen {
             }
 
         });
+
+        stage.addActor(pause);
     }
 
     @Override
@@ -81,8 +92,12 @@ public class Level_1 implements Screen {
 
         ground.draw(batch, 1);
         slingShot.draw(batch, 1);
+
+
         batch.end();
 
+        stage.act(delta);
+        stage.draw();
     }
 
     @Override
