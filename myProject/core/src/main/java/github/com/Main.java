@@ -1,9 +1,9 @@
 package github.com;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.assets.AssetManager;
-import github.com.screens.LoadingScreen;
-import github.com.screens.MainMenu;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import github.com.screens.Splash;
 
 /** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
