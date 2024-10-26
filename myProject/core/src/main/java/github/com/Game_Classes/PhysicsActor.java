@@ -79,7 +79,7 @@ public class PhysicsActor extends Box2DActor {
 
     @Override
     public void dispose() {
-        // Dispose of the texture to prevent memory leaks
         PhysicsActorTexture.dispose();
+        sprite.getTexture().dispose();
     }
 }

@@ -1,6 +1,5 @@
 package github.com.screens;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -19,7 +18,6 @@ public class Splash implements Screen {
     }
     @Override
     public void show() {
-        //add fading in and out
         batch=new SpriteBatch();
 
         Texture splashTexture= new Texture("img/Angry_birds.png");
@@ -27,7 +25,7 @@ public class Splash implements Screen {
         splash.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
 
-        ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu(game));
+        game.setScreen(new MainMenu(game));
     }
 
     @Override

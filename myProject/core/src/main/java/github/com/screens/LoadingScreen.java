@@ -34,11 +34,11 @@ public class LoadingScreen implements Screen {
         this.batch = new SpriteBatch();
         queueAssets();
 
-        // Load assets for background, fade image, and loading bar
+        // Load assets for background and logo
         backgroundTexture = new Texture("img/backgroundLoading.png");  // Resizable background
         fadeImageTexture = new Texture("img/fade_image.png");          // Fading image
 
-        // Set fade image position dynamically based on screen size
+        // Set logo image position dynamically based on screen size
         fadeImageSprite = new Sprite(fadeImageTexture);
         fadeImageSprite.setPosition((float) (stage.getViewport().getScreenWidth() - fadeImageSprite.getWidth())/2, stage.getViewport().getScreenHeight() * 0.5f);
 
@@ -66,13 +66,12 @@ public class LoadingScreen implements Screen {
         // Clear the screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        // Start drawing batch
         batch.begin();
 
-        // Draw the resizable background (adjust width and height based on window size)
+        // Draw the background
         batch.draw(backgroundTexture, 0, 0, stage.getViewport().getScreenWidth(), stage.getViewport().getScreenHeight());
 
-        // Update and draw the fade animation for the image
+        // draw the fade animation for the image
         fadeImageSprite.draw(batch);
 
         blackFont.draw(batch, "LOADING...", 32, (float) stage.getViewport().getScreenHeight()/4 + 64);
@@ -91,7 +90,6 @@ public class LoadingScreen implements Screen {
     }
 
     private void updateFadeImage(float delta) {
-        // Simplified fade-in and fade-out logic using delta time
         if (fadingIn) {
             fadeAlpha = (float) (progress * 2);
             if (fadeAlpha >= 1f){
@@ -103,8 +101,8 @@ public class LoadingScreen implements Screen {
     }
 
     private void updateLoadingBar(float delta) {
-        // Sync the progress bar with the actual asset loading progress
-//        progress = game.assetManager.getProgress();  // Get actual progress (0.0 to 1.0)
+//         Sync the progress bar with the actual asset loading progress
+//        progress = Main.assetManager.getProgress();  // Get actual progress (0.0 to 1.0)
         progress += (float) (delta*0.2);
         if (progress > 1f) progress = 1f;
     }
@@ -141,5 +139,7 @@ public class LoadingScreen implements Screen {
         blackFont.dispose();
         backgroundTexture.dispose();
         fadeImageTexture.dispose();
+        shapeRenderer.dispose();
+        stage.dispose();
     }
 }

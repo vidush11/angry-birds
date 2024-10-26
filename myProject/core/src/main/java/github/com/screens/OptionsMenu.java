@@ -53,9 +53,6 @@ public class OptionsMenu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1(game));
                 dispose();
-//                splash.setRegion(new Texture("img/color_birds.png"));
-//                stage.getViewport().update(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight());
-
             }
 
         });
@@ -71,20 +68,10 @@ public class OptionsMenu implements Screen {
 
         volume.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-
-                music.setVolume(0f);
-<<<<<<< Updated upstream
-                // ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu());
-                // dispose();
-=======
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu(game));
-                dispose();
->>>>>>> Stashed changes
-//                splash.setRegion(new Texture("img/color_birds.png"));
-//                stage.getViewport().update(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight());
-
+                if(volume.isChecked())
+                    music.setVolume(0f);
+                else music.setVolume(0.1f);
             }
-
         });
 
         ImageButton.ImageButtonStyle imageButtonStyle3 = new ImageButton.ImageButtonStyle();
@@ -99,11 +86,7 @@ public class OptionsMenu implements Screen {
 
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new MainMenu(game));
                 dispose();
-//                splash.setRegion(new Texture("img/color_birds.png"));
-//                stage.getViewport().update(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight());
-
             }
-
         });
         stage.addActor(play);
         stage.addActor(volume);
@@ -149,5 +132,6 @@ public class OptionsMenu implements Screen {
     public void dispose() {
         stage.dispose();
         batch.dispose();
+        splash.getTexture().dispose();
     }
 }

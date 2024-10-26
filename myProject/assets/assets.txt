@@ -54,5 +54,7 @@ ui/play.png
 ui/play_over.png
 ui/play_up.png
 ui/volulme.png
+ui/volume_off_over.png
+ui/volume_off_up.png
 ui/volume_over.png
 ui/volume_up.png

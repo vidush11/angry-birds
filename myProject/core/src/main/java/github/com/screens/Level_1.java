@@ -62,7 +62,7 @@ public class Level_1 implements Screen {
             public void clicked(InputEvent event, float x, float y) {
 
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu(game));
-
+                dispose();
             }
 
         });
@@ -123,6 +123,7 @@ public class Level_1 implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
+        batch.dispose();
     }
 }

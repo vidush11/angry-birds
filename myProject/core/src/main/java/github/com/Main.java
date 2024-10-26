@@ -13,7 +13,6 @@ public class Main extends Game {
 
     public static AssetManager assetManager = new AssetManager();
     public static Music music;
-//    public static Music music = Gdx.audio.newMusic(Gdx.files.internal("sounds/angry_birds_theme.mp3"));
 
     @Override
     public void create() {
@@ -23,7 +22,4 @@ public class Main extends Game {
         music.setLooping(true);
         music.play();
     }
-
-
-
 }

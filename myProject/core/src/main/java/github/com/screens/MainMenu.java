@@ -58,35 +58,6 @@ public class MainMenu implements Screen {
         textButtonStyle.pressedOffsetX=2;
         textButtonStyle.pressedOffsetY=-2;
         textButtonStyle.font=black;
-//        textButtonStyle.font.setColor(Color.BLUE);
-//        textButtonStyle.overFontColor = Color.WHITE;
-//        Texture buttonTexture = new Texture(Gdx.files.internal("img/background.jpg"));
-
-//        Skin skin1= new Skin(buttonTexture);
-//        ImageButton button =  new ImageButton(new TextureRegionDrawable(new TextureRegion(buttonTexture)));
-//        button.setTransform(true);
-//        button.setPosition(100,-10000);
-//        button.setHeight(10);
-//        button.setWidth(10);
-//        button.setPreferredSize();
-//        button.setSize(10,10);
-//        button.setPosition();
-
-//        button.addListener(new ClickListener(){
-//
-//            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-//                button.setScale(0.5f);
-//
-//            }
-//
-//            @Override
-//            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-//                button.setScale(1f);
-//            }
-//        });
-//                skin.add("honey", new Texture("img/birds.jpeg"));
-//        TextButton button =  new TextButton("honey",skin1);
-//        ImageButton button =  new ImageButton("img/birds.jpeg");
 
         buttonExit= new TextButton("EXIT", textButtonStyle);
         buttonExit.addListener(new ClickListener(){
@@ -113,12 +84,10 @@ public class MainMenu implements Screen {
         Label.LabelStyle headingstyle = new Label.LabelStyle(white, Color.RED);
 
         heading1= new Label(Main.NAME, headingstyle);
-//        heading2= new Label("(ANGRY BIRDS)",headingstyle);
-//        heading.setFontScale();
+
         table.add(heading1);
         table.getCell(heading1).spaceBottom(10);
-//        table.row();
-//        table.add(heading2);
+
         table.getCell(heading1).spaceBottom(50);
 
         table.row();
@@ -130,10 +99,8 @@ public class MainMenu implements Screen {
         table.getCell(buttonPlay).spaceBottom(10);
 
         table.row();
-//        table.add(button);
 
         table.setPosition(0,20);
-//        table.debug();
         stage.addActor(table);
 
 
@@ -148,7 +115,6 @@ public class MainMenu implements Screen {
         splash.draw(batch);
         batch.end();
 
-//        Table.drawDebug(stage);
         stage.act(delta);
         stage.draw();
 
@@ -160,10 +126,6 @@ public class MainMenu implements Screen {
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
 
-//        stage.setViewport(new Viewport());
-//        table.setClip(true);
-//
-//        table.setSize(width, height);
     }
 
     @Override
@@ -188,5 +150,6 @@ public class MainMenu implements Screen {
         skin.dispose();
         white.dispose();
         black.dispose();
+        splash.getTexture().dispose();
     }
 }
