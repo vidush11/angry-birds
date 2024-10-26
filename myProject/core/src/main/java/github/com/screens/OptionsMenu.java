@@ -55,6 +55,8 @@ public class OptionsMenu implements Screen {
         ImageButton.ImageButtonStyle imageButtonStyle2 = new ImageButton.ImageButtonStyle();
         imageButtonStyle2.up=new TextureRegionDrawable(new TextureRegion(new Texture("ui/volume_up.png")));
         imageButtonStyle2.over= new TextureRegionDrawable(new TextureRegion(new Texture("ui/volume_over.png")));
+        imageButtonStyle2.checked=new TextureRegionDrawable(new TextureRegion(new Texture("ui/volume_off_up.png")));
+        imageButtonStyle2.checkedOver=new TextureRegionDrawable(new TextureRegion(new Texture("ui/volume_off_over.png")));
         Button volume= new ImageButton(imageButtonStyle2);
         volume.setSize(65,65);
         volume.setPosition(290,190);
@@ -63,8 +65,8 @@ public class OptionsMenu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
 
                 music.setVolume(0f);
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu());
-                dispose();
+                // ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu());
+                // dispose();
 //                splash.setRegion(new Texture("img/color_birds.png"));
 //                stage.getViewport().update(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight());
 
