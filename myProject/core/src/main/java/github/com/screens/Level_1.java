@@ -17,7 +17,6 @@ import java.util.ArrayList;
 public class Level_1 implements Screen {
 
     private Stage stage;
-    private ShapeRenderer shapeRenderer;
     private SpriteBatch batch;
     private Texture background;
     private ArrayList<Bird> birds;
@@ -29,7 +28,6 @@ public class Level_1 implements Screen {
 
     public Level_1() {
         this.stage = new Stage();
-        this.shapeRenderer = new ShapeRenderer();
         this.batch = new SpriteBatch();
         this.birds = new ArrayList<>();
         this.pigs = new ArrayList<>();

@@ -48,6 +48,8 @@ ui/home.png
 ui/home_over.png
 ui/home_up.png
 ui/pause.png
+ui/pause_over.png
+ui/pause_up.png
 ui/play.png
 ui/play_over.png
 ui/play_up.png
