@@ -22,6 +22,7 @@ import java.util.ArrayList;
 
 public class Level_1 implements Screen {
 
+    private Main game;
     private Stage stage;
     private SpriteBatch batch;
     private Texture background;
@@ -32,7 +33,8 @@ public class Level_1 implements Screen {
     private Ground ground;
     private World world;
 
-    public Level_1() {
+    public Level_1(Main game) {
+        this.game = game;
         this.stage = new Stage();
         Gdx.input.setInputProcessor(stage);
         this.batch = new SpriteBatch();
@@ -59,7 +61,7 @@ public class Level_1 implements Screen {
         pause.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
 
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu());
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu(game));
 
             }
 

@@ -11,8 +11,12 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import github.com.Main;
+
+import static github.com.Main.music;
 
 public class OptionsMenu implements Screen {
+    private Main game;
     private Stage stage;
     private Table table;
     private TextureAtlas atlas;
@@ -23,6 +27,10 @@ public class OptionsMenu implements Screen {
     private BitmapFont white, black;
     private SpriteBatch batch;
     private Sprite splash;
+
+    public OptionsMenu(Main game) {
+        this.game = game;
+    }
 
     public void show() {
         batch= new SpriteBatch();
@@ -43,7 +51,7 @@ public class OptionsMenu implements Screen {
 
         play.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1());
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1(game));
                 dispose();
 //                splash.setRegion(new Texture("img/color_birds.png"));
 //                stage.getViewport().update(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight());
@@ -65,8 +73,13 @@ public class OptionsMenu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
 
                 music.setVolume(0f);
+<<<<<<< Updated upstream
                 // ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu());
                 // dispose();
+=======
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu(game));
+                dispose();
+>>>>>>> Stashed changes
 //                splash.setRegion(new Texture("img/color_birds.png"));
 //                stage.getViewport().update(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight());
 
@@ -84,7 +97,7 @@ public class OptionsMenu implements Screen {
         home.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
 
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new MainMenu());
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new MainMenu(game));
                 dispose();
 //                splash.setRegion(new Texture("img/color_birds.png"));
 //                stage.getViewport().update(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight());

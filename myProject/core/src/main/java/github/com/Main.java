@@ -12,11 +12,12 @@ public class Main extends Game {
     public static final String NAME="chidi hui chidiya", VERSION="0.0.0.new";
 
     public static AssetManager assetManager = new AssetManager();
-//    public Main this;
-    public Music music;
+    public static Music music;
+//    public static Music music = Gdx.audio.newMusic(Gdx.files.internal("sounds/angry_birds_theme.mp3"));
+
     @Override
     public void create() {
-        Music music = Gdx.audio.newMusic(Gdx.files.internal("sounds/angry_birds_theme.mp3"));
+        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/angry_birds_theme.mp3"));
         setScreen(new LoadingScreen(this));
         music.setVolume(0.1f);
         music.setLooping(true);

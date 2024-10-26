@@ -17,7 +17,7 @@ import github.com.Main;
 public class MainMenu implements Screen {
 
     private Stage stage; //done
-
+    private Main game;
     private TextureAtlas atlas; //done
     private Table table; //done
     private TextButton buttonPlay, buttonExit;
@@ -26,11 +26,10 @@ public class MainMenu implements Screen {
     private Skin skin; //appearance of buttons and other things
     private Sprite splash;
     private SpriteBatch batch;
-    private Main game;
 
-//    public MainMenu(Main game) {
-//        this.game = game;
-//    }
+    public MainMenu(Main game) {
+        this.game = game;
+    }
 
     public void show() {
 
@@ -104,7 +103,7 @@ public class MainMenu implements Screen {
         buttonPlay.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new LevelMenu());
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new LevelMenu(game));
                 dispose();
             }
         });

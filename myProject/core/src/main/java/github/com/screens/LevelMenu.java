@@ -13,8 +13,10 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import github.com.Main;
 
 public class LevelMenu implements Screen {
+    private Main game;
     private Stage stage;
     private Table table;
     private TextureAtlas atlas;
@@ -26,6 +28,9 @@ public class LevelMenu implements Screen {
     private SpriteBatch batch;
     private Sprite splash;
 
+    public LevelMenu(Main game) {
+        this.game = game;
+    }
 
     @Override
     public void show() {
@@ -65,7 +70,7 @@ public class LevelMenu implements Screen {
         l1.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
 
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1());
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1(game));
 //                splash.setRegion(new Texture("img/color_birds.png"));
 //                stage.getViewport().update(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight());
 
@@ -73,18 +78,18 @@ public class LevelMenu implements Screen {
         });
         l2.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1());
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1(game));
             }
         });
         l3.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1());
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1(game));
             }
 
         });
         l4.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1());
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1(game));
             }
         });
 
@@ -94,7 +99,7 @@ public class LevelMenu implements Screen {
         back.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu());
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu(game));
                 dispose();
             }
 
