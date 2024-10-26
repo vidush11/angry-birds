@@ -13,14 +13,6 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.Viewport;
-import jdk.jfr.internal.consumer.StringParser;
-
-import javax.swing.*;
-//import com.sun.org.apache.xpath.internal.operations.String;
-
-//import java.util.ArrayList;
-//import java.util.List;
 
 public class LevelMenu implements Screen {
     private Stage stage;

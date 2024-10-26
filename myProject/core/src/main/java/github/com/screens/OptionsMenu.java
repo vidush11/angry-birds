@@ -10,10 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-
-import java.awt.font.ImageGraphicAttribute;
 
 public class OptionsMenu implements Screen {
     private Stage stage;
@@ -46,9 +43,9 @@ public class OptionsMenu implements Screen {
 
         play.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu());
-                splash.setRegion(new Texture("img/color_birds.png"));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1());
+                dispose();
+//                splash.setRegion(new Texture("img/color_birds.png"));
 //                stage.getViewport().update(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight());
 
             }
@@ -65,8 +62,10 @@ public class OptionsMenu implements Screen {
         volume.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
 
+                music.setVolume(0f);
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu());
-                splash.setRegion(new Texture("img/color_birds.png"));
+                dispose();
+//                splash.setRegion(new Texture("img/color_birds.png"));
 //                stage.getViewport().update(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight());
 
             }
@@ -83,8 +82,9 @@ public class OptionsMenu implements Screen {
         home.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
 
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu());
-                splash.setRegion(new Texture("img/color_birds.png"));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new MainMenu());
+                dispose();
+//                splash.setRegion(new Texture("img/color_birds.png"));
 //                stage.getViewport().update(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight());
 
             }
@@ -132,6 +132,7 @@ public class OptionsMenu implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
+        batch.dispose();
     }
 }
