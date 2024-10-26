@@ -41,6 +41,21 @@ public class Level_1 implements Screen {
     public void show() {
         birds.add(new Bird(world, 32, 32, 40, 40 ));
         pigs.add(new Piggy(world, stage.getWidth() - 64, 32, 40, 40 ));
+        ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
+        imageButtonStyle.up=new TextureRegionDrawable(new TextureRegion(new Texture("ui/pause_up.png")));
+        imageButtonStyle.over= new TextureRegionDrawable(new TextureRegion(new Texture("ui/pause_over.png")));
+        Button pause= new ImageButton(imageButtonStyle);
+        pause.setSize(65,65);
+        pause.setPosition(290,260);
+
+        pause.addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu());
+
+            }
+
+        });
     }
 
     @Override
