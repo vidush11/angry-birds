@@ -35,12 +35,13 @@ public class LoadingScreen implements Screen {
         queueAssets();
 
         // Load assets for background and logo
-        backgroundTexture = new Texture("img/backgroundLoading.png");  // Resizable background
-        fadeImageTexture = new Texture("img/fade_image.png");          // Fading image
+        backgroundTexture = new Texture("img/loading_screen.png");  // Resizable background
+        fadeImageTexture = new Texture("img/logo.png");          // Fading image
 
         // Set logo image position dynamically based on screen size
         fadeImageSprite = new Sprite(fadeImageTexture);
-        fadeImageSprite.setPosition((float) (stage.getViewport().getScreenWidth() - fadeImageSprite.getWidth())/2, stage.getViewport().getScreenHeight() * 0.5f);
+        fadeImageSprite.setSize(350,55);
+        fadeImageSprite.setPosition((stage.getViewport().getScreenWidth() - fadeImageSprite.getWidth())*0.5f, stage.getViewport().getScreenHeight() * 0.8f);
 
         // Load font once in constructor
         blackFont = new BitmapFont(Gdx.files.internal("font/black.fnt"), false);
@@ -55,7 +56,7 @@ public class LoadingScreen implements Screen {
         updateFadeImage(delta);
         if(progress == 1 ) {
             if (game.assetManager.update()) {
-                game.setScreen(new Splash(game));
+                game.setScreen(new MainMenu(game));
                 dispose();
             }
         }
@@ -74,13 +75,13 @@ public class LoadingScreen implements Screen {
         // draw the fade animation for the image
         fadeImageSprite.draw(batch);
 
-        blackFont.draw(batch, "LOADING...", 32, (float) stage.getViewport().getScreenHeight()/4 + 64);
+        blackFont.draw(batch, "LOADING...", 32, (float) stage.getViewport().getScreenHeight()/6 + 64);
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.GRAY);
-        shapeRenderer.rect(32, (float) stage.getViewport().getScreenHeight()/4 , stage.getViewport().getScreenWidth() - 64, 16);
+        shapeRenderer.rect(32, (float) stage.getViewport().getScreenHeight()/8 , stage.getViewport().getScreenWidth() - 64, 16);
         shapeRenderer.setColor(Color.GOLD);
-        shapeRenderer.rect(32, (float) stage.getViewport().getScreenHeight()/4 , progress * (stage.getViewport().getScreenWidth() - 64), 16);
+        shapeRenderer.rect(32, (float) stage.getViewport().getScreenHeight()/8 , progress * (stage.getViewport().getScreenWidth() - 64), 16);
 
         batch.end();
         shapeRenderer.end();
