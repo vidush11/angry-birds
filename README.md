@@ -3,7 +3,7 @@ This contains the project for course CSE-201 (Advanced Programming). In this we 
 
 clone the repository
 set the root as idea project
- grade configuration:
+grade configuration:
   
   ![alt text](image.png)
 
