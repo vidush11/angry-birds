@@ -67,3 +67,5 @@ ui/volume_off_over.png
 ui/volume_off_up.png
 ui/volume_over.png
 ui/volume_up.png
+ui/winLoose_over.png
+ui/winLoose_up.png
