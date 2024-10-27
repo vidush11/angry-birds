@@ -1,9 +1,11 @@
 # angry-birds
 This contains the project for course CSE-201 (Advanced Programming). In this we have made the angry-birds game.
 
-clone the repository
-set the root as idea project
-grade configuration:
+1. clone the repository
+<br>
+2. set the root as idea project
+<br>
+3. set gradle configuration as:
   
   ![alt text](image.png)
 
