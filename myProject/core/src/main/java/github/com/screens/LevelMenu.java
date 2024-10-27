@@ -71,24 +71,28 @@ public class LevelMenu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
 
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1(game));
+                dispose();
             }
         });
 
         l2.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1(game));
+                dispose();
             }
         });
 
         l3.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1(game));
+                dispose();
             }
         });
 
         l4.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1(game));
+                dispose();
             }
         });
 
@@ -115,7 +119,7 @@ public class LevelMenu implements Screen {
         stage.addActor(table);
         table.setFillParent(true);
 
-        table.debug();
+        // table.debug();
     }
 
     @Override
