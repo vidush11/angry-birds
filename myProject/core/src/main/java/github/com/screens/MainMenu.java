@@ -20,7 +20,7 @@ public class MainMenu implements Screen {
     private Main game;
     private TextureAtlas atlas; //done
     private Table table; //done
-    private TextButton buttonPlay, buttonExit;
+    private TextButton buttonPlay, buttonOptions, buttonExit;
     private BitmapFont white, black;
     private Label heading1,heading2;
     private Skin skin; //appearance of buttons and other things
@@ -65,10 +65,20 @@ public class MainMenu implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 Gdx.app.exit();
             }
-
-
         });
+
         buttonExit.pad(10);
+
+        buttonOptions= new TextButton("OPTIONS", textButtonStyle);
+        buttonOptions.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new OptionsMenu(game));
+                dispose();
+            }
+        });
+
+        buttonOptions.pad(10);
 
         buttonPlay= new TextButton("PLAY", textButtonStyle);
         buttonPlay.addListener(new ClickListener(){
@@ -80,6 +90,7 @@ public class MainMenu implements Screen {
         });
 
         buttonPlay.pad(10);
+
         //heading for our button
         Label.LabelStyle headingstyle = new Label.LabelStyle(white, Color.RED);
 
@@ -95,6 +106,10 @@ public class MainMenu implements Screen {
         table.getCell(buttonPlay).spaceBottom(10);
 
         table.row();
+        table.add(buttonOptions);
+        table.getCell(buttonOptions).spaceBottom(10);
+
+        table.row();
         table.add(buttonExit);
         table.getCell(buttonPlay).spaceBottom(10);
 
@@ -102,8 +117,6 @@ public class MainMenu implements Screen {
 
         table.setPosition(0,20);
         stage.addActor(table);
-
-
     }
 
     @Override

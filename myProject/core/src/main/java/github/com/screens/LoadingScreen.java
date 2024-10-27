@@ -20,7 +20,7 @@ public class LoadingScreen implements Screen {
     private Texture backgroundTexture;
     private Texture fadeImageTexture;
     private SpriteBatch batch;
-    private BitmapFont blackFont;
+    private BitmapFont whiteFont;
     private Sprite fadeImageSprite;
     private float fadeAlpha = 0f;
     private boolean fadingIn = true;
@@ -44,7 +44,7 @@ public class LoadingScreen implements Screen {
         fadeImageSprite.setPosition((stage.getViewport().getScreenWidth() - fadeImageSprite.getWidth())*0.5f, stage.getViewport().getScreenHeight() * 0.8f);
 
         // Load font once in constructor
-        blackFont = new BitmapFont(Gdx.files.internal("font/black.fnt"), false);
+        whiteFont = new BitmapFont(Gdx.files.internal("font/white.fnt"), false);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class LoadingScreen implements Screen {
         // draw the fade animation for the image
         fadeImageSprite.draw(batch);
 
-        blackFont.draw(batch, "LOADING...", 32, (float) stage.getViewport().getScreenHeight()/6 + 64);
+        whiteFont.draw(batch, "LOADING...", 32, (float) stage.getViewport().getScreenHeight()/6 + 64);
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.GRAY);
@@ -122,6 +122,8 @@ public class LoadingScreen implements Screen {
         Main.assetManager.load("img/SlingShot.png", Texture.class );
         Main.assetManager.load("img/woodenBlock.png", Texture.class );
         Main.assetManager.load("img/ground.png", Texture.class );
+        Main.assetManager.load("img/WinLooseBackground.png", Texture.class );
+        Main.assetManager.load("img/star.png", Texture.class );
     }
 
     @Override
@@ -137,7 +139,7 @@ public class LoadingScreen implements Screen {
     public void dispose() {
         // Dispose of assets and objects to avoid memory leaks
         batch.dispose();
-        blackFont.dispose();
+        whiteFont.dispose();
         backgroundTexture.dispose();
         fadeImageTexture.dispose();
         shapeRenderer.dispose();

@@ -64,9 +64,24 @@ public class Level_1 implements Screen {
                 ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu(game));
                 dispose();
             }
-
         });
 
+        ImageButton.ImageButtonStyle imageButtonStyle2 = new ImageButton.ImageButtonStyle();
+        imageButtonStyle2.up=new TextureRegionDrawable(new TextureRegion(new Texture("ui/pause_up.png")));
+        imageButtonStyle2.over= new TextureRegionDrawable(new TextureRegion(new Texture("ui/pause_over.png")));
+        Button winLoose= new ImageButton(imageButtonStyle2);
+        winLoose.setSize(65,65);
+        winLoose.setPosition(stage.getWidth() - 64, 32);
+
+        winLoose.addListener(new ClickListener(){
+            public void clicked(InputEvent event, float x, float y) {
+
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, Level_1.this));
+                dispose();
+            }
+        });
+
+        stage.addActor(winLoose);
         stage.addActor(pause);
     }
 
