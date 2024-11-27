@@ -9,16 +9,19 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
-public class PhysicsActor extends Box2DActor {
+public class PhysicsActor extends Actor {
 
+    private final Body body;
     private  Texture PhysicsActorTexture; // PhysicsActor's texture (image)
     private int hitPoints;
     private Sprite sprite;
 
     public PhysicsActor(World world, float x, float y, Texture texture, float width, float height) {
-        super(createPhysicsActorBody(world, x, y, width, height));  // Call the parent constructor with the PhysicsActor's body
-
+        this.body = createPhysicsActorBody(world, x, y, width, height);
+        setPosition(body.getPosition().x, body.getPosition().y);  // Set initial position
+        setRotation((float) Math.toDegrees(body.getAngle()));  // Set initial rotation
         // Load the texture (image) for the PhysicsActor
         PhysicsActorTexture = texture;
         this.hitPoints = 0;
@@ -26,7 +29,7 @@ public class PhysicsActor extends Box2DActor {
         this.sprite = new Sprite(PhysicsActorTexture);
         sprite.setSize(width, height);
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
-        getBody().setUserData(sprite);
+        body.setUserData(sprite);
     }
 
     public int getHitPoints() { return hitPoints; }
@@ -66,7 +69,7 @@ public class PhysicsActor extends Box2DActor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         // Draw the PhysicsActor's texture at the current position of the actor
-        sprite.setPosition(getBody().getPosition().x, getBody().getPosition().y);
+        sprite.setPosition(body.getPosition().x, body.getPosition().y);
         sprite.draw(batch);
     }
 
@@ -75,10 +78,11 @@ public class PhysicsActor extends Box2DActor {
         // Call the parent's act method to update the actor's position and rotation
         super.act(delta);
 
-        // You can add custom logic here if needed (like controlling PhysicsActor movement, etc.)
+        // Update the position and rotation based on the Box2D body
+        setPosition(body.getPosition().x, body.getPosition().y);
+        setRotation((float) Math.toDegrees(body.getAngle()));
     }
 
-    @Override
     public void dispose() {
         PhysicsActorTexture.dispose();
         sprite.getTexture().dispose();
