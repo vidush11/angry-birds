@@ -104,7 +104,7 @@ public class LoadingScreen implements Screen {
     private void updateLoadingBar(float delta) {
 //         Sync the progress bar with the actual asset loading progress
 //        progress = Main.assetManager.getProgress();  // Get actual progress (0.0 to 1.0)
-        progress += (float) (delta*0.2);
+        progress += (float) (delta);
         if (progress > 1f) progress = 1f;
     }
 

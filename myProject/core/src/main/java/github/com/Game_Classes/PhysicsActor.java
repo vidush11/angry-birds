@@ -25,7 +25,8 @@ public class PhysicsActor extends Box2DActor {
         // Set the size of the actor (for rendering)
         this.sprite = new Sprite(PhysicsActorTexture);
         sprite.setSize(width, height);
-        setPosition(x, y);
+        sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
+        getBody().setUserData(sprite);
     }
 
     public int getHitPoints() { return hitPoints; }
@@ -38,9 +39,6 @@ public class PhysicsActor extends Box2DActor {
         bodyDef.type = BodyDef.BodyType.DynamicBody;  // Make it a dynamic body (so it responds to forces)
         bodyDef.position.set(x, y);  // Initial position in the world
 
-        // Create the body in the world
-        Body body = world.createBody(bodyDef);
-
         // Define the shape of the PhysicsActor (let's assume it's a box for simplicity)
         PolygonShape PhysicsActorShape = new PolygonShape();
         PhysicsActorShape.setAsBox(width, height);  // Set a 2x2 box shape (you can adjust the size)
@@ -50,7 +48,10 @@ public class PhysicsActor extends Box2DActor {
         fixtureDef.shape = PhysicsActorShape;
         fixtureDef.density = 1f;  // Adjust density (affects mass)
         fixtureDef.friction = 0.5f;  // Friction when in contact with other surfaces
-        fixtureDef.restitution = 0.6f;  // Bounciness
+        fixtureDef.restitution = 0.2f;  // Bounciness
+
+        // Create the body in the world
+        Body body = world.createBody(bodyDef);
 
         // Attach the fixture to the body
         body.createFixture(fixtureDef);
@@ -65,7 +66,7 @@ public class PhysicsActor extends Box2DActor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         // Draw the PhysicsActor's texture at the current position of the actor
-        sprite.setPosition(getX(), getY());
+        sprite.setPosition(getBody().getPosition().x, getBody().getPosition().y);
         sprite.draw(batch);
     }
 

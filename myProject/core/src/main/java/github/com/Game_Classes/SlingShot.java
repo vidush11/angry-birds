@@ -11,9 +11,9 @@ import github.com.Main;
 
 public class SlingShot extends Actor {
     private Texture slingshotTexture;   // Base of the slingshot (stationary)
-    private Sprite slingshotSprite;
+    private Sprite sprite;
     private Body body;
-    private float width = 64, height = 64;
+    private float width = 8, height = 16;
     private Vector2 anchorPoint;   // Stationary point for the slingshot
     private Bird loadedBird;      // The bird to be launched
     private boolean isLoaded;  // Whether the bird is being dragged
@@ -27,7 +27,10 @@ public class SlingShot extends Actor {
         loadedBird = null;
         trijectory = new Vector2(0,0);
         anchorPoint = new Vector2(x,y);
-        slingshotSprite = new Sprite(slingshotTexture);
+        sprite = new Sprite(slingshotTexture);
+        sprite.setSize(width, height);
+        sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
+        body.setUserData(sprite);
     }
 
     private void createBody(World world, float x, float y) {
@@ -53,8 +56,8 @@ public class SlingShot extends Actor {
     @Override
     public void draw(Batch batch, float parentAlpha) {
         // Draw the base of the slingshot
-        slingshotSprite.setPosition(getX(), getY());
-        slingshotSprite.draw(batch, parentAlpha);
+        sprite.setPosition(getX(), getY());
+        sprite.draw(batch, parentAlpha);
 //        batch.draw(slingshotTexture, anchorPoint.x, anchorPoint.y, 64, 64);
     }
 

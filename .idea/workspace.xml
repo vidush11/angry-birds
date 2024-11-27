@@ -28,7 +28,7 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/UTKARSH/IIITD/AP/angry-birds/myProject",
+    "last_opened_file_path": "C:/UTKARSH/IIITD/AP/angry-birds",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -72,6 +72,7 @@
       <workItem from="1729676198353" duration="90000" />
       <workItem from="1729676305520" duration="15000" />
       <workItem from="1729676332673" duration="818000" />
+      <workItem from="1732622096185" duration="16000" />
     </task>
     <servers />
   </component>
