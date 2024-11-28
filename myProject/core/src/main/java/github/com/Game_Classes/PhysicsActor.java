@@ -34,6 +34,7 @@ public class PhysicsActor extends Actor {
 
     public int getHitPoints() { return hitPoints; }
     public void setHitPoints(int hitPoints) { this.hitPoints = hitPoints; }
+    public Body getBody() { return body; }
 
     // Method to create the PhysicsActor's body in the Box2D world
     private static Body createPhysicsActorBody(World world, float x, float y, float width, float height) {
