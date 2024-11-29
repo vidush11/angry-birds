@@ -7,26 +7,13 @@ import github.com.Main;
 import java.util.ArrayList;
 
 public class BuildingBlock extends PhysicsActor {
-    public static enum types{
-        wood,
-        metal,
-        glass
-    }
-    private types type;
-    public BuildingBlock(World world, float x, float y, float width, float height, types type) {
+//    public static enum types{
+//        wood,
+//        metal,
+//        glass
+//    }
+    public BuildingBlock(World world, float x, float y, float width, float height) {
         super(world, x, y, Main.assetManager.get("img/woodenBlock.png"), width, height, true);
-        this.type = type;
-        switch (this.type){
-            case wood:
-                super.setHitPoints(5);
-                break;
-            case metal:
-                super.setHitPoints(10);
-                break;
-            case glass:
-                super.setHitPoints(2);
-                break;
-        }
         getBody().setUserData(this);
     }
 

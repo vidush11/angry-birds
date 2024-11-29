@@ -7,9 +7,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 
 import com.badlogic.gdx.math.Vector2;
@@ -31,6 +35,8 @@ import github.com.Game_Classes.SlingShot;
 
 import github.com.Main;
 public class Level_2 implements Screen {
+
+    private boolean options=false;
 
     private World world;
     private Box2DDebugRenderer debugRenderer;
@@ -71,6 +77,7 @@ public class Level_2 implements Screen {
         this.movement=new Vector2(0,0);
         BirdQueue = new LinkedList<>();
         PigList = new ArrayList<>();
+        Blocks = new ArrayList<>();
 
     }
 
@@ -111,6 +118,9 @@ public class Level_2 implements Screen {
                         shoot=true;
                     }
                 }
+                else if (24<=x && x<=31.5 && 15.5<=y &&y<=23.5){
+                    options=true;
+                }
                 return true;
 
             }
@@ -139,6 +149,12 @@ public class Level_2 implements Screen {
                     currBird = null;
                     shoot=false;
                     initial.set(-20.65f,-3.5f);
+                }
+                else if (options){
+                    game.setScreen(new OptionsMenu(game, screen));
+                    options=false;
+//                    ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu(game, screen));
+//                    dispose();
                 }
                 return true;
             }
@@ -227,6 +243,7 @@ public class Level_2 implements Screen {
 
         PigList.add(new Piggy(world, 23.65f, -12.5f, 3f, 3f));
 
+        Blocks.add(new BuildingBlock(world, 20.65f, -12.5f, 3f, 3f));
 
         BodyDef bodydef = new BodyDef();
         //slingshot
@@ -250,6 +267,12 @@ public class Level_2 implements Screen {
 
         boxShape.dispose();
 
+        ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
+        imageButtonStyle.up=new TextureRegionDrawable(new TextureRegion(new Texture("ui/pause_up.png")));
+        imageButtonStyle.over= new TextureRegionDrawable(new TextureRegion(new Texture("ui/pause_over.png")));
+        Button pause= new ImageButton(imageButtonStyle);
+        pause.setSize(65,65);
+        pause.setPosition(Gdx.graphics.getWidth()-75, Gdx.graphics.getHeight()-75);
 
     }
 

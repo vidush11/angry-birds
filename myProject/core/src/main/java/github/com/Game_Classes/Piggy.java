@@ -13,7 +13,6 @@ public class Piggy extends PhysicsActor{
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     public Piggy(World world, float x, float y, float width, float height) {
         super(world, x, y, Main.assetManager.get("img/basicPig.png"), width, height, false);
-        super.setHitPoints(5);
         getBody().setUserData(this);
     }
 

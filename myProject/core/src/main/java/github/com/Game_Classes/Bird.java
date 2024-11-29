@@ -17,7 +17,6 @@ public class Bird extends PhysicsActor{
 
     public Bird(World world, float x, float y, float width, float height) {
         super(world, x, y, Main.assetManager.get("img/RedBird.png"), width, height, false);
-        super.setHitPoints(5);
         getBody().setType(BodyDef.BodyType.StaticBody);
         getBody().setUserData(this);
     }
