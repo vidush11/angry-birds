@@ -1,11 +1,13 @@
 package github.com.screens;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
@@ -31,7 +33,7 @@ public class Level_2 implements Screen {
 
     private World world;
     private Box2DDebugRenderer debugRenderer;
-    private OrthographicCamera oCamera;    
+    private OrthographicCamera oCamera;
     private Main game;
     private Body box;
     private BodyDef bird_body= new BodyDef();
@@ -50,8 +52,8 @@ public class Level_2 implements Screen {
     private LinkedList<Bird> BirdQueue;
     private ArrayList<Piggy> PigList;
 
-    private Vector2 initial=new Vector2(-20.65f,-5.5f);
-    private Vector2 final_pos=new Vector2(-20.65f,-5.5f);
+    private Vector2 initial=new Vector2(-20.65f,-3.5f);
+    private Vector2 final_pos=new Vector2(-20.65f,-3.5f);
     private boolean shoot=false;
     private Projectile projectile= new Projectile(-10,0,0,0,0);
 
@@ -87,7 +89,7 @@ public class Level_2 implements Screen {
                     ((Game)Gdx.app.getApplicationListener()).setScreen(new LevelMenu(game));
 //                    dispose();
                 }
-               
+
                 return true;
             }
 
@@ -119,7 +121,7 @@ public class Level_2 implements Screen {
 
                 if (shoot){
                     final_pos.set(x,y);
-                    projectile=new Projectile(-10, 5*(initial.x-x), 5*(initial.y-y), -20.65f,-5.5f);
+                    projectile=new Projectile(-10, 5*(initial.x-x), 5*(initial.y-y), -20.65f,-3.5f);
 
                 }
 
@@ -130,12 +132,10 @@ public class Level_2 implements Screen {
             public boolean touchUp(int screenX, int screenY, int pointer, int button) {
                 if(currBird != null && shoot){
                     Vector2 diff= initial.sub(final_pos);
-                    Projectile curr_projectile=new Projectile(-10, 5*diff.x, 5*diff.y, -20.65f,-5.5f);
-                    float deltaT=1;
                     currBird.setLinearVelocity(5*diff.x + 5, 5*diff.y);
                     currBird = null;
                     shoot=false;
-                    initial.set(-20.65f,-5.5f);
+                    initial.set(-20.65f,-3.5f);
                 }
                 return true;
             }
@@ -152,9 +152,9 @@ public class Level_2 implements Screen {
         Ground ground = new Ground(world);
 
         //Bird
-        BirdQueue.add(new Bird(world, -23.65f, -9.5f, 3f, 3f));
-        BirdQueue.add(new Bird(world, -24.65f, -9.5f, 3f, 3f));
-        BirdQueue.add(new Bird(world, -25.65f, -9.5f, 3f, 3f));
+        BirdQueue.add(new Bird(world, -23.65f, -15f, 3f, 3f));
+        BirdQueue.add(new Bird(world, -24.65f, -15f, 3f, 3f));
+        BirdQueue.add(new Bird(world, -25.65f, -15f, 3f, 3f));
 
 
         BodyDef bodydef = new BodyDef();
@@ -201,7 +201,7 @@ public class Level_2 implements Screen {
 //        box.applyForceToCenter(movement, true);
         batch.begin();
 
-        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
+//        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
 //        background.setSize
         world.getBodies(bodies);
         for (Body body : bodies) {
@@ -275,7 +275,7 @@ public class Level_2 implements Screen {
         shape.rectLine(-19.5f, initial.y, final_pos.x, final_pos.y,0.5f);
         shape.end();
 
-        bird.setTransform(final_pos.x, final_pos.y,bird.getAngle());
+        currBird.setTransform(final_pos.x, final_pos.y,currBird.getAngle());
 
     }
 }
