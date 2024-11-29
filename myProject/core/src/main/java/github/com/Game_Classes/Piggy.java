@@ -33,7 +33,9 @@ public class Piggy extends PhysicsActor{
         pigList.remove(this);
 //        this.dispose();
         this.remove();
-        getBody().getWorld().destroyBody(getBody());
+        if(getBody() != null && getBody().getWorld().getBodyCount()>0){
+            getBody().getWorld().destroyBody(getBody());
+        }
     }
 }
 

@@ -52,6 +52,7 @@ public class Level_2 implements Screen {
 
     private LinkedList<Bird> BirdQueue;
     private ArrayList<Piggy> PigList;
+    private ArrayList<BuildingBlock> Blocks;
 
     private Vector2 initial=new Vector2(-20.65f,-3.5f);
     private Vector2 final_pos=new Vector2(-20.65f,-3.5f);
@@ -179,25 +180,25 @@ public class Level_2 implements Screen {
                     Bird bird = (Bird)objB;
                     BuildingBlock block = (BuildingBlock)objA;
                     bird.OnHit(block);
-                    block.OnHit(bird);
+                    block.OnHit(Blocks, bird);
                 }
-                else if (objA instanceof BuildingBlock && objB instanceof Ground){
+                else if (objA instanceof Bird && objB instanceof BuildingBlock){
                     Bird bird = (Bird)objA;
                     BuildingBlock block = (BuildingBlock)objB;
                     bird.OnHit(block);
-                    block.OnHit(bird);
+                    block.OnHit(Blocks, bird);
                 }
                 else if (objA instanceof Piggy && objB instanceof BuildingBlock){
                     BuildingBlock block = (BuildingBlock)objB;
                     Piggy piggy = (Piggy)objA;
                     piggy.OnHit(PigList, block);
-                    block.OnHit(piggy);
+                    block.OnHit(Blocks, piggy);
                 }
                 else if (objA instanceof BuildingBlock && objB instanceof Piggy){
                     BuildingBlock block = (BuildingBlock)objA;
                     Piggy piggy = (Piggy)objB;
                     piggy.OnHit(PigList, block);
-                    block.OnHit(piggy);
+                    block.OnHit(Blocks, piggy);
                 }
             }
 
@@ -265,13 +266,11 @@ public class Level_2 implements Screen {
         shape.setProjectionMatrix(oCamera.combined);
         batch.setProjectionMatrix(oCamera.combined);
 
-        if (shoot){
-            drawTrajectory();
-        }
+
 //        box.applyForceToCenter(movement, true);
         batch.begin();
 
-//        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
+        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
 //        background.setSize
         world.getBodies(bodies);
         for (Body body : bodies) {
@@ -290,7 +289,10 @@ public class Level_2 implements Screen {
 
         }
         batch.end();
-
+        if (shoot){
+            drawTrajectory();
+        }
+        
         Iterator<Piggy> iterator = PigList.iterator(); // Use an iterator for safe removal
         while (iterator.hasNext()) {
             Piggy pig = iterator.next();
@@ -298,7 +300,9 @@ public class Level_2 implements Screen {
                 // Clean up resources related to the pig
                 pig.dispose();
                 pig.remove();
-                pig.getBody().getWorld().destroyBody(pig.getBody());
+                if(pig.getBody() != null && pig.getBody().getWorld().getBodyCount()>0){
+                    pig.getBody().getWorld().destroyBody(pig.getBody());
+                }
                 // Remove the pig from the list
                 iterator.remove();
             }

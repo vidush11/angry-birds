@@ -31,9 +31,11 @@ public class Bird extends PhysicsActor{
             synchronized (this) {  // Use synchronization to prevent race conditions
 //                this.dispose();
                 this.remove();
-                getBody().getWorld().destroyBody(getBody());
+                if(getBody() != null && getBody().getWorld().getBodyCount()>0){
+                    getBody().getWorld().destroyBody(getBody());
+                }
             }
-        }, 5, TimeUnit.SECONDS);
+        }, 3, TimeUnit.SECONDS);
     };
 
     public void loadOnSlingShot(){
