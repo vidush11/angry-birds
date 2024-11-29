@@ -10,14 +10,21 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Bird extends PhysicsActor{
+    boolean abilityActive = true;
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
     public Bird(World world, float x, float y, float width, float height) {
-        super(world, x, y, Main.assetManager.get("img/RedBird.png"), width, height);
+        super(world, x, y, Main.assetManager.get("img/RedBird.png"), width, height, false);
         super.setHitPoints(5);
 
     }
 
-    public void OnHit(ArrayList<Bird> birdList){
+    public void OnHit(ArrayList<Bird> birdList, Object collidedWith){
+        if (collidedWith instanceof Ground){
+            Ground g = (Ground)collidedWith;
+            abilityActive = false;
+        }
+
         scheduler.schedule(() -> {
             synchronized (this) {  // Use synchronization to prevent race conditions
                 birdList.remove(this);
@@ -26,5 +33,10 @@ public class Bird extends PhysicsActor{
             }
         }, 5, TimeUnit.SECONDS);
     };
-    public void onClick(){};
+
+    public void onClick(){
+        if (abilityActive){
+            abilityActive = false;
+        }
+    };
 }

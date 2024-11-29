@@ -12,7 +12,7 @@ import java.util.concurrent.TimeUnit;
 public class Piggy extends PhysicsActor{
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     public Piggy(World world, float x, float y, float width, float height) {
-        super(world, x, y, Main.assetManager.get("img/basicPig.png"), width, height);
+        super(world, x, y, Main.assetManager.get("img/basicPig.png"), width, height, false);
         super.setHitPoints(5);
     }
 
@@ -20,7 +20,7 @@ public class Piggy extends PhysicsActor{
         setHitPoints(getHitPoints() - bird.getHitPoints());
         if (getHitPoints() <= 0){
             scheduler.schedule(() -> {
-                synchronized (this) {  // Use synchronization to prevent race conditions
+                synchronized (this) {
                     pigList.remove(this);
                     this.dispose();
                     this.remove();

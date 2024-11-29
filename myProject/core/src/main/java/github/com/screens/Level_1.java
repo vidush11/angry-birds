@@ -42,7 +42,7 @@ public class Level_1 implements Screen {
         this.pigs = new ArrayList<>();
         this.buildingBlocks = new ArrayList<>();
         this.world = new World(new Vector2(0, 0), true);
-        this.ground = new Ground(world, 0, 0, stage.getWidth(), 32);
+//        this.ground = new Ground(world, 0, 0, stage.getWidth(), 32);
         this.slingShot = new SlingShot(world, 21, 40);
         this.background = Main.assetManager.get("img/Background_level_1.png");
     }
@@ -106,7 +106,7 @@ public class Level_1 implements Screen {
             buildingBlock.draw(batch, 1);
         }
 
-        ground.draw(batch, 1);
+//        ground.draw(batch, 1);
         slingShot.draw(batch, 1);
 
 

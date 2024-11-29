@@ -64,7 +64,7 @@ public class Level_Test implements Screen {
     }
     @Override
     public void show() {
-        ground = new Ground(world, 0, -100, stage.getWidth(), 8);
+//        ground = new Ground(world, 0, -100, stage.getWidth(), 8);
         slingShot = new SlingShot(world, -10, -84);
         birds.add(new Bird(world, -20, 16, 8, 8 ));
         pigs.add(new Piggy(world, 20, 16, 8, 8 ));

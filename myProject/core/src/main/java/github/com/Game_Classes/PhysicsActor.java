@@ -2,68 +2,69 @@ package github.com.Game_Classes;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.*;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.badlogic.gdx.physics.box2d.PolygonShape;
-import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class PhysicsActor extends Actor {
 
-    private final Body body;
-    private  Texture PhysicsActorTexture; // PhysicsActor's texture (image)
+    private Body body;
+    private Texture PhysicsActorTexture; // PhysicsActor's texture (image)
     private int hitPoints;
     private Sprite sprite;
 
-    public PhysicsActor(World world, float x, float y, Texture texture, float width, float height) {
-        this.body = createPhysicsActorBody(world, x, y, width, height);
-        setPosition(body.getPosition().x, body.getPosition().y);  // Set initial position
-        setRotation((float) Math.toDegrees(body.getAngle()));  // Set initial rotation
-        // Load the texture (image) for the PhysicsActor
+    public PhysicsActor(World world, float x, float y, Texture texture, float width, float height, boolean isBlock) {
+        this.body = createPhysicsActorBody(world, x, y, width, height, isBlock);
+        setPosition(body.getPosition().x, body.getPosition().y);
+        setRotation((float) Math.toDegrees(body.getAngle()));
+
         PhysicsActorTexture = texture;
-        this.hitPoints = 0;
-        // Set the size of the actor (for rendering)
         this.sprite = new Sprite(PhysicsActorTexture);
+
         sprite.setSize(width, height);
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
         body.setUserData(sprite);
+
+        this.hitPoints = 0;
     }
 
     public int getHitPoints() { return hitPoints; }
     public void setHitPoints(int hitPoints) { this.hitPoints = hitPoints; }
     public Body getBody() { return body; }
+    public void setBody(Body body) { this.body = body;}
 
     // Method to create the PhysicsActor's body in the Box2D world
-    private static Body createPhysicsActorBody(World world, float x, float y, float width, float height) {
+    private static Body createPhysicsActorBody(World world, float x, float y, float width, float height, boolean isBlock) {
+
         // Define the body type and initial position
         BodyDef bodyDef = new BodyDef();
-        bodyDef.type = BodyDef.BodyType.DynamicBody;  // Make it a dynamic body (so it responds to forces)
-        bodyDef.position.set(x, y);  // Initial position in the world
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(x, y);
 
-        // Define the shape of the PhysicsActor (let's assume it's a box for simplicity)
-        PolygonShape PhysicsActorShape = new PolygonShape();
-        PhysicsActorShape.setAsBox(width, height);  // Set a 2x2 box shape (you can adjust the size)
+        Shape PhysicsActorShape;
+        if (isBlock) {
+            PolygonShape temp = new PolygonShape();
+            temp.setAsBox(width, height);
+            PhysicsActorShape = temp;
+        }
+        else{
+            CircleShape temp = new CircleShape();
+            temp.setRadius(width/2);
+            PhysicsActorShape = temp;
+        }
 
-        // Define the fixture properties for the PhysicsActor
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = PhysicsActorShape;
-        fixtureDef.density = 1f;  // Adjust density (affects mass)
-        fixtureDef.friction = 0.5f;  // Friction when in contact with other surfaces
-        fixtureDef.restitution = 0.2f;  // Bounciness
+        fixtureDef.friction=.5f;
+        fixtureDef.restitution=0.5f;
+        fixtureDef.density=0.5f;
 
-        // Create the body in the world
         Body body = world.createBody(bodyDef);
-
-        // Attach the fixture to the body
         body.createFixture(fixtureDef);
 
-        // Dispose of the shape after use
         PhysicsActorShape.dispose();
 
-        // Return the created body
         return body;
     }
 

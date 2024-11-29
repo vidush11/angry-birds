@@ -1,9 +1,6 @@
 package github.com.screens;
 
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
-import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -17,7 +14,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import github.com.Game_Classes.InputController;
+import github.com.Game_Classes.Bird;
+import github.com.Game_Classes.Ground;
 import github.com.Game_Classes.Projectile;
 import github.com.Game_Classes.SlingShot;
 //import github.com.Game_Classes.SlingShotMouse;
@@ -65,7 +63,7 @@ public class Level_2 implements Screen {
         oCamera = new OrthographicCamera();
 
 
-        Gdx.input.setInputProcessor(new InputController(){
+        Gdx.input.setInputProcessor(new InputAdapter(){
             @Override
             public boolean keyDown(int keycode) {
                 if (keycode== Input.Keys.ESCAPE) {
@@ -106,8 +104,8 @@ public class Level_2 implements Screen {
 
             @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
-                float x=(screenX-Gdx.graphics.getWidth()/2)/10;
-                float y=(-screenY+Gdx.graphics.getHeight()/2)/10;
+                float x= (float) (screenX - Gdx.graphics.getWidth() / 2) /10;
+                float y= (float) (-screenY + Gdx.graphics.getHeight() / 2) /10;
 
                 if (-24<=x && x<=17 && -8<=y && y<=-3){
                     shoot=true;
@@ -118,8 +116,8 @@ public class Level_2 implements Screen {
 
             @Override
             public boolean touchDragged(int screenX, int screenY, int pointer) {
-                float x=(screenX-Gdx.graphics.getWidth()/2)/10;
-                float y=(-screenY+Gdx.graphics.getHeight()/2)/10;
+                float x= (float) (screenX - Gdx.graphics.getWidth() / 2) /10;
+                float y= (float) (-screenY + Gdx.graphics.getHeight() / 2) /10;
 
                 if (shoot){
                     final_pos.set(x,y);
@@ -149,9 +147,9 @@ public class Level_2 implements Screen {
                 return true;
             }
 
-
-
         });
+
+
         // body definition
         BodyDef bodydef= new BodyDef();
         bodydef.type= BodyDef.BodyType.DynamicBody;
@@ -170,37 +168,11 @@ public class Level_2 implements Screen {
         Body ball= world.createBody(bodydef);
         ball.createFixture(fixtureDef);
 
-        //GROUND Definition
-        bodydef.type= BodyDef.BodyType.StaticBody;
-        bodydef.position.set(0,-10);
+        //Ground declaration
+        Ground ground = new Ground(world);
 
-        //Ground shape
-        ChainShape groundShape= new ChainShape();
-        groundShape.createChain(new Vector2[]{new Vector2(-500,0), new Vector2(500,0)});
-        //fixture definition
-        fixtureDef.shape=groundShape;
-        fixtureDef.friction=.5f;
-        fixtureDef.restitution=0f;
-
-        world.createBody(bodydef).createFixture(fixtureDef);
-
-        //BOX
-        bodydef.type= BodyDef.BodyType.DynamicBody;
-        bodydef.position.set(-20.65f,-5.5f);
-
-        PolygonShape boxShape= new PolygonShape();
-        boxShape.setAsBox(1.5f,1.5f);
-
-        fixtureDef.shape=boxShape;
-        fixtureDef.friction=.5f;
-        fixtureDef.restitution=0.5f;
-        fixtureDef.density=0.5f;
-        bird= world.createBody(bodydef);
-        bird.createFixture(fixtureDef);
-        boxSprite= new Sprite(new Texture("./img/RedBird.png"));
-        boxSprite.setSize(3,3);
-        boxSprite.setOrigin(boxSprite.getWidth()/2, boxSprite.getHeight()/2);
-        bird.setUserData(boxSprite);
+        //Bird
+        bird = new Bird(world, -20.65f, -5.5f, 1.5f, 1.5f).getBody();
 
         //slingshot
         bodydef.type= BodyDef.BodyType.StaticBody;
@@ -224,8 +196,7 @@ public class Level_2 implements Screen {
 //        SlingShotMouse slingShot= new SlingShotMouse(world, oCamera,0,0);
 //        slingShot.show();
         shape.dispose();
-        groundShape.dispose();
-        boxShape.dispose();
+//        boxShape.dispose();
 
 
     }

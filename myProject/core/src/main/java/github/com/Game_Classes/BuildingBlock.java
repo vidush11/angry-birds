@@ -12,7 +12,7 @@ public class BuildingBlock extends PhysicsActor {
     }
     private types type;
     public BuildingBlock(World world, float x, float y, float width, float height, types type) {
-        super(world, x, y, Main.assetManager.get("img/woodenBlock.png"), 2, 8);
+        super(world, x, y, Main.assetManager.get("img/woodenBlock.png"), width, height, true);
         this.type = type;
         switch (this.type){
             case wood:
@@ -27,5 +27,11 @@ public class BuildingBlock extends PhysicsActor {
         }
     }
 
-    public void OnHit(){};
+    public void OnHit(PhysicsActor actor){
+        this.setHitPoints(this.getHitPoints() - actor.getHitPoints());
+        if (this.getHitPoints() <= 0){
+            this.dispose();
+            this.remove();
+        }
+    };
 }
