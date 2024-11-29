@@ -27,9 +27,11 @@ public class Level_2 implements Screen {
 
     private World world;
     private Box2DDebugRenderer debugRenderer;
-    private OrthographicCamera oCamera;
+    private OrthographicCamera oCamera;    
     private Main game;
-//    private Body box;
+    private Body box;
+    private BodyDef bird_body= new BodyDef();
+
     private Body currBird;
 
     private Sprite boxSprite;
@@ -39,10 +41,15 @@ public class Level_2 implements Screen {
     private Stage stage;
     private Viewport viewport;
     private Vector2 movement;
+    private ShapeRenderer shape;
 
     private LinkedList<Bird> BirdQueue;
     private ArrayList<Piggy> PigList;
 
+    private Vector2 initial=new Vector2(-20.65f,-5.5f);
+    private Vector2 final_pos=new Vector2(-20.65f,-5.5f);
+    private boolean shoot=false;
+    private Projectile projectile= new Projectile(-10,0,0,0,0);
 
     private final float TIMESTEP=1/60f;
     private final int VELOCITYITERATIONS=8;
@@ -59,9 +66,7 @@ public class Level_2 implements Screen {
 
     }
 
-    private Vector2 initial=new Vector2(-20.65f,-5.5f);
-    private Vector2 final_pos=new Vector2(-20.65f,-5.5f);
-    private boolean shoot=false;
+
 
     @Override
     public void show() {
@@ -69,7 +74,7 @@ public class Level_2 implements Screen {
         debugRenderer= new Box2DDebugRenderer();
         batch= new SpriteBatch();
         oCamera = new OrthographicCamera();
-
+        shape = new ShapeRenderer();
 
         Gdx.input.setInputProcessor(new InputAdapter(){
             @Override
@@ -78,35 +83,7 @@ public class Level_2 implements Screen {
                     ((Game)Gdx.app.getApplicationListener()).setScreen(new LevelMenu(game));
 //                    dispose();
                 }
-                else if (keycode== Input.Keys.RIGHT){
-                    movement.x=30;
-                }
-                else if (keycode== Input.Keys.LEFT){
-                    movement.x=-30;
-                }
-                else if (keycode== Input.Keys.UP){
-                    movement.y=50;
-                }
-                else if (keycode== Input.Keys.DOWN){
-                    movement.y=-10;
-                }
-
-                return true;
-            }
-            @Override
-            public boolean keyUp(int keycode) {
-                if (keycode== Input.Keys.RIGHT){
-                    movement.x=0;
-                }
-                else if (keycode== Input.Keys.LEFT){
-                    movement.x=0;
-                }
-                else if (keycode== Input.Keys.UP){
-                    movement.y=0;
-                }
-                else if (keycode== Input.Keys.DOWN){
-                    movement.y=0;
-                }
+               
                 return true;
             }
 
@@ -138,6 +115,8 @@ public class Level_2 implements Screen {
 
                 if (shoot){
                     final_pos.set(x,y);
+                    projectile=new Projectile(-10, 5*(initial.x-x), 5*(initial.y-y), -20.65f,-5.5f);
+
                 }
 
                 return true;
@@ -153,11 +132,6 @@ public class Level_2 implements Screen {
                     currBird = null;
                     shoot=false;
                     initial.set(-20.65f,-5.5f);
-
-                    for (int i=0; i<10; i++){
-                        System.out.println(curr_projectile.getX(i*deltaT)+" "+ curr_projectile.getY(i*deltaT));
-                    }
-
                 }
                 return true;
             }
@@ -185,7 +159,7 @@ public class Level_2 implements Screen {
         bodydef.position.set(-20,-8);
 
         PolygonShape boxShape= new PolygonShape();
-        boxShape.setAsBox(10,1);
+        boxShape.setAsBox(5,1);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = boxShape;
@@ -199,11 +173,6 @@ public class Level_2 implements Screen {
         boxSprite.setOrigin(boxSprite.getWidth()/2, boxSprite.getHeight()/2);
         slingShot.setUserData(boxSprite);
 
-//        box.applyForceToCenter(1000,0,true);
-
-//        SlingShotMouse slingShot= new SlingShotMouse(world, oCamera,0,0);
-//        slingShot.show();
-//        shape.dispose();
         boxShape.dispose();
 
 
@@ -216,11 +185,15 @@ public class Level_2 implements Screen {
     {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+        debugRenderer.render(world, oCamera.combined);
 
-
-
+        world.step(TIMESTEP, VELOCITYITERATIONS, POSITIONITERATIONS);
+        shape.setProjectionMatrix(oCamera.combined);
         batch.setProjectionMatrix(oCamera.combined);
 
+        if (shoot){
+            drawTrajectory();
+        }
 //        box.applyForceToCenter(movement, true);
         batch.begin();
 
@@ -237,9 +210,8 @@ public class Level_2 implements Screen {
 
         }
         batch.end();
-        debugRenderer.render(world, oCamera.combined);
 
-        world.step(TIMESTEP, VELOCITYITERATIONS, POSITIONITERATIONS);
+
     }
 
     @Override
@@ -248,7 +220,6 @@ public class Level_2 implements Screen {
         oCamera.viewportWidth= width/10;
         oCamera.viewportHeight= height/10;
         oCamera.update();
-
         stage.getViewport().update(width,height);
 
     }
@@ -274,5 +245,33 @@ public class Level_2 implements Screen {
         debugRenderer.dispose();
         boxSprite.getTexture().dispose();
         stage.dispose();
+    }
+
+    public void drawTrajectory(){
+        float deltaT= 0.11f;
+        float x_;
+        float y_;
+        for (int i=0; i<12; i++){
+            x_=projectile.getX(i*deltaT);
+            y_=projectile.getY(i*deltaT);
+
+            shape.begin(ShapeRenderer.ShapeType.Filled);
+            shape.setColor(255,255,255,1-.08f*i);
+            shape.circle(x_, y_, 0.3f-0.015f*i,100);
+            shape.end();
+        }
+
+        shape.begin(ShapeRenderer.ShapeType.Filled);
+        shape.setColor(Color.BROWN);
+        shape.rectLine(-21.5f, initial.y, final_pos.x, final_pos.y,0.5f);
+        shape.end();
+
+        shape.begin(ShapeRenderer.ShapeType.Filled);
+        shape.setColor(Color.BROWN);
+        shape.rectLine(-19.5f, initial.y, final_pos.x, final_pos.y,0.5f);
+        shape.end();
+
+        bird.setTransform(final_pos.x, final_pos.y,bird.getAngle());
+
     }
 }
