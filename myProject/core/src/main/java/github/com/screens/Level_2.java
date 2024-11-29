@@ -149,54 +149,38 @@ public class Level_2 implements Screen {
 
         });
 
-
-        // body definition
-        BodyDef bodydef= new BodyDef();
-        bodydef.type= BodyDef.BodyType.DynamicBody;
-        bodydef.position.set(0,20); // 1m up
-
-        CircleShape shape =  new CircleShape();
-        shape.setRadius(5f);
-
-        // fixture defintion
-        FixtureDef fixtureDef = new FixtureDef();
-        fixtureDef.shape= shape;
-        fixtureDef.density= 2.5f;
-        fixtureDef.friction= 0.7f; //u
-        fixtureDef.restitution=0.8f;
-
-        Body ball= world.createBody(bodydef);
-        ball.createFixture(fixtureDef);
-
         //Ground declaration
         Ground ground = new Ground(world);
 
         //Bird
-        bird = new Bird(world, -20.65f, -5.5f, 1.5f, 1.5f).getBody();
+        bird = new Bird(world, -20.65f, -5.5f, 3f, 3f).getBody();
 
+        BodyDef bodydef = new BodyDef();
         //slingshot
         bodydef.type= BodyDef.BodyType.StaticBody;
         bodydef.position.set(-20,-10);
 
-        PolygonShape boxShape_= new PolygonShape();
-        boxShape_.setAsBox(10,3);
+        PolygonShape boxShape= new PolygonShape();
+        boxShape.setAsBox(10,3);
 
-        fixtureDef.shape=boxShape_;
-        fixtureDef.friction=.5f;
-        fixtureDef.restitution=0.5f;
-        fixtureDef.density=1f;
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = boxShape;
+        fixtureDef.friction = .5f;
+        fixtureDef.restitution = 0.5f;
+        fixtureDef.density = 1f;
         Body slingShot= world.createBody(bodydef);
         slingShot.createFixture(fixtureDef);
         boxSprite= new Sprite(new Texture("./img/SlingShot.png"));
         boxSprite.setSize(20,10);
         boxSprite.setOrigin(boxSprite.getWidth()/2, boxSprite.getHeight()/2);
         slingShot.setUserData(boxSprite);
+
 //        box.applyForceToCenter(1000,0,true);
 
 //        SlingShotMouse slingShot= new SlingShotMouse(world, oCamera,0,0);
 //        slingShot.show();
-        shape.dispose();
-//        boxShape.dispose();
+//        shape.dispose();
+        boxShape.dispose();
 
 
     }
@@ -218,7 +202,7 @@ public class Level_2 implements Screen {
 //        box.applyForceToCenter(movement, true);
         batch.begin();
 
-//        batch.draw(background, -stage.getViewport().getScreenWidth()/20, -stage.getViewport().getScreenHeight()/20, stage.getViewport().getScreenWidth()/10, stage.getViewport().getScreenHeight()/10);
+        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
 //        background.setSize
         world.getBodies(bodies);
         for (Body body : bodies) {

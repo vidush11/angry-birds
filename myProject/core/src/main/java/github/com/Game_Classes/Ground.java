@@ -20,7 +20,7 @@ public class Ground {
 
         //Ground shape
         ChainShape groundShape= new ChainShape();
-        groundShape.createChain(new Vector2[]{new Vector2(-500,0), new Vector2(500,0)});
+        groundShape.createChain(new Vector2[]{new Vector2(-500,-5), new Vector2(500,-5)});
         //fixture definition
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape=groundShape;
