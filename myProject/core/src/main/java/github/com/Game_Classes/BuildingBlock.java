@@ -25,6 +25,7 @@ public class BuildingBlock extends PhysicsActor {
                 super.setHitPoints(2);
                 break;
         }
+        getBody().setUserData(this);
     }
 
     public void OnHit(PhysicsActor actor){
