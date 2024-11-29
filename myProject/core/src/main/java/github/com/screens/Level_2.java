@@ -292,7 +292,7 @@ public class Level_2 implements Screen {
         if (shoot){
             drawTrajectory();
         }
-        
+
         Iterator<Piggy> iterator = PigList.iterator(); // Use an iterator for safe removal
         while (iterator.hasNext()) {
             Piggy pig = iterator.next();
@@ -351,7 +351,7 @@ public class Level_2 implements Screen {
             y_=projectile.getY(i*deltaT);
 
             shape.begin(ShapeRenderer.ShapeType.Filled);
-            shape.setColor(255,255,255,1-.08f*i);
+            shape.setColor(0,0,0,1-.08f*i);
             shape.circle(x_, y_, 0.3f-0.015f*i,100);
             shape.end();
         }
