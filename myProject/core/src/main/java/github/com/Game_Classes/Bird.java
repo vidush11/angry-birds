@@ -1,6 +1,7 @@
 package github.com.Game_Classes;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 import github.com.Main;
 
@@ -34,6 +35,10 @@ public class Bird extends PhysicsActor{
         }, 5, TimeUnit.SECONDS);
     };
 
+    public void loadOnSlingShot(){
+        System.out.println("hii");
+        getBody().setTransform(-20.65f, -4.5f, getBody().getAngle());
+    }
     public void onClick(){
         if (abilityActive){
             abilityActive = false;

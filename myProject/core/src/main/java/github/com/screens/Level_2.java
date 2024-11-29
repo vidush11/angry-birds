@@ -12,6 +12,7 @@ import com.badlogic.gdx.utils.Array;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Queue;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import github.com.Game_Classes.Bird;
@@ -21,14 +22,17 @@ import github.com.Game_Classes.SlingShot;
 //import github.com.Game_Classes.SlingShotMouse;
 import github.com.Main;
 
+import java.util.LinkedList;
+import java.util.Vector;
+
 public class Level_2 implements Screen {
 
     private World world;
     private Box2DDebugRenderer debugRenderer;
     private OrthographicCamera oCamera;
     private Main game;
-    private Body box;
-    private Body bird;
+//    private Body box;
+    private Body currBird;
 
     private Sprite boxSprite;
     private SpriteBatch batch;
@@ -37,6 +41,8 @@ public class Level_2 implements Screen {
     private Stage stage;
     private Viewport viewport;
     private Vector2 movement;
+
+    private LinkedList<Bird> BirdQueue;
 
     private final float TIMESTEP=1/60f;
     private final int VELOCITYITERATIONS=8;
@@ -48,6 +54,7 @@ public class Level_2 implements Screen {
         this.stage = new Stage();
 //        this.viewport= new StretchViewport(1920,1080, this.oCamera);
         this.movement=new Vector2(0,0);
+        BirdQueue = new LinkedList<>();
 
     }
 
@@ -107,8 +114,16 @@ public class Level_2 implements Screen {
                 float x= (float) (screenX - Gdx.graphics.getWidth() / 2) /10;
                 float y= (float) (-screenY + Gdx.graphics.getHeight() / 2) /10;
 
-                if (-24<=x && x<=17 && -8<=y && y<=-3){
-                    shoot=true;
+                if (-23<=x && x<=-20 && -8<=y && y<=-3){
+                    if (!(BirdQueue.isEmpty()) && currBird==null && !shoot){
+                        Bird bird = BirdQueue.poll();
+                        bird.loadOnSlingShot();
+                        currBird = bird.getBody();
+                        shoot = false;
+                    }
+                    else if (currBird != null){
+                        shoot=true;
+                    }
                 }
                 return true;
 
@@ -118,6 +133,7 @@ public class Level_2 implements Screen {
             public boolean touchDragged(int screenX, int screenY, int pointer) {
                 float x= (float) (screenX - Gdx.graphics.getWidth() / 2) /10;
                 float y= (float) (-screenY + Gdx.graphics.getHeight() / 2) /10;
+                System.out.println(shoot);
 
                 if (shoot){
                     final_pos.set(x,y);
@@ -128,16 +144,20 @@ public class Level_2 implements Screen {
 
             @Override
             public boolean touchUp(int screenX, int screenY, int pointer, int button) {
-                shoot=false;
-                Vector2 diff= initial.sub(final_pos);
-                System.out.println(diff.x+ "diff "+ diff.y);
-                Projectile curr_projectile=new Projectile(-10, 5*diff.x, 5*diff.y, -20.65f,-5.5f);
-                float deltaT=1;
-                bird.setLinearVelocity(5*diff.x, 5*diff.y);
-                for (int i=0; i<10; i++){
-                    System.out.println(curr_projectile.getX(i*deltaT)+" "+ curr_projectile.getY(i*deltaT));
-                }
+                if(currBird != null && shoot){
+                    Vector2 diff= initial.sub(final_pos);
+                    Projectile curr_projectile=new Projectile(-10, 5*diff.x, 5*diff.y, -20.65f,-5.5f);
+                    float deltaT=1;
+                    currBird.setLinearVelocity(5*diff.x + 5, 5*diff.y);
+                    currBird = null;
+                    shoot=false;
+                    initial.set(-20.65f,-5.5f);
 
+                    for (int i=0; i<10; i++){
+                        System.out.println(curr_projectile.getX(i*deltaT)+" "+ curr_projectile.getY(i*deltaT));
+                    }
+
+                }
                 return true;
             }
 
@@ -153,15 +173,18 @@ public class Level_2 implements Screen {
         Ground ground = new Ground(world);
 
         //Bird
-        bird = new Bird(world, -20.65f, -5.5f, 3f, 3f).getBody();
+        BirdQueue.add(new Bird(world, -23.65f, -9.5f, 3f, 3f));
+        BirdQueue.add(new Bird(world, -24.65f, -9.5f, 3f, 3f));
+        BirdQueue.add(new Bird(world, -25.65f, -9.5f, 3f, 3f));
+
 
         BodyDef bodydef = new BodyDef();
         //slingshot
         bodydef.type= BodyDef.BodyType.StaticBody;
-        bodydef.position.set(-20,-10);
+        bodydef.position.set(-20,-8);
 
         PolygonShape boxShape= new PolygonShape();
-        boxShape.setAsBox(10,3);
+        boxShape.setAsBox(10,1);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = boxShape;
@@ -193,16 +216,14 @@ public class Level_2 implements Screen {
         Gdx.gl.glClearColor(0, 0, 0, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
-        debugRenderer.render(world, oCamera.combined);
 
-        world.step(TIMESTEP, VELOCITYITERATIONS, POSITIONITERATIONS);
 
         batch.setProjectionMatrix(oCamera.combined);
 
 //        box.applyForceToCenter(movement, true);
         batch.begin();
 
-        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
+//        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
 //        background.setSize
         world.getBodies(bodies);
         for (Body body : bodies) {
@@ -215,6 +236,9 @@ public class Level_2 implements Screen {
 
         }
         batch.end();
+        debugRenderer.render(world, oCamera.combined);
+
+        world.step(TIMESTEP, VELOCITYITERATIONS, POSITIONITERATIONS);
     }
 
     @Override
