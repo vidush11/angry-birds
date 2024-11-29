@@ -22,6 +22,7 @@ import github.com.Game_Classes.*;
 import github.com.Main;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Vector;
 
@@ -117,7 +118,7 @@ public class Level_2 implements Screen {
             public boolean touchDragged(int screenX, int screenY, int pointer) {
                 float x= (float) (screenX - Gdx.graphics.getWidth() / 2) /10;
                 float y= (float) (-screenY + Gdx.graphics.getHeight() / 2) /10;
-                System.out.println(shoot);
+//                System.out.println(shoot);
 
                 if (shoot){
                     final_pos.set(x,y);
@@ -143,7 +144,7 @@ public class Level_2 implements Screen {
 
             @Override
             public boolean mouseMoved(int screenX, int screenY) {
-                System.out.println("x: "+(screenX-Gdx.graphics.getWidth()/2)+", y:"+(-screenY+Gdx.graphics.getHeight()/2));
+//                System.out.println("x: "+(screenX-Gdx.graphics.getWidth()/2)+", y:"+(-screenY+Gdx.graphics.getHeight()/2));
                 return true;
             }
 
@@ -159,6 +160,32 @@ public class Level_2 implements Screen {
                     Piggy piggy = (Piggy)objB;
                     bird.OnHit(piggy);
                     piggy.OnHit(PigList, bird);
+                }
+                else if (objA instanceof Piggy && objB instanceof Bird) {
+                    Bird bird = (Bird)objB;
+                    Piggy piggy = (Piggy)objA;
+                    bird.OnHit(piggy);
+                    piggy.OnHit(PigList, bird);
+                }
+                else if (objA instanceof Ground && objB instanceof Bird){
+                    Bird bird = (Bird)objB;
+                    bird.OnHit((Ground)objA);
+                }
+                else if (objA instanceof Bird && objB instanceof Ground){
+                    Bird bird = (Bird)objA;
+                    bird.OnHit((Ground)objB);
+                }
+                else if (objA instanceof BuildingBlock && objB instanceof Bird){
+                    Bird bird = (Bird)objB;
+                    BuildingBlock block = (BuildingBlock)objA;
+                    bird.OnHit(block);
+                    block.OnHit(bird);
+                }
+                else if (objA instanceof BuildingBlock && objB instanceof Ground){
+                    Bird bird = (Bird)objA;
+                    BuildingBlock block = (BuildingBlock)objB;
+                    bird.OnHit(block);
+                    block.OnHit(bird);
                 }
             }
 
@@ -251,6 +278,19 @@ public class Level_2 implements Screen {
 
         }
         batch.end();
+
+        Iterator<Piggy> iterator = PigList.iterator(); // Use an iterator for safe removal
+        while (iterator.hasNext()) {
+            Piggy pig = iterator.next();
+            if (pig.getBody().getPosition().x > 35 || pig.getBody().getPosition().x < -30) {
+                // Clean up resources related to the pig
+                pig.dispose();
+                pig.remove();
+                pig.getBody().getWorld().destroyBody(pig.getBody());
+                // Remove the pig from the list
+                iterator.remove();
+            }
+        }
     }
 
     @Override

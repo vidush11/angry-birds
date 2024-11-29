@@ -33,6 +33,7 @@ public class BuildingBlock extends PhysicsActor {
         if (this.getHitPoints() <= 0){
             this.dispose();
             this.remove();
+            getBody().getWorld().destroyBody(getBody());
         }
     };
 }

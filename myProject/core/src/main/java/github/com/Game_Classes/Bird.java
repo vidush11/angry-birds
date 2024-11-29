@@ -29,7 +29,7 @@ public class Bird extends PhysicsActor{
 
         scheduler.schedule(() -> {
             synchronized (this) {  // Use synchronization to prevent race conditions
-                this.dispose();
+//                this.dispose();
                 this.remove();
                 getBody().getWorld().destroyBody(getBody());
             }

@@ -10,6 +10,7 @@ public class Ground {
     Body body;
     public Ground(World world) {
         body = createBody(world);
+        body.setUserData(this);
     }
 
     public Body createBody(World world){

@@ -19,15 +19,21 @@ public class Piggy extends PhysicsActor{
 
     public void OnHit(ArrayList<Piggy> pigList, Bird bird){
         setHitPoints(getHitPoints() - bird.getHitPoints());
+        System.out.println(getHitPoints());
         if (getHitPoints() <= 0){
             scheduler.schedule(() -> {
                 synchronized (this) {
-                    pigList.remove(this);
-                    this.dispose();
-                    this.remove();
-                    getBody().getWorld().destroyBody(getBody());
+                    kill(pigList);
                 }
             }, 1, TimeUnit.SECONDS);
         };
     }
+
+    public void kill(ArrayList<Piggy> pigList){
+        pigList.remove(this);
+//        this.dispose();
+        this.remove();
+        getBody().getWorld().destroyBody(getBody());
+    }
 }
+

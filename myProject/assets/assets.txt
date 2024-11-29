@@ -5,9 +5,186 @@ font/white.png
 hs_err_pid7552.log
 img/Angry_birds.png
 img/Background_level_1.png
+img/Debris/debrisGlass_1.png
+img/Debris/debrisGlass_2.png
+img/Debris/debrisGlass_3.png
+img/Debris/debrisStone_1.png
+img/Debris/debrisStone_2.png
+img/Debris/debrisStone_3.png
+img/Debris/debrisWood_1.png
+img/Debris/debrisWood_2.png
+img/Debris/debrisWood_3.png
+img/Metal elements/elementMetal000.png
+img/Metal elements/elementMetal001.png
+img/Metal elements/elementMetal002.png
+img/Metal elements/elementMetal003.png
+img/Metal elements/elementMetal004.png
+img/Metal elements/elementMetal005.png
+img/Metal elements/elementMetal006.png
+img/Metal elements/elementMetal007.png
+img/Metal elements/elementMetal008.png
+img/Metal elements/elementMetal009.png
+img/Metal elements/elementMetal010.png
+img/Metal elements/elementMetal011.png
+img/Metal elements/elementMetal012.png
+img/Metal elements/elementMetal013.png
+img/Metal elements/elementMetal014.png
+img/Metal elements/elementMetal015.png
+img/Metal elements/elementMetal016.png
+img/Metal elements/elementMetal017.png
+img/Metal elements/elementMetal018.png
+img/Metal elements/elementMetal019.png
+img/Metal elements/elementMetal020.png
+img/Metal elements/elementMetal021.png
+img/Metal elements/elementMetal022.png
+img/Metal elements/elementMetal023.png
+img/Metal elements/elementMetal024.png
+img/Metal elements/elementMetal025.png
+img/Metal elements/elementMetal026.png
+img/Metal elements/elementMetal027.png
+img/Metal elements/elementMetal028.png
+img/Metal elements/elementMetal029.png
+img/Metal elements/elementMetal030.png
+img/Metal elements/elementMetal031.png
+img/Metal elements/elementMetal032.png
+img/Metal elements/elementMetal033.png
+img/Metal elements/elementMetal034.png
+img/Metal elements/elementMetal035.png
+img/Metal elements/elementMetal036.png
+img/Metal elements/elementMetal037.png
+img/Metal elements/elementMetal038.png
+img/Metal elements/elementMetal039.png
+img/Metal elements/elementMetal040.png
+img/Metal elements/elementMetal041.png
+img/Metal elements/elementMetal042.png
+img/Metal elements/elementMetal043.png
+img/Metal elements/elementMetal044.png
+img/Metal elements/elementMetal045.png
+img/Metal elements/elementMetal046.png
+img/Metal elements/elementMetal047.png
+img/Metal elements/elementMetal048.png
+img/Metal elements/elementMetal049.png
+img/Metal elements/elementMetal050.png
+img/Metal elements/elementMetal051.png
+img/Metal elements/elementMetal052.png
+img/Metal elements/elementMetal053.png
+img/Metal elements/elementMetal054.png
+img/Metal elements/elementMetal055.png
+img/Metal elements/elementMetal056.png
+img/Metal elements/elementMetal057.png
 img/RedBird.png
 img/SlingShot.png
+img/Stone elements/elementStone000.png
+img/Stone elements/elementStone001.png
+img/Stone elements/elementStone002.png
+img/Stone elements/elementStone003.png
+img/Stone elements/elementStone004.png
+img/Stone elements/elementStone005.png
+img/Stone elements/elementStone006.png
+img/Stone elements/elementStone007.png
+img/Stone elements/elementStone008.png
+img/Stone elements/elementStone009.png
+img/Stone elements/elementStone010.png
+img/Stone elements/elementStone011.png
+img/Stone elements/elementStone012.png
+img/Stone elements/elementStone013.png
+img/Stone elements/elementStone014.png
+img/Stone elements/elementStone015.png
+img/Stone elements/elementStone016.png
+img/Stone elements/elementStone017.png
+img/Stone elements/elementStone018.png
+img/Stone elements/elementStone019.png
+img/Stone elements/elementStone020.png
+img/Stone elements/elementStone021.png
+img/Stone elements/elementStone022.png
+img/Stone elements/elementStone023.png
+img/Stone elements/elementStone024.png
+img/Stone elements/elementStone025.png
+img/Stone elements/elementStone026.png
+img/Stone elements/elementStone027.png
+img/Stone elements/elementStone028.png
+img/Stone elements/elementStone029.png
+img/Stone elements/elementStone030.png
+img/Stone elements/elementStone031.png
+img/Stone elements/elementStone032.png
+img/Stone elements/elementStone033.png
+img/Stone elements/elementStone034.png
+img/Stone elements/elementStone035.png
+img/Stone elements/elementStone036.png
+img/Stone elements/elementStone037.png
+img/Stone elements/elementStone038.png
+img/Stone elements/elementStone039.png
+img/Stone elements/elementStone040.png
+img/Stone elements/elementStone041.png
+img/Stone elements/elementStone042.png
+img/Stone elements/elementStone043.png
+img/Stone elements/elementStone044.png
+img/Stone elements/elementStone045.png
+img/Stone elements/elementStone046.png
+img/Stone elements/elementStone047.png
+img/Stone elements/elementStone048.png
+img/Stone elements/elementStone049.png
+img/Stone elements/elementStone050.png
+img/Stone elements/elementStone051.png
+img/Stone elements/elementStone052.png
+img/Stone elements/elementStone053.png
+img/Stone elements/elementStone054.png
 img/WinLooseBackground.png
+img/Wood elements/elementWood000.png
+img/Wood elements/elementWood001.png
+img/Wood elements/elementWood002.png
+img/Wood elements/elementWood003.png
+img/Wood elements/elementWood004.png
+img/Wood elements/elementWood005.png
+img/Wood elements/elementWood006.png
+img/Wood elements/elementWood007.png
+img/Wood elements/elementWood008.png
+img/Wood elements/elementWood009.png
+img/Wood elements/elementWood010.png
+img/Wood elements/elementWood011.png
+img/Wood elements/elementWood012.png
+img/Wood elements/elementWood013.png
+img/Wood elements/elementWood014.png
+img/Wood elements/elementWood015.png
+img/Wood elements/elementWood016.png
+img/Wood elements/elementWood017.png
+img/Wood elements/elementWood018.png
+img/Wood elements/elementWood019.png
+img/Wood elements/elementWood020.png
+img/Wood elements/elementWood021.png
+img/Wood elements/elementWood022.png
+img/Wood elements/elementWood023.png
+img/Wood elements/elementWood024.png
+img/Wood elements/elementWood025.png
+img/Wood elements/elementWood026.png
+img/Wood elements/elementWood027.png
+img/Wood elements/elementWood028.png
+img/Wood elements/elementWood029.png
+img/Wood elements/elementWood030.png
+img/Wood elements/elementWood031.png
+img/Wood elements/elementWood032.png
+img/Wood elements/elementWood033.png
+img/Wood elements/elementWood034.png
+img/Wood elements/elementWood035.png
+img/Wood elements/elementWood036.png
+img/Wood elements/elementWood037.png
+img/Wood elements/elementWood038.png
+img/Wood elements/elementWood039.png
+img/Wood elements/elementWood040.png
+img/Wood elements/elementWood041.png
+img/Wood elements/elementWood042.png
+img/Wood elements/elementWood043.png
+img/Wood elements/elementWood044.png
+img/Wood elements/elementWood045.png
+img/Wood elements/elementWood046.png
+img/Wood elements/elementWood047.png
+img/Wood elements/elementWood048.png
+img/Wood elements/elementWood049.png
+img/Wood elements/elementWood050.png
+img/Wood elements/elementWood051.png
+img/Wood elements/elementWood052.png
+img/Wood elements/elementWood053.png
+img/Wood elements/elementWood054.png
 img/background.jpg
 img/background.webp
 img/backgroundLoading.png
@@ -25,6 +202,11 @@ img/loading_bar.png
 img/loading_screen.png
 img/logo.png
 img/pause_menu.png
+img/pigs/RedBird.png
+img/pigs/blue.png
+img/pigs/green.png
+img/pigs/red.png
+img/pigs/yellow.png
 img/pixelated_background.png
 img/pixelated_bird.png
 img/pixelated_menu.png
