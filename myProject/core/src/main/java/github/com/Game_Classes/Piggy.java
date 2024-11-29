@@ -14,6 +14,7 @@ public class Piggy extends PhysicsActor{
     public Piggy(World world, float x, float y, float width, float height) {
         super(world, x, y, Main.assetManager.get("img/basicPig.png"), width, height, false);
         super.setHitPoints(5);
+        getBody().setUserData(this);
     }
 
     public void OnHit(ArrayList<Piggy> pigList, Bird bird){
@@ -24,6 +25,7 @@ public class Piggy extends PhysicsActor{
                     pigList.remove(this);
                     this.dispose();
                     this.remove();
+                    getBody().getWorld().destroyBody(getBody());
                 }
             }, 1, TimeUnit.SECONDS);
         };

@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.Queue;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import github.com.Game_Classes.*;
-import github.com.Game_Classes.InputController;
+//import github.com.Game_Classes.InputController;
 import github.com.Main;
 
 import java.util.ArrayList;
@@ -132,6 +132,7 @@ public class Level_2 implements Screen {
             public boolean touchUp(int screenX, int screenY, int pointer, int button) {
                 if(currBird != null && shoot){
                     Vector2 diff= initial.sub(final_pos);
+                    currBird.setTransform(-20.65f,-3.5f, currBird.getAngle());
                     currBird.setLinearVelocity(5*diff.x + 5, 5*diff.y);
                     currBird = null;
                     shoot=false;
@@ -148,13 +149,43 @@ public class Level_2 implements Screen {
 
         });
 
+        world.setContactListener(new ContactListener() {
+            @Override
+            public void beginContact(Contact contact) {
+                Object objA = contact.getFixtureA().getBody().getUserData();
+                Object objB = contact.getFixtureB().getBody().getUserData();
+                if (objA instanceof Bird && objB instanceof Piggy){
+                    Bird bird = (Bird)objA;
+                    Piggy piggy = (Piggy)objB;
+                    bird.OnHit(piggy);
+                    piggy.OnHit(PigList, bird);
+                }
+            }
+
+            @Override
+            public void endContact(Contact contact) {
+
+            }
+
+            @Override
+            public void preSolve(Contact contact, Manifold manifold) {
+
+            }
+
+            @Override
+            public void postSolve(Contact contact, ContactImpulse contactImpulse) {
+
+            }
+        });
         //Ground declaration
         Ground ground = new Ground(world);
 
         //Bird
-        BirdQueue.add(new Bird(world, -23.65f, -15f, 3f, 3f));
-        BirdQueue.add(new Bird(world, -24.65f, -15f, 3f, 3f));
-        BirdQueue.add(new Bird(world, -25.65f, -15f, 3f, 3f));
+        BirdQueue.add(new Bird(world, -23.65f, -13.5f, 3f, 3f));
+        BirdQueue.add(new Bird(world, -26.65f, -13.5f, 3f, 3f));
+        BirdQueue.add(new Bird(world, -29.65f, -13.5f, 3f, 3f));
+
+        PigList.add(new Piggy(world, 23.65f, -12.5f, 3f, 3f));
 
 
         BodyDef bodydef = new BodyDef();
@@ -205,7 +236,13 @@ public class Level_2 implements Screen {
 //        background.setSize
         world.getBodies(bodies);
         for (Body body : bodies) {
-            if (body.getUserData() != null && body.getUserData() instanceof Sprite) {
+            if (body.getUserData() != null && body.getUserData() instanceof PhysicsActor) {
+                Sprite sprite = (Sprite) ((PhysicsActor) body.getUserData()).getSprite();
+                sprite.setPosition(body.getPosition().x-sprite.getWidth()/2, body.getPosition().y- sprite.getHeight()/2);
+                sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
+                sprite.draw(batch);
+            }
+            else if(body.getUserData() != null && body.getUserData() instanceof Sprite){
                 Sprite sprite = (Sprite) body.getUserData();
                 sprite.setPosition(body.getPosition().x-sprite.getWidth()/2, body.getPosition().y- sprite.getHeight()/2);
                 sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
@@ -214,8 +251,6 @@ public class Level_2 implements Screen {
 
         }
         batch.end();
-
-
     }
 
     @Override

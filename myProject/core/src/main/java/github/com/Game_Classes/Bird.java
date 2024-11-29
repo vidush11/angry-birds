@@ -17,10 +17,11 @@ public class Bird extends PhysicsActor{
     public Bird(World world, float x, float y, float width, float height) {
         super(world, x, y, Main.assetManager.get("img/RedBird.png"), width, height, false);
         super.setHitPoints(5);
-
+        getBody().setActive(false);
+        getBody().setUserData(this);
     }
 
-    public void OnHit(ArrayList<Bird> birdList, Object collidedWith){
+    public void OnHit(Object collidedWith){
         if (collidedWith instanceof Ground){
             Ground g = (Ground)collidedWith;
             abilityActive = false;
@@ -28,15 +29,16 @@ public class Bird extends PhysicsActor{
 
         scheduler.schedule(() -> {
             synchronized (this) {  // Use synchronization to prevent race conditions
-                birdList.remove(this);
                 this.dispose();
                 this.remove();
+                getBody().getWorld().destroyBody(getBody());
             }
         }, 5, TimeUnit.SECONDS);
     };
 
     public void loadOnSlingShot(){
-        System.out.println("hii");
+//        System.out.println("hii");
+        getBody().setActive(true);
         getBody().setTransform(-20.65f, -4.5f, getBody().getAngle());
     }
     public void onClick(){
