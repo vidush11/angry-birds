@@ -15,13 +15,11 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Queue;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import github.com.Game_Classes.Bird;
-import github.com.Game_Classes.Ground;
-import github.com.Game_Classes.Projectile;
-import github.com.Game_Classes.SlingShot;
+import github.com.Game_Classes.*;
 //import github.com.Game_Classes.SlingShotMouse;
 import github.com.Main;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Vector;
 
@@ -43,6 +41,8 @@ public class Level_2 implements Screen {
     private Vector2 movement;
 
     private LinkedList<Bird> BirdQueue;
+    private ArrayList<Piggy> PigList;
+
 
     private final float TIMESTEP=1/60f;
     private final int VELOCITYITERATIONS=8;
@@ -55,6 +55,7 @@ public class Level_2 implements Screen {
 //        this.viewport= new StretchViewport(1920,1080, this.oCamera);
         this.movement=new Vector2(0,0);
         BirdQueue = new LinkedList<>();
+        PigList = new ArrayList<>();
 
     }
 
@@ -223,7 +224,7 @@ public class Level_2 implements Screen {
 //        box.applyForceToCenter(movement, true);
         batch.begin();
 
-//        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
+        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
 //        background.setSize
         world.getBodies(bodies);
         for (Body body : bodies) {
