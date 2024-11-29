@@ -17,8 +17,8 @@ public class Piggy extends PhysicsActor{
         getBody().setUserData(this);
     }
 
-    public void OnHit(ArrayList<Piggy> pigList, Bird bird){
-        setHitPoints(getHitPoints() - bird.getHitPoints());
+    public void OnHit(ArrayList<Piggy> pigList, PhysicsActor obj){
+        setHitPoints(getHitPoints() - obj.getHitPoints());
         System.out.println(getHitPoints());
         if (getHitPoints() <= 0){
             scheduler.schedule(() -> {

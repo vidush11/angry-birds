@@ -187,6 +187,18 @@ public class Level_2 implements Screen {
                     bird.OnHit(block);
                     block.OnHit(bird);
                 }
+                else if (objA instanceof Piggy && objB instanceof BuildingBlock){
+                    BuildingBlock block = (BuildingBlock)objB;
+                    Piggy piggy = (Piggy)objA;
+                    piggy.OnHit(PigList, block);
+                    block.OnHit(piggy);
+                }
+                else if (objA instanceof BuildingBlock && objB instanceof Piggy){
+                    BuildingBlock block = (BuildingBlock)objA;
+                    Piggy piggy = (Piggy)objB;
+                    piggy.OnHit(PigList, block);
+                    block.OnHit(piggy);
+                }
             }
 
             @Override
