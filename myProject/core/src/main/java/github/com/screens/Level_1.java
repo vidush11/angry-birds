@@ -76,7 +76,7 @@ public class Level_1 implements Screen {
         winLoose.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
 
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, Level_1.this));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, new Level_2(game)));
                 dispose();
             }
         });

@@ -293,6 +293,9 @@ public class Level_2 implements Screen {
             drawTrajectory();
         }
 
+        if (PigList.size() <= 0){
+            game.setScreen(new WinLoose(game, new Level_2(game)));
+        }
         Iterator<Piggy> iterator = PigList.iterator(); // Use an iterator for safe removal
         while (iterator.hasNext()) {
             Piggy pig = iterator.next();

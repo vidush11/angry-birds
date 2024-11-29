@@ -18,7 +18,7 @@ import static github.com.Main.music;
 public class WinLoose implements Screen {
 
     private Main game;
-    private Level_1 lastLevel;
+    private Level_2 lastLevel;
     private Stage stage;
     private Table table;
     private TextureAtlas atlas;
@@ -31,7 +31,7 @@ public class WinLoose implements Screen {
     private Sprite background;
     private Sprite starSprite1, starSprite2, starSprite3;
 
-    public WinLoose(Main game, Level_1 lastLevel) {
+    public WinLoose(Main game, Level_2 lastLevel) {
         this.game = game;
         this.lastLevel = lastLevel;
     }
@@ -55,7 +55,7 @@ public class WinLoose implements Screen {
 
         retry.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1(game));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_2(game));
                 dispose();
             }
         });
@@ -69,7 +69,7 @@ public class WinLoose implements Screen {
 
         next.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new Level_1(game));
+                game.setScreen(new Level_2(game));
             }
         });
 

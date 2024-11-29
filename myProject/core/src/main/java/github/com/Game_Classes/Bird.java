@@ -2,6 +2,7 @@ package github.com.Game_Classes;
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import github.com.Main;
 
@@ -17,7 +18,7 @@ public class Bird extends PhysicsActor{
     public Bird(World world, float x, float y, float width, float height) {
         super(world, x, y, Main.assetManager.get("img/RedBird.png"), width, height, false);
         super.setHitPoints(5);
-        getBody().setActive(false);
+        getBody().setType(BodyDef.BodyType.StaticBody);
         getBody().setUserData(this);
     }
 
@@ -40,7 +41,7 @@ public class Bird extends PhysicsActor{
 
     public void loadOnSlingShot(){
 //        System.out.println("hii");
-        getBody().setActive(true);
+        getBody().setType(BodyDef.BodyType.DynamicBody);
         getBody().setTransform(-20.65f, -4.5f, getBody().getAngle());
     }
     public void onClick(){

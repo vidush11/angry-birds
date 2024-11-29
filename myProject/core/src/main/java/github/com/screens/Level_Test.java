@@ -94,7 +94,7 @@ public class Level_Test implements Screen {
         winLoose.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
 
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, new Level_1(game)));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, new Level_2(game)));
 //                dispose();
             }
         });

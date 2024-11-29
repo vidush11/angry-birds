@@ -2,6 +2,7 @@ font/black.fnt
 font/black.png
 font/white.fnt
 font/white.png
+hs_err_pid19856.log
 hs_err_pid7552.log
 img/Angry_birds.png
 img/Background_level_1.png

@@ -26,7 +26,7 @@ public class PhysicsActor extends Actor {
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
         body.setUserData(this);
 
-        this.hitPoints = 0;
+        this.hitPoints = (int)((height+width)/2);
     }
 
     public int getHitPoints() { return hitPoints; }
