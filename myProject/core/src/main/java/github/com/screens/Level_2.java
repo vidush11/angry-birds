@@ -15,7 +15,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.Queue;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
-import github.com.Game_lasses.*;
+import github.com.Game_Classes.*;
 import github.com.Game_Classes.InputController;
 import github.com.Main;
 
