@@ -151,7 +151,7 @@ public class Level_2 implements Screen {
                     initial.set(-20.65f,-3.5f);
                 }
                 else if (options){
-                    game.setScreen(new OptionsMenu(game, screen));
+                    game.setScreen(new OptionsMenu(game));
                     options=false;
 //                    ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu(game, screen));
 //                    dispose();
@@ -243,7 +243,7 @@ public class Level_2 implements Screen {
 
         PigList.add(new Piggy(world, 23.65f, -12.5f, 3f, 3f));
 
-        Blocks.add(new BuildingBlock(world, 20.65f, -12.5f, 3f, 3f));
+        Blocks.add(new BuildingBlock(world, 16.65f, -12.5f, 3f, 3f));
 
         BodyDef bodydef = new BodyDef();
         //slingshot
@@ -273,7 +273,7 @@ public class Level_2 implements Screen {
         Button pause= new ImageButton(imageButtonStyle);
         pause.setSize(65,65);
         pause.setPosition(Gdx.graphics.getWidth()-75, Gdx.graphics.getHeight()-75);
-
+        stage.addActor(pause);
     }
 
 
