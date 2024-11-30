@@ -1,30 +1,36 @@
 package github.com.Game_Classes;
 
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.physics.box2d.World;
-import github.com.Main;
+import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 
-import java.util.ArrayList;
+public abstract class Box2DActor extends Actor {
+    private final Body body;  // Box2D body for physics simulation
 
-public class BuildingBlock extends PhysicsActor {
-//    public static enum types{
-//        wood,
-//        metal,
-//        glass
-//    }
-    public BuildingBlock(World world, float x, float y, float width, float height) {
-        super(world, x, y, Main.assetManager.get("img/woodenBlock.png"), width, height, true);
-        getBody().setUserData(this);
+    public Box2DActor(Body body) {
+        this.body = body;  // Set the body for the actor
+        setPosition(body.getPosition().x, body.getPosition().y);  // Set initial position
+        setRotation((float) Math.toDegrees(body.getAngle()));  // Set initial rotation
     }
 
-    public void OnHit(ArrayList<BuildingBlock> blockList, PhysicsActor actor){
-        this.setHitPoints(this.getHitPoints() - actor.getHitPoints());
-        if (this.getHitPoints() <= 0){
-            blockList.remove(this);
-            this.remove();
-            if(getBody() != null && getBody().getWorld().getBodyCount()>0){
-                getBody().getWorld().destroyBody(getBody());
-            }
-        }
-    };
+    @Override
+    public void act(float delta) {
+        super.act(delta);
+
+        // Update the position and rotation based on the Box2D body
+        setPosition(body.getPosition().x, body.getPosition().y);
+        setRotation((float) Math.toDegrees(body.getAngle()));
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+    }
+
+    public Body getBody() {
+        return body;
+    }
+
+    public abstract void dispose();
 }
