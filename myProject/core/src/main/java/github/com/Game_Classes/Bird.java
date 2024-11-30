@@ -17,8 +17,8 @@ public class Bird extends PhysicsActor{
     boolean abilityActive = true;
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-    public Bird(World world, float x, float y, float width, float height) {
-        super(world, x, y, Main.assetManager.get("img/RedBird.png"), width, height, false);
+    public Bird(World world, float x, float y, float width, float height, String s) {
+        super(world, x, y, new Texture(s), width, height, false);
         super.setHitPoints(5);
 
 //        super.setUserData
