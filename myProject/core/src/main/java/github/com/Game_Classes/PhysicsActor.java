@@ -24,16 +24,15 @@ public class PhysicsActor extends Actor {
 
         sprite.setSize(width, height);
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
-        body.setUserData(this);
+        body.setUserData(sprite);
 
-        this.hitPoints = (int)((height+width)/2);
+        this.hitPoints = 0;
     }
 
     public int getHitPoints() { return hitPoints; }
     public void setHitPoints(int hitPoints) { this.hitPoints = hitPoints; }
     public Body getBody() { return body; }
     public void setBody(Body body) { this.body = body;}
-    public Sprite getSprite() { return sprite; }
 
     // Method to create the PhysicsActor's body in the Box2D world
     private static Body createPhysicsActorBody(World world, float x, float y, float width, float height, boolean isBlock) {
