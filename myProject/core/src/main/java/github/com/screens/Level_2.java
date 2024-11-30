@@ -293,7 +293,7 @@ public class Level_2 implements Screen {
 //        box.applyForceToCenter(movement, true);
         batch.begin();
 
-        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
+//        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
 //        background.setSize
         world.getBodies(bodies);
         for (Body body : bodies) {
