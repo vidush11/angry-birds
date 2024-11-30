@@ -1,0 +1,9 @@
+unnamed.png
+size:64,32
+repeat:none
+button_down
+bounds:42,2,18,18
+button_pressed
+bounds:2,2,18,18
+button_up
+bounds:22,2,18,18
