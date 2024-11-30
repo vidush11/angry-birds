@@ -10,7 +10,6 @@ public class Ground {
     Body body;
     public Ground(World world) {
         body = createBody(world);
-        body.setUserData(this);
     }
 
     public Body createBody(World world){
@@ -28,8 +27,11 @@ public class Ground {
         fixtureDef.friction=.5f;
         fixtureDef.restitution=0f;
 
+        fixtureDef.filter.categoryBits=Main.BIT_GROUND;
+//        fixtureDef.filter.maskBits=Main.BIT_BIRD;
         body = world.createBody(bodydef);
         body.createFixture(fixtureDef);
+        body.setUserData(new userData(null, "ground"));
         groundShape.dispose();
 
         return body;
