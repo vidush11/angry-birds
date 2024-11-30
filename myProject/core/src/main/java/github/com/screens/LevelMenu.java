@@ -13,10 +13,17 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.viewport.Viewport;
 import github.com.Main;
+import jdk.jfr.internal.consumer.StringParser;
+
+import javax.swing.*;
+//import com.sun.org.apache.xpath.internal.operations.String;
+
+//import java.util.ArrayList;
+//import java.util.List;
 
 public class LevelMenu implements Screen {
-    private Main game;
     private Stage stage;
     private Table table;
     private TextureAtlas atlas;
@@ -27,14 +34,17 @@ public class LevelMenu implements Screen {
     private BitmapFont white, black;
     private SpriteBatch batch;
     private Sprite splash;
+    private Main game;
+
 
     public LevelMenu(Main game) {
         this.game = game;
+//        game.screens.add(new Level_1(game));
+//        game.screens.add(new Level_2(game));
     }
 
     @Override
     public void show() {
-
         batch= new SpriteBatch();
         Texture splashTexture= new Texture("img/levels_pixelated.jpeg");
         splash= new Sprite(splashTexture);
@@ -67,24 +77,32 @@ public class LevelMenu implements Screen {
         l4=new TextButton("Level 4", textButtonStyle);
         back=new TextButton("back", textButtonStyle);
 
+
+//        game.screens.add(new Level_3(game));
+//        game.screens.add(new Level_4(game));
+
+        System.out.println("OKKKK");
         l1.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1(game));
+                game.setScreen(new Level_1(game));
+//                game.setScreen(game.screens.get(3));
+//                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1(game));
                 dispose();
             }
         });
 
         l2.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_2(game));
+                game.setScreen(new Level_2(game));
+
+//                game.setScreen(game.screens.get(4));
                 dispose();
             }
         });
 
         l3.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_Test(game));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1(game));
                 dispose();
             }
         });
@@ -105,7 +123,10 @@ public class LevelMenu implements Screen {
                 ((Game) Gdx.app.getApplicationListener()).setScreen(new MainMenu(game));
                 dispose();
             }
+
+
         });
+//        table.left().top();
 
         table.add(l1).expandX().padTop(100).spaceBottom(10).spaceRight(50).right();
         table.add(l2).expandX().padTop(100).spaceBottom(10).left();
@@ -116,10 +137,24 @@ public class LevelMenu implements Screen {
 
         table.add(back).expandX().expandY().bottom().padLeft(40).padBottom(40).left();
 
+
         stage.addActor(table);
         table.setFillParent(true);
 
-        // table.debug();
+        table.debug();
+//
+////        list= new List(skin);
+////        list.setItems("one", "two","three");
+//
+////        scrollPane= new ScrollPane(list, skin);
+////
+//        play = new TextButton("PLAY", skin);
+//        play.pad(10);
+//
+//
+//        back=  new TextButton("BACK", sk2in);x
+//        back.pad(10);
+////        table.add("SELECT LEVEL");
     }
 
     @Override
@@ -133,23 +168,29 @@ public class LevelMenu implements Screen {
 
         stage.act(delta);
         stage.draw();
+//        System.out.println("yoyo"+Gdx.graphics.getHeight());
+
     }
 
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+
     }
 
     @Override
     public void pause() {
+
     }
 
     @Override
     public void resume() {
+
     }
 
     @Override
     public void hide() {
+
     }
 
     @Override
@@ -158,8 +199,5 @@ public class LevelMenu implements Screen {
         batch.dispose();
         atlas.dispose();
         skin.dispose();
-        white.dispose();
-        black.dispose();
-        splash.getTexture().dispose();
     }
 }
