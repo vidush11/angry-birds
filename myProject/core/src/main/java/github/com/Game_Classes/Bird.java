@@ -1,8 +1,10 @@
 package github.com.Game_Classes;
 
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.World;
 import github.com.Main;
 
@@ -17,30 +19,35 @@ public class Bird extends PhysicsActor{
 
     public Bird(World world, float x, float y, float width, float height) {
         super(world, x, y, Main.assetManager.get("img/RedBird.png"), width, height, false);
-        getBody().setType(BodyDef.BodyType.StaticBody);
-        getBody().setUserData(this);
+        super.setHitPoints(5);
+
+//        super.setUserData
+        Filter filter=super.getBody().getFixtureList().get(0).getFilterData();
+        filter.categoryBits=Main.BIT_BIRD;
+//        filter.maskBits=M
+        Object curr_user_data= super.getBody().getUserData();
+        super.getBody().setUserData(new userData((Sprite)curr_user_data, "bird"));
+        super.getBody().setActive(false);
     }
 
-    public void OnHit(Object collidedWith){
+    public void OnHit(ArrayList<Bird> birdList, Object collidedWith){
         if (collidedWith instanceof Ground){
             Ground g = (Ground)collidedWith;
             abilityActive = false;
         }
 
-        scheduler.schedule(() -> {
-            synchronized (this) {  // Use synchronization to prevent race conditions
+//        scheduler.schedule(() -> {
+//            synchronized (this) {  // Use synchronization to prevent race conditions
+//                birdList.remove(this);
 //                this.dispose();
-                this.remove();
-                if(getBody() != null && getBody().getWorld().getBodyCount()>0){
-                    getBody().getWorld().destroyBody(getBody());
-                }
-            }
-        }, 3, TimeUnit.SECONDS);
+//                this.remove();
+//            }
+//        }, 5, TimeUnit.SECONDS);
     };
 
     public void loadOnSlingShot(){
 //        System.out.println("hii");
-        getBody().setType(BodyDef.BodyType.DynamicBody);
+        getBody().setActive(true);
         getBody().setTransform(-20.65f, -4.5f, getBody().getAngle());
     }
     public void onClick(){
