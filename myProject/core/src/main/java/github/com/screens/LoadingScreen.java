@@ -20,7 +20,7 @@ public class LoadingScreen implements Screen {
     private Texture backgroundTexture;
     private Texture fadeImageTexture;
     private SpriteBatch batch;
-    private BitmapFont whiteFont;
+    private BitmapFont blackFont;
     private Sprite fadeImageSprite;
     private float fadeAlpha = 0f;
     private boolean fadingIn = true;
@@ -29,6 +29,8 @@ public class LoadingScreen implements Screen {
 
     public LoadingScreen(Main game) {
         this.game = game;
+//        game.screens.add(new MainMenu(game));
+
         this.stage = new Stage();
         this.shapeRenderer = new ShapeRenderer();
         this.batch = new SpriteBatch();
@@ -44,7 +46,7 @@ public class LoadingScreen implements Screen {
         fadeImageSprite.setPosition((stage.getViewport().getScreenWidth() - fadeImageSprite.getWidth())*0.5f, stage.getViewport().getScreenHeight() * 0.8f);
 
         // Load font once in constructor
-        whiteFont = new BitmapFont(Gdx.files.internal("font/white.fnt"), false);
+        blackFont = new BitmapFont(Gdx.files.internal("font/black.fnt"), false);
     }
 
     @Override
@@ -57,6 +59,7 @@ public class LoadingScreen implements Screen {
         if(progress == 1 ) {
             if (game.assetManager.update()) {
                 game.setScreen(new MainMenu(game));
+//                game.setScreen(game.screens.get(1));
                 dispose();
             }
         }
@@ -75,7 +78,7 @@ public class LoadingScreen implements Screen {
         // draw the fade animation for the image
         fadeImageSprite.draw(batch);
 
-        whiteFont.draw(batch, "LOADING...", 32, (float) stage.getViewport().getScreenHeight()/6 + 64);
+        blackFont.draw(batch, "LOADING...", 32, (float) stage.getViewport().getScreenHeight()/6 + 64);
 
         shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
         shapeRenderer.setColor(Color.GRAY);
@@ -104,7 +107,7 @@ public class LoadingScreen implements Screen {
     private void updateLoadingBar(float delta) {
 //         Sync the progress bar with the actual asset loading progress
 //        progress = Main.assetManager.getProgress();  // Get actual progress (0.0 to 1.0)
-        progress += (float) (delta);
+        progress += (float) (delta*1);
         if (progress > 1f) progress = 1f;
     }
 
@@ -122,8 +125,6 @@ public class LoadingScreen implements Screen {
         Main.assetManager.load("img/SlingShot.png", Texture.class );
         Main.assetManager.load("img/woodenBlock.png", Texture.class );
         Main.assetManager.load("img/ground.png", Texture.class );
-        Main.assetManager.load("img/WinLooseBackground.png", Texture.class );
-        Main.assetManager.load("img/star.png", Texture.class );
     }
 
     @Override
@@ -139,7 +140,7 @@ public class LoadingScreen implements Screen {
     public void dispose() {
         // Dispose of assets and objects to avoid memory leaks
         batch.dispose();
-        whiteFont.dispose();
+        blackFont.dispose();
         backgroundTexture.dispose();
         fadeImageTexture.dispose();
         shapeRenderer.dispose();

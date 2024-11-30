@@ -214,6 +214,7 @@ public class Level_1 implements Screen {
         batch = new SpriteBatch();
         oCamera = new OrthographicCamera();
         shape = new ShapeRenderer();
+        initialize();
 
     }
 
@@ -305,6 +306,9 @@ public class Level_1 implements Screen {
             }
 
         });
+    }
+    public void initialize() {
+
 
         //Ground declaration
         Ground ground = new Ground(world);
@@ -451,7 +455,7 @@ public class Level_1 implements Screen {
 
     @Override
     public void hide() {
-        dispose();
+
     }
 
     @Override

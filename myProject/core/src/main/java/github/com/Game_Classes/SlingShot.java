@@ -47,7 +47,7 @@ public class SlingShot extends Actor {
         body.createFixture(fixtureDef);
         shape.dispose();
     }
-    
+
     // Method to load a new bird into the slingshot
     public void loadBird(Bird bird) {
         loadedBird = bird;

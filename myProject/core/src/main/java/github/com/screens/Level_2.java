@@ -65,7 +65,7 @@ public class Level_2 implements Screen {
     private boolean shootSound = false;
 
     private boolean options = false;
-    private Screen screen=this;
+    private Screen screen = this;
 
     private Projectile projectile = new Projectile(-10, 0, 0, 0, 0);
     private int score;
@@ -88,6 +88,7 @@ public class Level_2 implements Screen {
         batch = new SpriteBatch();
         oCamera = new OrthographicCamera();
         shape = new ShapeRenderer();
+        initialize();
 
     }
 
@@ -164,7 +165,7 @@ public class Level_2 implements Screen {
                 }
 
                 if (options){
-                    game.setScreen(new OptionsMenu(game, screen));
+                    game.setScreen(new OptionsMenu(game, Level_2.this));
                     options=false;
 //                    ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu(game, screen));
 //                    dispose();
@@ -179,6 +180,10 @@ public class Level_2 implements Screen {
             }
 
         });
+
+    }
+    public void initialize() {
+
 
         //Ground declaration
         Ground ground = new Ground(world);
@@ -235,14 +240,6 @@ public class Level_2 implements Screen {
         Button pause= new ImageButton(imageButtonStyle);
         pause.setSize(65,65);
         pause.setPosition(Gdx.graphics.getWidth()-75, Gdx.graphics.getHeight()-75);
-
-//        pause.addListener(new ClickListener(){
-//            public void clicked(InputEvent event, float x, float y) {
-//
-//
-//            }
-//        });
-
         stage.addActor(pause);
     }
 
@@ -326,7 +323,6 @@ public class Level_2 implements Screen {
 
     @Override
     public void hide() {
-        dispose();
     }
 
     @Override

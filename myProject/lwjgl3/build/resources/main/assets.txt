@@ -1,12 +1,47 @@
+.gitkeep
 font/black.fnt
 font/black.png
 font/white.fnt
 font/white.png
-hs_err_pid1908.log
-hs_err_pid19856.log
-hs_err_pid7552.log
+hs_err_pid11140.log
+hs_err_pid12933.log
+hs_err_pid12942.log
+hs_err_pid12987.log
+hs_err_pid13079.log
+hs_err_pid13894.log
+hs_err_pid14542.log
+hs_err_pid15587.log
+hs_err_pid19512.log
+hs_err_pid3463.log
+hs_err_pid3506.log
+hs_err_pid4376.log
+hs_err_pid7732.log
+hs_err_pid9492.log
+img/Aliens/alienBeige_round.png
+img/Aliens/alienBeige_square.png
+img/Aliens/alienBeige_suit.png
+img/Aliens/alienBlue_round.png
+img/Aliens/alienBlue_square.png
+img/Aliens/alienBlue_suit.png
+img/Aliens/alienGreen_round.png
+img/Aliens/alienGreen_square.png
+img/Aliens/alienGreen_suit.png
+img/Aliens/alienPink_round.png
+img/Aliens/alienPink_square.png
+img/Aliens/alienPink_suit.png
+img/Aliens/alienYellow_round.png
+img/Aliens/alienYellow_square.png
+img/Aliens/alienYellow_suit.png
 img/Angry_birds.png
 img/Background_level_1.png
+img/Backgrounds/blue_desert.png
+img/Backgrounds/blue_grass.png
+img/Backgrounds/blue_land.png
+img/Backgrounds/blue_shroom.png
+img/Backgrounds/colored_desert.png
+img/Backgrounds/colored_grass.png
+img/Backgrounds/colored_land.png
+img/Backgrounds/colored_shroom.png
 img/Debris/debrisGlass_1.png
 img/Debris/debrisGlass_2.png
 img/Debris/debrisGlass_3.png
@@ -16,6 +51,119 @@ img/Debris/debrisStone_3.png
 img/Debris/debrisWood_1.png
 img/Debris/debrisWood_2.png
 img/Debris/debrisWood_3.png
+img/Explosive elements/elementExplosive000.png
+img/Explosive elements/elementExplosive001.png
+img/Explosive elements/elementExplosive002.png
+img/Explosive elements/elementExplosive003.png
+img/Explosive elements/elementExplosive004.png
+img/Explosive elements/elementExplosive005.png
+img/Explosive elements/elementExplosive006.png
+img/Explosive elements/elementExplosive007.png
+img/Explosive elements/elementExplosive008.png
+img/Explosive elements/elementExplosive009.png
+img/Explosive elements/elementExplosive010.png
+img/Explosive elements/elementExplosive011.png
+img/Explosive elements/elementExplosive012.png
+img/Explosive elements/elementExplosive013.png
+img/Explosive elements/elementExplosive014.png
+img/Explosive elements/elementExplosive015.png
+img/Explosive elements/elementExplosive016.png
+img/Explosive elements/elementExplosive017.png
+img/Explosive elements/elementExplosive018.png
+img/Explosive elements/elementExplosive019.png
+img/Explosive elements/elementExplosive020.png
+img/Explosive elements/elementExplosive021.png
+img/Explosive elements/elementExplosive022.png
+img/Explosive elements/elementExplosive023.png
+img/Explosive elements/elementExplosive024.png
+img/Explosive elements/elementExplosive025.png
+img/Explosive elements/elementExplosive026.png
+img/Explosive elements/elementExplosive027.png
+img/Explosive elements/elementExplosive028.png
+img/Explosive elements/elementExplosive029.png
+img/Explosive elements/elementExplosive030.png
+img/Explosive elements/elementExplosive031.png
+img/Explosive elements/elementExplosive032.png
+img/Explosive elements/elementExplosive033.png
+img/Explosive elements/elementExplosive034.png
+img/Explosive elements/elementExplosive035.png
+img/Explosive elements/elementExplosive036.png
+img/Explosive elements/elementExplosive037.png
+img/Explosive elements/elementExplosive038.png
+img/Explosive elements/elementExplosive039.png
+img/Explosive elements/elementExplosive040.png
+img/Explosive elements/elementExplosive041.png
+img/Explosive elements/elementExplosive042.png
+img/Explosive elements/elementExplosive043.png
+img/Explosive elements/elementExplosive044.png
+img/Explosive elements/elementExplosive045.png
+img/Explosive elements/elementExplosive046.png
+img/Explosive elements/elementExplosive047.png
+img/Explosive elements/elementExplosive048.png
+img/Explosive elements/elementExplosive049.png
+img/Explosive elements/elementExplosive050.png
+img/Explosive elements/elementExplosive051.png
+img/Explosive elements/elementExplosive052.png
+img/Explosive elements/elementExplosive053.png
+img/Explosive elements/elementExplosive054.png
+img/Explosive elements/elementExplosive055.png
+img/Explosive elements/elementExplosive056.png
+img/Explosive elements/elementExplosive057.png
+img/Glass elements/elementGlass000.png
+img/Glass elements/elementGlass001.png
+img/Glass elements/elementGlass002.png
+img/Glass elements/elementGlass003.png
+img/Glass elements/elementGlass004.png
+img/Glass elements/elementGlass005.png
+img/Glass elements/elementGlass006.png
+img/Glass elements/elementGlass007.png
+img/Glass elements/elementGlass008.png
+img/Glass elements/elementGlass009.png
+img/Glass elements/elementGlass010.png
+img/Glass elements/elementGlass011.png
+img/Glass elements/elementGlass012.png
+img/Glass elements/elementGlass013.png
+img/Glass elements/elementGlass014.png
+img/Glass elements/elementGlass015.png
+img/Glass elements/elementGlass016.png
+img/Glass elements/elementGlass017.png
+img/Glass elements/elementGlass018.png
+img/Glass elements/elementGlass019.png
+img/Glass elements/elementGlass020.png
+img/Glass elements/elementGlass021.png
+img/Glass elements/elementGlass022.png
+img/Glass elements/elementGlass023.png
+img/Glass elements/elementGlass024.png
+img/Glass elements/elementGlass025.png
+img/Glass elements/elementGlass026.png
+img/Glass elements/elementGlass027.png
+img/Glass elements/elementGlass028.png
+img/Glass elements/elementGlass029.png
+img/Glass elements/elementGlass030.png
+img/Glass elements/elementGlass031.png
+img/Glass elements/elementGlass032.png
+img/Glass elements/elementGlass033.png
+img/Glass elements/elementGlass034.png
+img/Glass elements/elementGlass035.png
+img/Glass elements/elementGlass036.png
+img/Glass elements/elementGlass037.png
+img/Glass elements/elementGlass038.png
+img/Glass elements/elementGlass039.png
+img/Glass elements/elementGlass040.png
+img/Glass elements/elementGlass041.png
+img/Glass elements/elementGlass042.png
+img/Glass elements/elementGlass043.png
+img/Glass elements/elementGlass044.png
+img/Glass elements/elementGlass045.png
+img/Glass elements/elementGlass046.png
+img/Glass elements/elementGlass047.png
+img/Glass elements/elementGlass048.png
+img/Glass elements/elementGlass049.png
+img/Glass elements/elementGlass050.png
+img/Glass elements/elementGlass051.png
+img/Glass elements/elementGlass052.png
+img/Glass elements/elementGlass053.png
+img/Glass elements/elementGlass054.png
 img/Metal elements/elementMetal000.png
 img/Metal elements/elementMetal001.png
 img/Metal elements/elementMetal002.png
@@ -74,6 +222,26 @@ img/Metal elements/elementMetal054.png
 img/Metal elements/elementMetal055.png
 img/Metal elements/elementMetal056.png
 img/Metal elements/elementMetal057.png
+img/Other/bush.png
+img/Other/cactus.png
+img/Other/coinBronze.png
+img/Other/coinDiamond.png
+img/Other/coinGold.png
+img/Other/coinSilver.png
+img/Other/dirt.png
+img/Other/flagBlue.png
+img/Other/flagGreen.png
+img/Other/flagRed.png
+img/Other/flagYellow.png
+img/Other/frozenBush.png
+img/Other/grass.png
+img/Other/rock.png
+img/Other/sand.png
+img/Other/snow.png
+img/Other/starBronze.png
+img/Other/starDiamond.png
+img/Other/starGold.png
+img/Other/starSilver.png
 img/RedBird.png
 img/SlingShot.png
 img/Stone elements/elementStone000.png
@@ -131,7 +299,6 @@ img/Stone elements/elementStone051.png
 img/Stone elements/elementStone052.png
 img/Stone elements/elementStone053.png
 img/Stone elements/elementStone054.png
-img/WinLooseBackground.png
 img/Wood elements/elementWood000.png
 img/Wood elements/elementWood001.png
 img/Wood elements/elementWood002.png
@@ -189,18 +356,14 @@ img/Wood elements/elementWood053.png
 img/Wood elements/elementWood054.png
 img/background.jpg
 img/background.webp
-img/backgroundLoading.png
 img/basicPig.png
 img/birds.jpeg
 img/blue_bird.jpg
 img/color_birds.png
-img/fade_image.png
 img/ground.png
-img/level_background.jpg
 img/levels_menu.jpeg
 img/levels_menu.png
 img/levels_pixelated.jpeg
-img/loading_bar.png
 img/loading_screen.png
 img/logo.png
 img/pause_menu.png
@@ -212,7 +375,6 @@ img/pigs/yellow.png
 img/pixelated_background.png
 img/pixelated_bird.png
 img/pixelated_menu.png
-img/star.png
 img/unnamed.atlas
 img/unnamed.png
 img/woodenBlock.png
@@ -223,6 +385,11 @@ skin/uiskin.atlas
 skin/uiskin.json
 skin/uiskin.png
 sounds/angry_birds_theme.mp3
+sounds/loading.mov
+sounds/loading.mp3
+sounds/shoot.mov
+sounds/shoot.mp3
+sounds/slingshot.mp3
 ui/button.atlas
 ui/button.png
 ui/button_down.png
@@ -236,16 +403,12 @@ ui/green/button_up.png
 ui/home.png
 ui/home_over.png
 ui/home_up.png
-ui/next_over.png
-ui/next_up.png
 ui/pause.png
 ui/pause_over.png
 ui/pause_up.png
 ui/play.png
 ui/play_over.png
 ui/play_up.png
-ui/retry_over.png
-ui/retry_up.png
 ui/volulme.png
 ui/volume_off_over.png
 ui/volume_off_up.png
