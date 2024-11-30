@@ -184,9 +184,9 @@ public class Level_2 implements Screen {
         Ground ground = new Ground(world);
 
         //Bird
-        BirdQueue.add(new Bird(world, -21.65f, -15f, 3f, 3f));
-        BirdQueue.add(new Bird(world, -24.65f, -15f, 3f, 3f));
-        BirdQueue.add(new Bird(world, -27.65f, -15f, 3f, 3f));
+        BirdQueue.add(new Bird(world, -21.65f, -15f, 3f, 3f,"./img/pigs/RedBird.png"));
+        BirdQueue.add(new Bird(world, -24.65f, -15f, 3f, 3f,"./img/pigs/RedBird.png"));
+        BirdQueue.add(new Bird(world, -27.65f, -15f, 3f, 3f,"./img/pigs/RedBird.png"));
 
 
         BodyDef bodydef = new BodyDef();
