@@ -53,7 +53,13 @@ public class BuildingBlock implements Serializable {
         shape.dispose();
     }
 
-    private void remakeBody(World world){
+    public void remakeBody(World world){
+        if (bodyWrapper == null){
+            BuildingBlock temp = new BuildingBlock(world,1, 1, 1, 1, myType, texturePath);
+            block = temp.block;
+            block.setUserData(null);
+            return;
+        }
         block = bodyWrapper.recreateBody(world);
         reAddSprite(texturePath);
     }

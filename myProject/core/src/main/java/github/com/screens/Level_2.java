@@ -27,6 +27,9 @@ import github.com.Game_Classes.*;
 import github.com.Game_Classes.InputController;
 import github.com.Main;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Vector;
@@ -39,27 +42,27 @@ import github.com.Main;
 
 import static java.lang.Thread.sleep;
 
-public class Level_2 implements Screen {
+public class Level_2 implements Screen, Serializable {
 
-    private World world;
-    private Box2DDebugRenderer debugRenderer;
-    private OrthographicCamera oCamera;
-    private Main game;
-    private Body box;
-    private BodyDef bird_body = new BodyDef();
+    private static final String SAVE_FILE_PATH = "level_2_save.ser";
 
-    private Body currBird;
-    private Body prevBird;
+    private transient World world;
+    private transient Box2DDebugRenderer debugRenderer;
+    private transient OrthographicCamera oCamera;
+    private transient Main game;
+
+    private transient Body currBird;
+    private transient Body prevBird;
+    private Ground ground;
     private Bird currBIRD;
     private Bird prevBIRD;
-    private Stage stage;
-    private Sprite boxSprite;
-    private SpriteBatch batch;
-    private Array<Body> bodies = new Array<>();
-    private Texture background;
-    private Viewport viewport;
+    private transient Stage stage;
+    private transient Sprite boxSprite;
+    private transient SpriteBatch batch;
+    private transient Array<Body> bodies = new Array<>();
+    private transient Texture background;
     private Vector2 movement;
-    private ShapeRenderer shape;
+    private transient ShapeRenderer shape;
 
     private LinkedList<Bird> BirdQueue;
     private ArrayList<Piggy> PigList;
@@ -69,12 +72,12 @@ public class Level_2 implements Screen {
     private Vector2 final_pos = new Vector2(-20.65f, -3.5f);
     private boolean shoot = false;
     private boolean shootSound = false;
-    private boolean powerUp=false;
-    private AtomicBoolean worldEnd= new AtomicBoolean(false);
-    private boolean end=false;
+    private boolean powerUp = false;
+    private AtomicBoolean worldEnd = new AtomicBoolean(false);
+    private boolean end = false;
 
     private boolean options = false;
-    private Screen screen = this;
+    private transient Screen screen = this;
 
     private Projectile projectile = new Projectile(-10, 0, 0, 0, 0);
     private int score;
@@ -115,6 +118,18 @@ public class Level_2 implements Screen {
 //                    dispose();
                 }
 
+                // Save game state when 'S' is pressed
+                if (keycode == Input.Keys.S) {
+                    saveGameState();
+                    return true;
+                }
+
+                // Load game state when 'L' is pressed
+                if (keycode == Input.Keys.L) {
+                    loadGameState();
+                    return true;
+                }
+
                 return true;
             }
 
@@ -124,7 +139,7 @@ public class Level_2 implements Screen {
 
                 if (-23 <= x && x <= -20 && -8 <= y && y <= -3) {
                     if (!(BirdQueue.isEmpty()) && currBird==null &&!shoot) {
-                        shootSound=false;
+                        shootSound = false;
                         currBIRD = BirdQueue.poll();
                         currBIRD.loadOnSlingShot();
                         currBird = currBIRD.getBody();
@@ -213,12 +228,11 @@ public class Level_2 implements Screen {
 
         });
 
-//        System.out.println("JAAAAT+1");
     }
 
     public void initialize(){
         //Ground declaration
-        Ground ground = new Ground(world);
+        ground = new Ground(world);
 
         //Bird
         BirdQueue.add(new Bird(world, -21.65f, -15f, 3f, 3f,"./img/pigs/RedBird.png"));
@@ -226,6 +240,29 @@ public class Level_2 implements Screen {
         BirdQueue.add(new Bird(world, -27.65f, -15f, 3f, 3f,"./img/pigs/RedBird.png"));
 
 
+        makeSlingShot();
+
+        PigList.add(new Piggy(world, 19.5f, -2f, 2f, 2f,"img/pigs/green.png"));
+        blocks.add(new BuildingBlock(world, 16f, -10.5f, 1f, 9f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
+        blocks.add(new BuildingBlock(world, 23, -10.5f, 1f, 9f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
+        blocks.add(new BuildingBlock(world, 19.5f, -5f, 9f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
+
+        blocks.add(new BuildingBlock(world, 18f, -11.5f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
+        blocks.add(new BuildingBlock(world, 21f, -11.5f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
+        blocks.add(new BuildingBlock(world, 19.5f, -14f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
+        blocks.add(new BuildingBlock(world, 19.5f, -9f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
+
+        blocks.add(new BuildingBlock(world, 17f, -2f, 1f, 9f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
+        blocks.add(new BuildingBlock(world, 22f, -2f, 1f, 9f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
+        blocks.add(new BuildingBlock(world, 19.5f, 3.5f, 1f, 2.25f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
+
+        blocks.add(new BuildingBlock(world, 19.5f, -2.5f, 2.25f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
+        blocks.add(new BuildingBlock(world, 19.5f, 3.5f, 5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
+
+        makePause();
+    }
+
+    private void makeSlingShot(){
         BodyDef bodydef = new BodyDef();
         //slingshot
         bodydef.type = BodyDef.BodyType.StaticBody;
@@ -247,35 +284,7 @@ public class Level_2 implements Screen {
         slingShot.setUserData(new userData(boxSprite,"slingshot"));
 
         boxShape.dispose();
-
-        PigList.add(new Piggy(world, 19.5f, -2f, 2f, 2f,"img/pigs/green.png"));
-        blocks.add(new BuildingBlock(world, 16f, -10.5f, 1f, 9f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
-        blocks.add(new BuildingBlock(world, 23, -10.5f, 1f, 9f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
-        blocks.add(new BuildingBlock(world, 19.5f, -5f, 9f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
-
-        blocks.add(new BuildingBlock(world, 18f, -11.5f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
-        blocks.add(new BuildingBlock(world, 21f, -11.5f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
-        blocks.add(new BuildingBlock(world, 19.5f, -14f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
-        blocks.add(new BuildingBlock(world, 19.5f, -9f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
-
-        blocks.add(new BuildingBlock(world, 17f, -2f, 1f, 9f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
-        blocks.add(new BuildingBlock(world, 22f, -2f, 1f, 9f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
-        blocks.add(new BuildingBlock(world, 19.5f, 3.5f, 1f, 2.25f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
-
-        blocks.add(new BuildingBlock(world, 19.5f, -2.5f, 2.25f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
-//        blocks.add(new BuildingBlock(world, 23, -10.5f, 1f, 9f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
-        blocks.add(new BuildingBlock(world, 19.5f, 3.5f, 5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
-
-        ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
-        imageButtonStyle.up=new TextureRegionDrawable(new TextureRegion(new Texture("ui/pause_up.png")));
-        imageButtonStyle.over= new TextureRegionDrawable(new TextureRegion(new Texture("ui/pause_over.png")));
-        Button pause= new ImageButton(imageButtonStyle);
-        pause.setSize(65,65);
-        pause.setPosition(Gdx.graphics.getWidth()-75, Gdx.graphics.getHeight()-75);
-
-        stage.addActor(pause);
     }
-
 
     @Override
     public void render(float delta) {
@@ -288,7 +297,6 @@ public class Level_2 implements Screen {
         batch.setProjectionMatrix(oCamera.combined);
 
 
-//        box.applyForceToCenter(movement, true);
         batch.begin();
         batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
 
@@ -324,15 +332,7 @@ public class Level_2 implements Screen {
                             score+=5000;
                         }
                         world.destroyBody(body);
-//                        Filter filter= body.getFixtureList().get(0).getFilterData();
-//                        filter.maskBits=2;
-//                        body.getFixtureList().get(0).setFilterData(filter);
                     }
-//                    if (data.id.equals("piggy")){
-//                        if (data.increaseContact()>10){
-//                            world.destroyBody(body);
-//                        }
-//                    }
                 }
             }
         }
@@ -344,7 +344,7 @@ public class Level_2 implements Screen {
             if (! end){
                 Thread t1 = new Thread(new Dhagga(worldEnd));
                 t1.start();
-                end=true;
+                end = true;
             }
             if (worldEnd.get()) {
                 for (int i=0; i<BirdQueue.size(); i++){
@@ -434,5 +434,91 @@ public class Level_2 implements Screen {
             }
             flag.set(true);
         }
+    }
+
+    // Method to save the game state
+    private void saveGameState() {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(Files.newOutputStream(Paths.get(SAVE_FILE_PATH)));
+            // Serialize core game state
+            out.writeObject(this);
+            System.out.println("Game state saved successfully!");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    // Method to load the game state
+    private void loadGameState() {
+        try (ObjectInputStream in = new ObjectInputStream(Files.newInputStream(Paths.get(SAVE_FILE_PATH)))) {
+
+            // Deserialize the saved game state
+            Level_2 savedGame = (Level_2) in.readObject();
+
+            world.dispose();
+            world = world = new World(new Vector2(0, -10f), true);
+
+            ground = new Ground(world);
+
+            makeSlingShot();
+
+            this.BirdQueue = savedGame.BirdQueue;
+            this.PigList = savedGame.PigList;
+            this.blocks = savedGame.blocks;
+
+            this.bodies.clear();
+            world.getBodies(bodies);
+            this.currBIRD = savedGame.currBIRD;
+            this.prevBIRD = savedGame.prevBIRD;
+            for(Bird bird: BirdQueue){
+                bird.remakeBody(world);
+            }
+            for(Piggy pig: PigList){
+                pig.remakeBody(world);
+            }
+            for(BuildingBlock block: blocks){
+                block.remakeBody(world);
+            }
+            if (currBIRD != null){
+                currBIRD.remakeBody(world);
+                this.currBird = currBIRD.getBody();
+            }
+            if (prevBIRD != null){
+                prevBIRD.remakeBody(world);
+                this.prevBird = prevBIRD.getBody();
+            }
+
+            this.shoot = savedGame.shoot;
+            this.shootSound = savedGame.shootSound;
+            this.movement = savedGame.movement;
+
+            this.powerUp = savedGame.powerUp;
+            this.worldEnd = savedGame.worldEnd;
+            this.end = false;
+            this.options = savedGame.options;
+            this.score = savedGame.score;
+            screen = this;
+
+            this.initial = savedGame.initial;
+            this.final_pos = savedGame.final_pos;
+
+//            makePause();
+
+            System.out.println("Game state loaded successfully!");
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Error loading game state: " + e.getMessage());
+        }
+    }
+
+    // Method to reinitialize components that can't be serialized
+    private void makePause() {
+        ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
+        imageButtonStyle.up = new TextureRegionDrawable(new TextureRegion(new Texture("ui/pause_up.png")));
+        imageButtonStyle.over = new TextureRegionDrawable(new TextureRegion(new Texture("ui/pause_over.png")));
+        Button pause = new ImageButton(imageButtonStyle);
+        pause.setSize(65,65);
+        pause.setPosition(Gdx.graphics.getWidth()-75, Gdx.graphics.getHeight()-75);
+
+        stage.addActor(pause);
     }
 }

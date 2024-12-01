@@ -62,6 +62,9 @@ public class SerializableBodyWrapper implements Serializable {
 
     // Static method to create wrapper from Body
     public static SerializableBodyWrapper wrap(Body body) {
+        if(body.getUserData() == null) {
+            return null;
+        }
         return new SerializableBodyWrapper(body);
     }
 

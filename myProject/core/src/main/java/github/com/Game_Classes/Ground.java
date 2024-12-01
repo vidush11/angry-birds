@@ -5,9 +5,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import github.com.Main;
 
-public class Ground {
+import java.io.IOException;
+import java.io.Serializable;
 
-    Body body;
+public class Ground implements Serializable {
+
+//    SerializableBodyWrapper bodyWrapper;
+    transient Body body;
     public Ground(World world) {
         body = createBody(world);
     }

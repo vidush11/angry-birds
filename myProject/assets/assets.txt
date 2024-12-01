@@ -11,6 +11,7 @@ hs_err_pid13079.log
 hs_err_pid13894.log
 hs_err_pid14542.log
 hs_err_pid15587.log
+hs_err_pid18532.log
 hs_err_pid19512.log
 hs_err_pid3463.log
 hs_err_pid3506.log
@@ -386,6 +387,7 @@ img/star.png
 img/unnamed.atlas
 img/unnamed.png
 img/woodenBlock.png
+level_2_save.ser
 skin/font-button.fnt
 skin/font-label.fnt
 skin/font-title.fnt

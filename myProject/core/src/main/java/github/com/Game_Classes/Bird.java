@@ -18,6 +18,8 @@ import java.util.concurrent.TimeUnit;
 public class Bird extends PhysicsActor implements Serializable {
     boolean abilityActive = true;
     private String type;
+    private SerializableBodyWrapper bodyWrapper;
+
     public Bird(World world, float x, float y, float width, float height, String s) {
         super(world, x, y, s, width, height, false);
         type=s;
@@ -73,12 +75,21 @@ public class Bird extends PhysicsActor implements Serializable {
         out.defaultWriteObject();
     }
 
-    private void remakeBody(World world){
+    public void remakeBody(World world){
+        System.out.println("making body");
+        if (bodyWrapper == null){
+            Bird bird = new Bird(world, getX(), getY(), getWidth(), getHeight(), type);
+            bird.getBody().setUserData(null);
+            setBody(bird.getBody());
+            System.out.println("null data");
+            return;
+        }
         setWorld(world);
         setBody(bodyWrapper.recreateBody(world));
-        addSpriteToBody(type);
+        addSpriteToBody(type, bodyWrapper);
         Filter filter=super.getBody().getFixtureList().get(0).getFilterData();
         filter.categoryBits=Main.BIT_BIRD;
         filter.maskBits=Main.BIT_GROUND|Main.BIT_PIG|1;
     }
+
 }

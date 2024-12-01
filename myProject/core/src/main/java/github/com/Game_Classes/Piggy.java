@@ -15,6 +15,8 @@ import java.util.concurrent.TimeUnit;
 
 public class Piggy extends PhysicsActor implements Serializable {
     String texturePath;
+    private SerializableBodyWrapper bodyWrapper;
+
     public Piggy(World world, float x, float y, float width, float height, String s) {
         super(world, x, y, s, width, height, false);
         texturePath = s;
@@ -31,14 +33,20 @@ public class Piggy extends PhysicsActor implements Serializable {
         out.defaultWriteObject();
     }
 
-    private void remakeBody(World world){
+    public void remakeBody(World world){
+        if (bodyWrapper == null){
+            Piggy pig = new Piggy(world, getX(), getY(), getWidth(), getHeight(), texturePath);
+            pig.getBody().setUserData(null);
+            setBody(pig.getBody());
+            return;
+        }
         setWorld(world);
         setBody(bodyWrapper.recreateBody(world));
-        addSpriteToBody(texturePath);
+        addSpriteToBody(texturePath, bodyWrapper);
         Filter filter=super.getBody().getFixtureList().get(0).getFilterData();
         filter.categoryBits=Main.BIT_PIG;
         super.getBody().getFixtureList().get(0).setFilterData(filter);
-        Object curr_user_data= super.getBody().getUserData();
-        super.getBody().setUserData(new userData((Sprite)curr_user_data, "piggy"));
     }
+
+
 }

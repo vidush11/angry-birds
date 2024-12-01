@@ -1,6 +1,8 @@
 package github.com.Game_Classes;
 
-public class Projectile {
+import java.io.Serializable;
+
+public class Projectile implements Serializable {
     public float gravity;
     public float speedx;
     public float speedy;

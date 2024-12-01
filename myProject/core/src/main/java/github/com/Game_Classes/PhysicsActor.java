@@ -18,7 +18,6 @@ public class PhysicsActor extends Actor implements Serializable {
     private transient Texture PhysicsActorTexture; // PhysicsActor's texture (image)
     private transient Sprite sprite;
 
-    protected SerializableBodyWrapper bodyWrapper;
 
     public PhysicsActor(World world, float x, float y, String texturePath, float width, float height, boolean isBlock) {
         this.body = createPhysicsActorBody(world, x, y, width, height, isBlock);
@@ -74,7 +73,7 @@ public class PhysicsActor extends Actor implements Serializable {
         return body;
     }
 
-    public void addSpriteToBody(String texturePath) {
+    public void addSpriteToBody(String texturePath, SerializableBodyWrapper bodyWrapper) {
         PhysicsActorTexture = new Texture(texturePath);
         this.sprite = new Sprite(PhysicsActorTexture);
 
@@ -82,6 +81,8 @@ public class PhysicsActor extends Actor implements Serializable {
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
         userData temp = (userData)body.getUserData();
         temp.sprite = sprite;
+        body.setUserData(temp);
+        System.out.println("Sprite added");
     }
     @Override
     public void draw(Batch batch, float parentAlpha) {
