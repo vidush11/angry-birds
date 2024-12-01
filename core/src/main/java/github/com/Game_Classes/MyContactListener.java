@@ -32,6 +32,8 @@ public class MyContactListener implements ContactListener {
         Object o1 = contact.getFixtureA().getBody();
         Object o2 = contact.getFixtureB().getBody();
 
+        if (((userData) (((Body) o1).getUserData())) == null || ((userData) (((Body) o2).getUserData())) == null) return;
+
         String id1 = ((userData) (((Body) o1).getUserData())).id;
         String id2 = ((userData) (((Body) o2).getUserData())).id;
 

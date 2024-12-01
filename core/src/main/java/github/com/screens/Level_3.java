@@ -72,7 +72,8 @@ public class Level_3 implements Screen {
     private boolean powerUp=false;
     private AtomicBoolean worldEnd= new AtomicBoolean(false);
     private boolean end=false;
-
+    private AtomicBoolean delay= new AtomicBoolean(false);
+    private boolean delayOnce=false;
     private boolean options = false;
     private Screen screen = this;
 
@@ -218,8 +219,8 @@ public class Level_3 implements Screen {
 
     public void initialize(){
         //Ground declaration
-        Ground ground = new Ground(world);
-
+        Ground ground = new Ground(world,0,-15);
+        ground= new Ground(world, 0,25);
         //Bird
         BirdQueue.add(new Bird(world, -21.65f, -15f, 3f, 3f,"./img/pigs/RedBird.png"));
         BirdQueue.add(new Bird(world, -24.65f, -15f, 3f, 3f,"./img/pigs/RedBird.png"));
@@ -283,6 +284,8 @@ public class Level_3 implements Screen {
         blocks.add(new BuildingBlock(world, 17.6f, 13f, 2f, 2f, BuildingBlock.Type.wood,"img/Wood elements/elementWood013.png"));
         blocks.add(new BuildingBlock(world, 21f, 13f, 2f, 2f, BuildingBlock.Type.wood,"img/Wood elements/elementWood013.png"));
 
+        Wall wall= new Wall(world,30,0);
+        wall=new Wall(world,-30,0);
         //        blocks.add(new BuildingBlock(world, 16.5f, 2.75f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
 //        blocks.add(new BuildingBlock(world, 22.3f, 2.6f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
 
@@ -347,15 +350,8 @@ public class Level_3 implements Screen {
                             score+=5000;
                         }
                         world.destroyBody(body);
-//                        Filter filter= body.getFixtureList().get(0).getFilterData();
-//                        filter.maskBits=2;
-//                        body.getFixtureList().get(0).setFilterData(filter);
                     }
-//                    if (data.id.equals("piggy")){
-//                        if (data.increaseContact()>10){
-//                            world.destroyBody(body);
-//                        }
-//                    }
+
                 }
             }
         }
@@ -376,14 +372,21 @@ public class Level_3 implements Screen {
                 if (currBird!=null) score+=5000;
 
 //                System.out.println("SCORE: "+score);
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 75000,true));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 115000,true));
                 dispose();
             }
         }
         else {
             if (BirdQueue.isEmpty() && prevBird!=null &&prevBird.getUserData()==null && currBird==null){ //no birds left and curr bird also dead
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 75000,false));
-                dispose();
+                if (!delayOnce){
+                    Thread t1 = new Thread(new Dhagga(delay));
+                    t1.start();
+                    delayOnce=true;
+                }
+                if (delay.get()) {
+                    ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 115000, false));
+                    dispose();
+                }
             }
 
         }

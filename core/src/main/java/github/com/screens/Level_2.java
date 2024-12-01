@@ -218,8 +218,8 @@ public class Level_2 implements Screen {
 
     public void initialize(){
         //Ground declaration
-        Ground ground = new Ground(world);
-
+        Ground ground = new Ground(world,0,-15);
+        ground=new Ground(world,0,26 );
         //Bird
         BirdQueue.add(new Bird(world, -21.65f, -15f, 3f, 3f,"./img/pigs/RedBird.png"));
         BirdQueue.add(new Bird(world, -24.65f, -15f, 3f, 3f,"./img/pigs/RedBird.png"));

@@ -346,7 +346,7 @@ public class Level_1 implements Screen {
 
 
         //Ground declaration
-        Ground ground = new Ground(world);
+        Ground ground = new Ground(world,0,-15);
 
         //Bird
         BirdQueue.add(new Bird(world, -21.65f, -15f, 3f, 3f,"./img/pigs/RedBird.png"));
@@ -484,7 +484,7 @@ public class Level_1 implements Screen {
         }
         else {
             if (BirdQueue.isEmpty() && prevBird!=null&& prevBird.getUserData()==null && currBird==null){ //no birds left and curr bird also dead
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 75000,false));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 70000,false));
                 dispose();
             }
 

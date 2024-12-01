@@ -8,19 +8,20 @@ import github.com.Main;
 public class Ground {
 
     Body body;
-    public Ground(World world) {
-        body = createBody(world);
+    public Ground(World world, int x, int y) {
+        body = createBody(world,x,y);
+
     }
 
-    public Body createBody(World world){
+    public Body createBody(World world, int x, int y){
         //GROUND Definition
         BodyDef bodydef= new BodyDef();
         bodydef.type= BodyDef.BodyType.StaticBody;
-        bodydef.position.set(0,-10);
+        bodydef.position.set(x,y);
 
         //Ground shape
         ChainShape groundShape= new ChainShape();
-        groundShape.createChain(new Vector2[]{new Vector2(-500,-5), new Vector2(500,-5)});
+        groundShape.createChain(new Vector2[]{new Vector2(-500,0), new Vector2(500,0)});
         //fixture definition
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape=groundShape;
