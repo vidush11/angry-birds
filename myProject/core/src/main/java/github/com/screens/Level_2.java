@@ -30,11 +30,14 @@ import github.com.Main;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import github.com.Game_Classes.Projectile;
 import github.com.Game_Classes.SlingShot;
 
 import github.com.Main;
+
+import static java.lang.Thread.sleep;
 
 public class Level_2 implements Screen {
 
@@ -67,6 +70,8 @@ public class Level_2 implements Screen {
     private boolean shoot = false;
     private boolean shootSound = false;
     private boolean powerUp=false;
+    private AtomicBoolean worldEnd= new AtomicBoolean(false);
+    private boolean end=false;
 
     private boolean options = false;
     private Screen screen = this;
@@ -82,7 +87,7 @@ public class Level_2 implements Screen {
     public int x=1;
     public Level_2(Main game) {
         this.game = game;
-        this.background = Main.assetManager.get("img/Background_level_1.png");
+        this.background = new Texture("img/bg5.jpg");
         this.stage = new Stage();
         this.movement = new Vector2(0, 0);
         BirdQueue = new LinkedList<>();
@@ -142,7 +147,7 @@ public class Level_2 implements Screen {
             public boolean touchDragged(int screenX, int screenY, int pointer) {
                 float x = (float) (screenX - Gdx.graphics.getWidth() / 2) / 10;
                 float y = (float) (-screenY + Gdx.graphics.getHeight() / 2) / 10;
-                System.out.println(shoot);
+//                System.out.println(shoot);
 
                 if (shoot) {
                     if (!shootSound){
@@ -207,6 +212,8 @@ public class Level_2 implements Screen {
             }
 
         });
+
+//        System.out.println("JAAAAT+1");
     }
 
     public void initialize(){
@@ -280,13 +287,11 @@ public class Level_2 implements Screen {
         shape.setProjectionMatrix(oCamera.combined);
         batch.setProjectionMatrix(oCamera.combined);
 
-        if (shoot) {
-            drawTrajectory();
-        }
+
 //        box.applyForceToCenter(movement, true);
         batch.begin();
+        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
 
-//        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
 //        background.setSize
         world.getBodies(bodies);
         for (Body body : bodies) {
@@ -299,7 +304,13 @@ public class Level_2 implements Screen {
             }
 
         }
+
+
         batch.end();
+
+        if (shoot) {
+            drawTrajectory();
+        }
 
         stage.act(delta);
         stage.draw();
@@ -325,8 +336,27 @@ public class Level_2 implements Screen {
                 }
             }
         }
+        boolean dead=true;
+        for (Piggy pig: PigList){
+            if (pig.getBody().getUserData()!=null){dead=false; break;}
+        }
+        if (dead){
+            if (! end){
+                Thread t1 = new Thread(new Dhagga(worldEnd));
+                t1.start();
+                end=true;
+            }
+            if (worldEnd.get()) {
+                for (int i=0; i<BirdQueue.size(); i++){
+                    score+=5000;
+                }
+                if (currBird!=null) score+=5000;
 
-//        for ()
+                System.out.println("SCORE: "+score);
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 75000,true));
+                dispose();
+            }
+        }
     }
 
     @Override
@@ -388,5 +418,21 @@ public class Level_2 implements Screen {
 
         currBird.setTransform(final_pos.x, final_pos.y, currBird.getAngle());
 
+    }
+
+    public class Dhagga implements Runnable{
+        private AtomicBoolean flag;
+
+        public Dhagga(AtomicBoolean x){
+            this.flag=x;
+        }
+        public void run() {
+            try {
+                sleep(5000);
+            } catch (InterruptedException e) {
+                System.out.println("error");
+            }
+            flag.set(true);
+        }
     }
 }
