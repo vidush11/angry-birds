@@ -87,7 +87,7 @@ public class Level_2 implements Screen {
     public int x=1;
     public Level_2(Main game) {
         this.game = game;
-        this.background = Main.assetManager.get("img/Background_level_1.png");
+        this.background = new Texture("img/bg5.jpg");
         this.stage = new Stage();
         this.movement = new Vector2(0, 0);
         BirdQueue = new LinkedList<>();
@@ -287,9 +287,7 @@ public class Level_2 implements Screen {
         shape.setProjectionMatrix(oCamera.combined);
         batch.setProjectionMatrix(oCamera.combined);
 
-        if (shoot) {
-            drawTrajectory();
-        }
+
 //        box.applyForceToCenter(movement, true);
         batch.begin();
         batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
@@ -309,6 +307,10 @@ public class Level_2 implements Screen {
 
 
         batch.end();
+
+        if (shoot) {
+            drawTrajectory();
+        }
 
         stage.act(delta);
         stage.draw();
@@ -345,7 +347,13 @@ public class Level_2 implements Screen {
                 end=true;
             }
             if (worldEnd.get()) {
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game));
+                for (int i=0; i<BirdQueue.size(); i++){
+                    score+=5000;
+                }
+                if (currBird!=null) score+=5000;
+
+                System.out.println("SCORE: "+score);
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 75000,true));
                 dispose();
             }
         }

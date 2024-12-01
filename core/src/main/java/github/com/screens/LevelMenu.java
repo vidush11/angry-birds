@@ -46,7 +46,7 @@ public class LevelMenu implements Screen {
     @Override
     public void show() {
         batch= new SpriteBatch();
-        Texture splashTexture= new Texture("img/levels_pixelated.jpeg");
+        Texture splashTexture= new Texture("img/bg7.jpg");
         splash= new Sprite(splashTexture);
         splash.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -102,7 +102,7 @@ public class LevelMenu implements Screen {
 
         l3.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1(game));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new WinLoose(game,9,10,true));
                 dispose();
             }
         });
