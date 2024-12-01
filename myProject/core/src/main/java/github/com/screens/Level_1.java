@@ -153,6 +153,8 @@ import github.com.Game_Classes.*;
 import github.com.Game_Classes.InputController;
 import github.com.Main;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Vector;
@@ -162,7 +164,7 @@ import github.com.Game_Classes.SlingShot;
 
 import github.com.Main;
 
-public class Level_1 implements Screen {
+public class Level_1 implements Screen, Serializable {
 
     private World world;
     private Box2DDebugRenderer debugRenderer;
@@ -303,7 +305,7 @@ public class Level_1 implements Screen {
                     if (speed>6){
                         diff.set(diff.x*6/speed, diff.y*6/speed);
                     }
-                    
+
                     currBird.setLinearVelocity(5 * diff.x + 5, 5 * diff.y);
                     prevBird=currBird;
                     prevBIRD=currBIRD;
@@ -450,15 +452,7 @@ public class Level_1 implements Screen {
                             score+=5000;
                         }
                         world.destroyBody(body);
-//                        Filter filter= body.getFixtureList().get(0).getFilterData();
-//                        filter.maskBits=2;
-//                        body.getFixtureList().get(0).setFilterData(filter);
                     }
-//                    if (data.id.equals("piggy")){
-//                        if (data.increaseContact()>10){
-//                            world.destroyBody(body);
-//                        }
-//                    }
                 }
             }
         }

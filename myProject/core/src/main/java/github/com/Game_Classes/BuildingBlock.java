@@ -7,11 +7,14 @@ import com.badlogic.gdx.physics.box2d.*;
 import github.com.Main;
 
 public class BuildingBlock {
-    BodyDef bodyDef;
-    PolygonShape shape;
-    FixtureDef fixtureDef;
-    Body block;
-    Sprite boxSprite;
+    transient BodyDef bodyDef;
+    transient PolygonShape shape;
+    transient FixtureDef fixtureDef;
+    transient Body block;
+    transient Sprite boxSprite;
+
+    SerializableBodyWrapper bodyWrapper;
+    String texturePath;
     public static enum Type{
         wood,
         metal,
@@ -20,11 +23,11 @@ public class BuildingBlock {
     private Type myType;
     public BuildingBlock(World world, float x, float y, float width, float height, Type type, String s) {
         bodyDef = new BodyDef();
-        shape=new PolygonShape();
+        shape = new PolygonShape();
         fixtureDef= new FixtureDef();
+        texturePath=s;
         boxSprite= new Sprite(new Texture(s));
 
-        //slingshot
         bodyDef.type= BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(x,y);
 
@@ -40,31 +43,24 @@ public class BuildingBlock {
         boxSprite.setSize(width,height);
         boxSprite.setOrigin(boxSprite.getWidth()/2, boxSprite.getHeight()/2);
         block.setUserData(new userData(boxSprite,"block"));
-//        super(world, x, y, new Texture(s), width, height, true);
 
         this.myType = type;
-//        switch (this.myType){
-//            case wood:
-//                super.setHitPoints(5);
-//                break;
-//            case metal:
-//                super.setHitPoints(10);
-//                break;
-//            case glass:
-//                super.setHitPoints(2);
-//                break;
-//        }
 
         shape.dispose();
     }
 
-    public void OnHit(PhysicsActor actor){
-//        this.setHitPoints(this.getHitPoints() - actor.getHitPoints());
-//        if (this.getHitPoints() <= 0){
-//            this.dispose();
-//            this.remove();
-//        }
-    };
+    private void remakeBody(World world){
+        block = bodyWrapper.recreateBody(world);
+        reAddSprite(texturePath);
+    }
+
+    private void reAddSprite(String texturePath){
+        boxSprite = new Sprite(new Texture(texturePath));
+        boxSprite.setSize(bodyWrapper.getWidth(), bodyWrapper.getHeight());
+        boxSprite.setOrigin(boxSprite.getWidth() / 2, boxSprite.getHeight() / 2);
+        userData data = (userData) block.getUserData();
+        data.sprite = boxSprite;
+    }
 
     public void dispose(){
 

@@ -2,10 +2,11 @@ package github.com.Game_Classes;
 
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
+import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-public class userData {
-    public Sprite sprite;
+public class userData implements Serializable {
+    public transient Sprite sprite;
     public String id;
     public AtomicBoolean dead=new AtomicBoolean(false);
     public int contacts;

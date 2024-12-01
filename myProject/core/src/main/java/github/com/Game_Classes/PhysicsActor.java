@@ -6,33 +6,39 @@ import com.badlogic.gdx.physics.box2d.*;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.utils.Disposable;
 
-public class PhysicsActor extends Actor {
+import java.io.IOException;
+import java.io.Serializable;
 
-    private Body body;
-    private Texture PhysicsActorTexture; // PhysicsActor's texture (image)
-    private int hitPoints;
-    private Sprite sprite;
+public class PhysicsActor extends Actor implements Serializable {
 
-    public PhysicsActor(World world, float x, float y, Texture texture, float width, float height, boolean isBlock) {
+    private transient Body body;
+    private transient World world;
+    private transient Texture PhysicsActorTexture; // PhysicsActor's texture (image)
+    private transient Sprite sprite;
+
+    protected SerializableBodyWrapper bodyWrapper;
+
+    public PhysicsActor(World world, float x, float y, String texturePath, float width, float height, boolean isBlock) {
         this.body = createPhysicsActorBody(world, x, y, width, height, isBlock);
         setPosition(body.getPosition().x, body.getPosition().y);
         setRotation((float) Math.toDegrees(body.getAngle()));
 
-        PhysicsActorTexture = texture;
+        this.world = world;
+        PhysicsActorTexture = new Texture(texturePath);
         this.sprite = new Sprite(PhysicsActorTexture);
 
         sprite.setSize(width, height);
         sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
         body.setUserData(sprite);
-
-        this.hitPoints = 0;
+//        bodyWrapper = SerializableBodyWrapper.wrap(body);
     }
 
-    public int getHitPoints() { return hitPoints; }
-    public void setHitPoints(int hitPoints) { this.hitPoints = hitPoints; }
     public Body getBody() { return body; }
     public void setBody(Body body) { this.body = body;}
+    public World getWorld() { return world; }
+    public void setWorld(World world) { this.world = world; }
 
     // Method to create the PhysicsActor's body in the Box2D world
     private static Body createPhysicsActorBody(World world, float x, float y, float width, float height, boolean isBlock) {
@@ -68,19 +74,24 @@ public class PhysicsActor extends Actor {
         return body;
     }
 
+    public void addSpriteToBody(String texturePath) {
+        PhysicsActorTexture = new Texture(texturePath);
+        this.sprite = new Sprite(PhysicsActorTexture);
+
+        sprite.setSize(bodyWrapper.getWidth(), bodyWrapper.getHeight());
+        sprite.setOrigin(sprite.getWidth() / 2, sprite.getHeight() / 2);
+        userData temp = (userData)body.getUserData();
+        temp.sprite = sprite;
+    }
     @Override
     public void draw(Batch batch, float parentAlpha) {
-        // Draw the PhysicsActor's texture at the current position of the actor
         sprite.setPosition(body.getPosition().x, body.getPosition().y);
         sprite.draw(batch);
     }
 
     @Override
     public void act(float delta) {
-        // Call the parent's act method to update the actor's position and rotation
         super.act(delta);
-
-        // Update the position and rotation based on the Box2D body
         setPosition(body.getPosition().x, body.getPosition().y);
         setRotation((float) Math.toDegrees(body.getAngle()));
     }
@@ -88,6 +99,11 @@ public class PhysicsActor extends Actor {
     public void dispose() {
         PhysicsActorTexture.dispose();
         sprite.getTexture().dispose();
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        bodyWrapper = SerializableBodyWrapper.wrap(body);
+        out.defaultWriteObject();
     }
 
 }
