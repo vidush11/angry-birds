@@ -16,15 +16,17 @@ import java.util.concurrent.TimeUnit;
 public class Bird extends PhysicsActor{
     boolean abilityActive = true;
     private static final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
+    private String type;
+    private World world;
     public Bird(World world, float x, float y, float width, float height, String s) {
         super(world, x, y, new Texture(s), width, height, false);
         super.setHitPoints(5);
-
+        type=s;
+        this.world=world;
 //        super.setUserData
         Filter filter=super.getBody().getFixtureList().get(0).getFilterData();
         filter.categoryBits=Main.BIT_BIRD;
-//        filter.maskBits=M
+        filter.maskBits=Main.BIT_GROUND|Main.BIT_PIG|1;
         Object curr_user_data= super.getBody().getUserData();
         super.getBody().setUserData(new userData((Sprite)curr_user_data, "bird"));
         super.getBody().setActive(false);
@@ -55,4 +57,31 @@ public class Bird extends PhysicsActor{
             abilityActive = false;
         }
     };
+
+    public void powerUp(){
+        if (type.equals("./img/pigs/blue.png")){
+            float x=this.getBody().getPosition().x;
+            float y=this.getBody().getPosition().y;
+            Vector2 velocity=this.getBody().getLinearVelocity();
+            double angle=(float) Math.atan(velocity.y/velocity.x);
+
+            double speed=Math.sqrt(Math.pow(velocity.x, 2) + Math.pow(velocity.y, 2));
+
+            Bird b1=new Bird(this.world, x,y, 2f, 2f,"./img/pigs/blue.png");
+            b1.getBody().setActive(true);
+            b1.getBody().setLinearVelocity((float) (speed*Math.cos(angle+Math.toRadians(15))), (float) (speed*Math.sin(angle+Math.toRadians(15))));
+
+
+            Bird b2=new Bird(this.world, x,y, 2f, 2f,"./img/pigs/blue.png");
+            b2.getBody().setActive(true);
+            b2.getBody().setLinearVelocity((float) (speed*Math.cos(angle-Math.toRadians(15))), (float) (speed*Math.sin(angle-Math.toRadians(15))));
+
+
+        }
+        else if (type.equals("./img/pigs/yellow.png")){
+            float x=this.getBody().getLinearVelocity().x;
+            float y=this.getBody().getLinearVelocity().y;
+            this.getBody().setLinearVelocity(2*x, 2*y);
+        }
+    }
 }

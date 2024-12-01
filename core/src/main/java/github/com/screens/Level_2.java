@@ -30,11 +30,14 @@ import github.com.Main;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import github.com.Game_Classes.Projectile;
 import github.com.Game_Classes.SlingShot;
 
 import github.com.Main;
+
+import static java.lang.Thread.sleep;
 
 public class Level_2 implements Screen {
 
@@ -46,6 +49,9 @@ public class Level_2 implements Screen {
     private BodyDef bird_body = new BodyDef();
 
     private Body currBird;
+    private Body prevBird;
+    private Bird currBIRD;
+    private Bird prevBIRD;
     private Stage stage;
     private Sprite boxSprite;
     private SpriteBatch batch;
@@ -63,9 +69,12 @@ public class Level_2 implements Screen {
     private Vector2 final_pos = new Vector2(-20.65f, -3.5f);
     private boolean shoot = false;
     private boolean shootSound = false;
+    private boolean powerUp=false;
+    private AtomicBoolean worldEnd= new AtomicBoolean(false);
+    private boolean end=false;
 
     private boolean options = false;
-    private Screen screen=this;
+    private Screen screen = this;
 
     private Projectile projectile = new Projectile(-10, 0, 0, 0, 0);
     private int score;
@@ -73,6 +82,7 @@ public class Level_2 implements Screen {
     private final float TIMESTEP = 1 / 60f;
     private final int VELOCITYITERATIONS = 8;
     private final int POSITIONITERATIONS = 3;
+    private float MAX_SPEED=6;
 
     public int x=1;
     public Level_2(Main game) {
@@ -89,6 +99,7 @@ public class Level_2 implements Screen {
         oCamera = new OrthographicCamera();
         shape = new ShapeRenderer();
 
+        initialize();
     }
 
 
@@ -107,17 +118,16 @@ public class Level_2 implements Screen {
                 return true;
             }
 
-            @Override
             public boolean touchDown(int screenX, int screenY, int pointer, int button) {
                 float x = (float) (screenX - Gdx.graphics.getWidth() / 2) / 10;
                 float y = (float) (-screenY + Gdx.graphics.getHeight() / 2) / 10;
 
                 if (-23 <= x && x <= -20 && -8 <= y && y <= -3) {
-                    if (!(BirdQueue.isEmpty()) && currBird == null && !shoot) {
+                    if (!(BirdQueue.isEmpty()) && currBird==null &&!shoot) {
                         shootSound=false;
-                        Bird bird = BirdQueue.poll();
-                        bird.loadOnSlingShot();
-                        currBird = bird.getBody();
+                        currBIRD = BirdQueue.poll();
+                        currBIRD.loadOnSlingShot();
+                        currBird = currBIRD.getBody();
                         shoot = false;
                     } else if (currBird != null) {
                         shoot = true;
@@ -125,6 +135,9 @@ public class Level_2 implements Screen {
                 }
                 else if (24<=x && x<=31.5 && 15.5<=y &&y<=23.5){
                     options=true;
+                }
+                else if(prevBird!=null && !((userData)prevBird.getUserData()).dead.get() ){
+                    powerUp=true;
                 }
                 return true;
 
@@ -134,7 +147,7 @@ public class Level_2 implements Screen {
             public boolean touchDragged(int screenX, int screenY, int pointer) {
                 float x = (float) (screenX - Gdx.graphics.getWidth() / 2) / 10;
                 float y = (float) (-screenY + Gdx.graphics.getHeight() / 2) / 10;
-                System.out.println(shoot);
+//                System.out.println(shoot);
 
                 if (shoot) {
                     if (!shootSound){
@@ -142,7 +155,14 @@ public class Level_2 implements Screen {
                         shootSound=true;
                     }
                     final_pos.set(x, y);
-                    projectile = new Projectile(-10, 5 * (initial.x - x), 5 * (initial.y - y), -20.65f, -3.5f);
+                    float diffx=initial.x-x;
+                    float diffy=initial.y-y;
+                    float speed= (float) Math.sqrt(Math.pow(initial.x-x,2)+ Math.pow(initial.y-y, 2));
+                    if (speed>6){
+                        diffx=diffx*6/speed;
+                        diffy=diffy*6/speed;
+                    }
+                    projectile = new Projectile(-10, 5 * diffx, 5 * diffy, -20.65f, -3.5f);
                 }
 
                 return true;
@@ -155,19 +175,32 @@ public class Level_2 implements Screen {
 
                     Vector2 diff = initial.sub(final_pos);
                     Main.sound2.play(0f);
-
+                    float speed= (float) Math.sqrt(Math.pow(diff.x,2)+ Math.pow(diff.y, 2));
+                    if (speed>6){
+                        diff.set(diff.x*6/speed, diff.y*6/speed);
+                    }
+//                    System.out.println("Speed: "+Math.sqrt(Math.pow(diff.x,2)+ Math.pow(diff.y, 2)));
                     currBird.setLinearVelocity(5 * diff.x + 5, 5 * diff.y);
-
+                    prevBird=currBird;
+                    prevBIRD=currBIRD;
+                    currBIRD=null;
                     currBird = null;
                     shoot = false;
                     initial.set(-20.65f, -3.5f);
                 }
 
-                if (options){
+                else if (options){
                     game.setScreen(new OptionsMenu(game, screen));
                     options=false;
 //                    ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu(game, screen));
 //                    dispose();
+                }
+
+                else if(prevBird!=null && ((userData)prevBird.getUserData() != null) && powerUp){
+                    (prevBIRD).powerUp();
+                    prevBird=null;
+                    prevBIRD=null;
+                    powerUp=false;
                 }
                 return true;
             }
@@ -180,6 +213,10 @@ public class Level_2 implements Screen {
 
         });
 
+//        System.out.println("JAAAAT+1");
+    }
+
+    public void initialize(){
         //Ground declaration
         Ground ground = new Ground(world);
 
@@ -236,13 +273,6 @@ public class Level_2 implements Screen {
         pause.setSize(65,65);
         pause.setPosition(Gdx.graphics.getWidth()-75, Gdx.graphics.getHeight()-75);
 
-//        pause.addListener(new ClickListener(){
-//            public void clicked(InputEvent event, float x, float y) {
-//
-//
-//            }
-//        });
-
         stage.addActor(pause);
     }
 
@@ -262,8 +292,8 @@ public class Level_2 implements Screen {
         }
 //        box.applyForceToCenter(movement, true);
         batch.begin();
+        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
 
-//        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
 //        background.setSize
         world.getBodies(bodies);
         for (Body body : bodies) {
@@ -276,6 +306,8 @@ public class Level_2 implements Screen {
             }
 
         }
+
+
         batch.end();
 
         stage.act(delta);
@@ -302,6 +334,21 @@ public class Level_2 implements Screen {
                 }
             }
         }
+        boolean dead=true;
+        for (Piggy pig: PigList){
+            if (pig.getBody().getUserData()!=null){dead=false; break;}
+        }
+        if (dead){
+            if (! end){
+                Thread t1 = new Thread(new Dhagga(worldEnd));
+                t1.start();
+                end=true;
+            }
+            if (worldEnd.get()) {
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game));
+                dispose();
+            }
+        }
     }
 
     @Override
@@ -326,7 +373,7 @@ public class Level_2 implements Screen {
 
     @Override
     public void hide() {
-        dispose();
+
     }
 
     @Override
@@ -363,5 +410,21 @@ public class Level_2 implements Screen {
 
         currBird.setTransform(final_pos.x, final_pos.y, currBird.getAngle());
 
+    }
+
+    public class Dhagga implements Runnable{
+        private AtomicBoolean flag;
+
+        public Dhagga(AtomicBoolean x){
+            this.flag=x;
+        }
+        public void run() {
+            try {
+                sleep(5000);
+            } catch (InterruptedException e) {
+                System.out.println("error");
+            }
+            flag.set(true);
+        }
     }
 }
