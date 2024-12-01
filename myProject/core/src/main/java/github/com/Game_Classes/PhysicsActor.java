@@ -100,10 +100,4 @@ public class PhysicsActor extends Actor implements Serializable {
         PhysicsActorTexture.dispose();
         sprite.getTexture().dispose();
     }
-
-    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
-        bodyWrapper = SerializableBodyWrapper.wrap(body);
-        out.defaultWriteObject();
-    }
-
 }

@@ -4,9 +4,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.physics.box2d.*;
 
+import com.badlogic.gdx.utils.Disposable;
 import github.com.Main;
 
-public class BuildingBlock {
+import java.io.IOException;
+import java.io.Serializable;
+
+public class BuildingBlock implements Serializable {
     transient BodyDef bodyDef;
     transient PolygonShape shape;
     transient FixtureDef fixtureDef;
@@ -60,6 +64,11 @@ public class BuildingBlock {
         boxSprite.setOrigin(boxSprite.getWidth() / 2, boxSprite.getHeight() / 2);
         userData data = (userData) block.getUserData();
         data.sprite = boxSprite;
+    }
+
+    private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        bodyWrapper = SerializableBodyWrapper.wrap(block);
+        out.defaultWriteObject();
     }
 
     public void dispose(){
