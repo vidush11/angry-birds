@@ -370,8 +370,7 @@ public class Level_3 implements Screen {
                     score+=5000;
                 }
                 if (currBird!=null) score+=5000;
-
-//                System.out.println("SCORE: "+score);
+                
                 ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 115000,true));
                 dispose();
             }
