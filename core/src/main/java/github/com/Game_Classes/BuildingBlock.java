@@ -69,4 +69,8 @@ public class BuildingBlock {
     public void dispose(){
 
     }
+
+    public Body getBody(){
+        return block;
+    }
 }

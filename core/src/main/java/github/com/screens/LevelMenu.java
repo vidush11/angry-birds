@@ -102,7 +102,7 @@ public class LevelMenu implements Screen {
 
         l3.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new WinLoose(game,9,10,true));
+                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_3(game));
                 dispose();
             }
         });

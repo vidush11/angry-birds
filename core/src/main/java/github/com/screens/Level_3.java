@@ -39,7 +39,7 @@ import github.com.Main;
 
 import static java.lang.Thread.sleep;
 
-public class Level_2 implements Screen {
+public class Level_3 implements Screen {
 
     private World world;
     private Box2DDebugRenderer debugRenderer;
@@ -85,7 +85,7 @@ public class Level_2 implements Screen {
     private float MAX_SPEED=6;
 
     public int x=1;
-    public Level_2(Main game) {
+    public Level_3(Main game) {
         this.game = game;
         this.background = new Texture("img/bg5.jpg");
         this.stage = new Stage();
@@ -248,23 +248,46 @@ public class Level_2 implements Screen {
 
         boxShape.dispose();
 
-        PigList.add(new Piggy(world, 19.5f, -2f, 2f, 2f,"img/pigs/green.png"));
-        blocks.add(new BuildingBlock(world, 16f, -10.5f, 1f, 9f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
-        blocks.add(new BuildingBlock(world, 23, -10.5f, 1f, 9f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
-        blocks.add(new BuildingBlock(world, 19.5f, -5f, 9f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
+        PigList.add(new Piggy(world, 19.5f, -11f, 2f, 2f,"img/pigs/green.png"));
+        PigList.add(new Piggy(world, 19.5f, -4.5f, 2f, 2f,"img/pigs/green.png"));
+        PigList.add(new Piggy(world, 19.5f, 7f, 1.4f, 1.4f,"img/pigs/green.png"));
 
-        blocks.add(new BuildingBlock(world, 18f, -11.5f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
-        blocks.add(new BuildingBlock(world, 21f, -11.5f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
-        blocks.add(new BuildingBlock(world, 19.5f, -14f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
-        blocks.add(new BuildingBlock(world, 19.5f, -9f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
+        blocks.add(new BuildingBlock(world, 16f, -10.5f, 1f, 9f, BuildingBlock.Type.metal,"img/Metal elements/elementMetal025.png"));
+        blocks.add(new BuildingBlock(world, 23, -10.5f, 1f, 9f, BuildingBlock.Type.metal,"img/Metal elements/elementMetal025.png"));
+        blocks.add(new BuildingBlock(world, 13f, -10.5f, 1f, 5f, BuildingBlock.Type.wood,"img/Wood elements/elementWood019.png"));
+        blocks.add(new BuildingBlock(world, 26, -10.5f, 1f, 5f, BuildingBlock.Type.wood,"img/Wood elements/elementWood019.png"));
+        blocks.add(new BuildingBlock(world, 19.5f, -5f, 9f, 1f, BuildingBlock.Type.metal,"img/Metal elements/elementMetal016.png"));
+        BuildingBlock rot_block= new BuildingBlock(world, 16f, -10.5f, 1f, 13f, BuildingBlock.Type.metal,"img/Metal elements/elementMetal025.png");
+        rot_block.getBody().setTransform(10.5f,-5.5f,(float)Math.toRadians(-45));
+        rot_block= new BuildingBlock(world, 16f, -10.5f, 1f, 13f, BuildingBlock.Type.metal,"img/Metal elements/elementMetal025.png");
+        rot_block.getBody().setTransform(28.5f,-5.5f,(float)Math.toRadians(45));
+        blocks.add(new BuildingBlock(world, 19.5f, -12.5f, 6f, 6f, BuildingBlock.Type.metal,"img/Metal elements/elementMetal014.png"));
+//        blocks.add(new BuildingBlock(world, 21f, -11.5f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
+//        blocks.add(new BuildingBlock(world, 19.5f, -14f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
+//        blocks.add(new BuildingBlock(world, 19.5f, -9f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
+//
+//        blocks.add(new BuildingBlock(world, 17f, -2f, 1f, 9f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
+//        blocks.add(new BuildingBlock(world, 22f, -2f, 1f, 9f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
+        blocks.add(new BuildingBlock(world, 17.6f, -2f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
+        blocks.add(new BuildingBlock(world, 21f, -2f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
+        blocks.add(new BuildingBlock(world, 19.5f, 2f, 9f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
 
-        blocks.add(new BuildingBlock(world, 17f, -2f, 1f, 9f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
-        blocks.add(new BuildingBlock(world, 22f, -2f, 1f, 9f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
-        blocks.add(new BuildingBlock(world, 19.5f, 3.5f, 1f, 2.25f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
+        blocks.add(new BuildingBlock(world, 19.5f, 2.5f, 6f, 6f, BuildingBlock.Type.wood,"img/Wood elements/elementWood013.png"));
+        blocks.add(new BuildingBlock(world, 19.5f, 7f, 15f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
 
-        blocks.add(new BuildingBlock(world, 19.5f, -2.5f, 2.25f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
+        blocks.add(new BuildingBlock(world, 16f, 8f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
+        blocks.add(new BuildingBlock(world, 18f, 8f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
+        blocks.add(new BuildingBlock(world, 21, 8f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
+        blocks.add(new BuildingBlock(world, 23, 8f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
+        blocks.add(new BuildingBlock(world, 19.5f, 11f, 8, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
+        blocks.add(new BuildingBlock(world, 17.6f, 13f, 2f, 2f, BuildingBlock.Type.wood,"img/Wood elements/elementWood013.png"));
+        blocks.add(new BuildingBlock(world, 21f, 13f, 2f, 2f, BuildingBlock.Type.wood,"img/Wood elements/elementWood013.png"));
+
+        //        blocks.add(new BuildingBlock(world, 16.5f, 2.75f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
+//        blocks.add(new BuildingBlock(world, 22.3f, 2.6f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
+
 //        blocks.add(new BuildingBlock(world, 23, -10.5f, 1f, 9f, BuildingBlock.Type.wood,"img/Wood elements/elementWood024.png"));
-        blocks.add(new BuildingBlock(world, 19.5f, 3.5f, 5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
+//        blocks.add(new BuildingBlock(world, 19.5f, 3.5f, 5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
 
         ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
         imageButtonStyle.up=new TextureRegionDrawable(new TextureRegion(new Texture("ui/pause_up.png")));
@@ -358,7 +381,7 @@ public class Level_2 implements Screen {
             }
         }
         else {
-            if (BirdQueue.isEmpty() && prevBird!=null &&prevBird.getUserData()==null && currBird!=null){ //no birds left and curr bird also dead
+            if (BirdQueue.isEmpty() && prevBird!=null &&prevBird.getUserData()==null && currBird==null){ //no birds left and curr bird also dead
                 ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 75000,false));
                 dispose();
             }

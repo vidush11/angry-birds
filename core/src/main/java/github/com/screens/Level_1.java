@@ -156,11 +156,14 @@ import github.com.Main;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Vector;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import github.com.Game_Classes.Projectile;
 import github.com.Game_Classes.SlingShot;
 
 import github.com.Main;
+
+import static java.lang.Thread.sleep;
 
 public class Level_1 implements Screen {
 
@@ -194,6 +197,8 @@ public class Level_1 implements Screen {
     private boolean shoot = false;
     private boolean shootSound = false;
     private boolean powerUp=false;
+    private AtomicBoolean worldEnd= new AtomicBoolean(false);
+    private boolean end=false;
 
     private boolean options = false;
     private Screen screen=this;
@@ -450,17 +455,39 @@ public class Level_1 implements Screen {
                             score+=5000;
                         }
                         world.destroyBody(body);
-//                        Filter filter= body.getFixtureList().get(0).getFilterData();
-//                        filter.maskBits=2;
-//                        body.getFixtureList().get(0).setFilterData(filter);
                     }
-//                    if (data.id.equals("piggy")){
-//                        if (data.increaseContact()>10){
-//                            world.destroyBody(body);
-//                        }
-//                    }
+
                 }
             }
+        }
+
+        boolean dead=true;
+        for (Piggy pig: PigList){
+            if (pig.getBody().getUserData()!=null){dead=false; break;}
+        }
+        if (dead){
+            if (! end){
+                Thread t1 = new Thread(new Level_1.Dhagga(worldEnd));
+                t1.start();
+                end=true;
+            }
+            if (worldEnd.get()) {
+                for (int i=0; i<BirdQueue.size(); i++){
+                    score+=5000;
+                }
+                if (currBird!=null) score+=5000;
+
+                System.out.println("SCORE: "+score);
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 70000,true));
+                dispose();
+            }
+        }
+        else {
+            if (BirdQueue.isEmpty() && prevBird!=null&& prevBird.getUserData()==null && currBird==null){ //no birds left and curr bird also dead
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 75000,false));
+                dispose();
+            }
+
         }
     }
 
@@ -524,4 +551,21 @@ public class Level_1 implements Screen {
         currBird.setTransform(final_pos.x, final_pos.y, currBird.getAngle());
 
     }
+
+    public class Dhagga implements Runnable{
+        private AtomicBoolean flag;
+
+        public Dhagga(AtomicBoolean x){
+            this.flag=x;
+        }
+        public void run() {
+            try {
+                sleep(5000);
+            } catch (InterruptedException e) {
+                System.out.println("error");
+            }
+            flag.set(true);
+        }
+    }
+
 }

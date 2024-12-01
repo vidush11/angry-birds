@@ -51,12 +51,12 @@ public class MyContactListener implements ContactListener {
 
 //            System.out.println("Contacts"+ data.contacts);
         if (data1.id.equals("piggy")) {
-            if (data1.contacts > 10) {
+            if (data1.contacts > 20) {
                 data1.dead.set(true);
             }
         }
         else if (data1.id.equals("block")) {
-            if (data1.contacts > 25) {
+            if (data1.contacts > 30) {
                 data1.dead.set(true);
             }
         }
@@ -68,12 +68,12 @@ public class MyContactListener implements ContactListener {
         data2.increaseContact();
 //            System.out.println("Contacts"+ data.contacts);
         if (data2.id.equals("piggy")) {
-            if (data2.contacts > 10) {
+            if (data2.contacts > 20) {
                 data2.dead.set(true);
             }
         }
         else if (data2.id.equals("block")){
-            if (data2.contacts > 25) {
+            if (data2.contacts > 30) {
                 data2.dead.set(true);
             }
         }
