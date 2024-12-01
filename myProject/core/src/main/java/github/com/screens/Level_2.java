@@ -456,7 +456,7 @@ public class Level_2 implements Screen, Serializable {
             Level_2 savedGame = (Level_2) in.readObject();
 
             world.dispose();
-            world = world = new World(new Vector2(0, -10f), true);
+            world = new World(new Vector2(0, -10f), true);
 
             ground = new Ground(world);
 
@@ -493,8 +493,8 @@ public class Level_2 implements Screen, Serializable {
             this.movement = savedGame.movement;
 
             this.powerUp = savedGame.powerUp;
-            this.worldEnd = savedGame.worldEnd;
-            this.end = false;
+            this.worldEnd.set(savedGame.worldEnd.get());
+            this.end = savedGame.end;
             this.options = savedGame.options;
             this.score = savedGame.score;
             screen = this;
@@ -502,8 +502,7 @@ public class Level_2 implements Screen, Serializable {
             this.initial = savedGame.initial;
             this.final_pos = savedGame.final_pos;
 
-//            makePause();
-
+            show();
             System.out.println("Game state loaded successfully!");
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error loading game state: " + e.getMessage());
