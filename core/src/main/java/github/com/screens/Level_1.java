@@ -172,6 +172,10 @@ public class Level_1 implements Screen {
     private BodyDef bird_body = new BodyDef();
 
     private Body currBird;
+    private Body prevBird;
+    private Bird currBIRD;
+    private Bird prevBIRD;
+
     private Stage stage;
     private Sprite boxSprite;
     private SpriteBatch batch;
@@ -189,6 +193,7 @@ public class Level_1 implements Screen {
     private Vector2 final_pos = new Vector2(-20.65f, -3.5f);
     private boolean shoot = false;
     private boolean shootSound = false;
+    private boolean powerUp=false;
 
     private boolean options = false;
     private Screen screen=this;
@@ -214,12 +219,14 @@ public class Level_1 implements Screen {
         batch = new SpriteBatch();
         oCamera = new OrthographicCamera();
         shape = new ShapeRenderer();
+        initialize();
 
     }
 
 
     @Override
     public void show() {
+
         world.setContactListener(new MyContactListener());
         Gdx.input.setInputProcessor(new InputAdapter() {
 
@@ -239,11 +246,11 @@ public class Level_1 implements Screen {
                 float y = (float) (-screenY + Gdx.graphics.getHeight() / 2) / 10;
 
                 if (-23 <= x && x <= -20 && -8 <= y && y <= -3) {
-                    if (!(BirdQueue.isEmpty()) && currBird == null && !shoot) {
+                    if (!(BirdQueue.isEmpty()) && currBird==null &&!shoot) {
                         shootSound=false;
-                        Bird bird = BirdQueue.poll();
-                        bird.loadOnSlingShot();
-                        currBird = bird.getBody();
+                        currBIRD = BirdQueue.poll();
+                        currBIRD.loadOnSlingShot();
+                        currBird = currBIRD.getBody();
                         shoot = false;
                     } else if (currBird != null) {
                         shoot = true;
@@ -251,6 +258,9 @@ public class Level_1 implements Screen {
                 }
                 else if (24<=x && x<=31.5 && 15.5<=y &&y<=23.5){
                     options=true;
+                }
+                else if(prevBird!=null && !((userData)prevBird.getUserData()).dead.get() ){
+                    powerUp=true;
                 }
                 return true;
 
@@ -268,7 +278,14 @@ public class Level_1 implements Screen {
                         shootSound=true;
                     }
                     final_pos.set(x, y);
-                    projectile = new Projectile(-10, 5 * (initial.x - x), 5 * (initial.y - y), -20.65f, -3.5f);
+                    float diffx=initial.x-x;
+                    float diffy=initial.y-y;
+                    float speed= (float) Math.sqrt(Math.pow(initial.x-x,2)+ Math.pow(initial.y-y, 2));
+                    if (speed>6){
+                        diffx=diffx*6/speed;
+                        diffy=diffy*6/speed;
+                    }
+                    projectile = new Projectile(-10, 5 * diffx, 5 * diffy, -20.65f, -3.5f);
                 }
 
                 return true;
@@ -282,18 +299,32 @@ public class Level_1 implements Screen {
                     Vector2 diff = initial.sub(final_pos);
                     Main.sound2.play(0f);
 
-                    currBird.setLinearVelocity(5 * diff.x + 5, 5 * diff.y);
+                    float speed= (float) Math.sqrt(Math.pow(diff.x,2)+ Math.pow(diff.y, 2));
+                    if (speed>6){
+                        diff.set(diff.x*6/speed, diff.y*6/speed);
+                    }
 
+                    currBird.setLinearVelocity(5 * diff.x + 5, 5 * diff.y);
+                    prevBird=currBird;
+                    prevBIRD=currBIRD;
+                    currBIRD=null;
                     currBird = null;
                     shoot = false;
                     initial.set(-20.65f, -3.5f);
                 }
 
-                if (options){
+                else if (options){
                     game.setScreen(new OptionsMenu(game, screen));
                     options=false;
 //                    ((Game)Gdx.app.getApplicationListener()).setScreen(new OptionsMenu(game, screen));
 //                    dispose();
+                }
+
+                else if(prevBird!=null && ((userData)prevBird.getUserData() != null) && powerUp){
+                    (prevBIRD).powerUp();
+                    prevBird=null;
+                    prevBIRD=null;
+                    powerUp=false;
                 }
                 return true;
             }
@@ -305,14 +336,18 @@ public class Level_1 implements Screen {
             }
 
         });
+    }
+    public void initialize() {
+
 
         //Ground declaration
         Ground ground = new Ground(world);
 
         //Bird
         BirdQueue.add(new Bird(world, -21.65f, -15f, 3f, 3f,"./img/pigs/RedBird.png"));
+
         BirdQueue.add(new Bird(world, -24.65f, -15f, 2f, 2f,"./img/pigs/blue.png"));
-        BirdQueue.add(new Bird(world, -27.65f, -15f, 3f, 3f,"./img/pigs/RedBird.png"));
+        BirdQueue.add(new Bird(world, -27.65f, -15f, 2f, 2f,"./img/pigs/yellow.png"));
 
 
         BodyDef bodydef = new BodyDef();
@@ -451,7 +486,7 @@ public class Level_1 implements Screen {
 
     @Override
     public void hide() {
-        dispose();
+
     }
 
     @Override

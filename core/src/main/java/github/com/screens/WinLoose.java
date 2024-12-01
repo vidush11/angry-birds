@@ -31,9 +31,9 @@ public class WinLoose implements Screen {
     private Sprite background;
     private Sprite starSprite1, starSprite2, starSprite3;
 
-    public WinLoose(Main game, Level_1 lastLevel) {
+    public WinLoose(Main game) {
         this.game = game;
-        this.lastLevel = lastLevel;
+//        this.lastLevel = sc;
     }
 
     @Override

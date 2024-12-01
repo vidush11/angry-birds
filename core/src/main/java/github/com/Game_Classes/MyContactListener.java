@@ -18,11 +18,10 @@ public class MyContactListener implements ContactListener {
             this.flag=x;
         }
         public void run() {
-            System.out.println("JAAT code");
             try {
                 sleep(5000);
             } catch (InterruptedException e) {
-                System.out.println("ERRROR");
+                System.out.println("error");
             }
             flag.set(true);
         }

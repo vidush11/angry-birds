@@ -34,7 +34,7 @@ public class OptionsMenu implements Screen {
 
     public OptionsMenu(Main game, Screen sc) {
         this.game = game;
-        this.prevScreen=sc;
+        this.prevScreen = sc;
     }
 
     public void show() {
@@ -56,15 +56,9 @@ public class OptionsMenu implements Screen {
 
         play.addListener(new ClickListener() {
             public void clicked(InputEvent event, float x, float y) {
-//                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1(game));
-//                System.out.println(prevScreen);
-//                game.setScreen((Level_2) prevScreen);
-//                    game.setScreen(game.screens.get(prevScreen));
-                ((Game) Gdx.app.getApplicationListener()).setScreen((Level_2) prevScreen);
-//                dispose();
-//                splash.setRegion(new Texture("img/color_birds.png"));
-//                stage.getViewport().update(Gdx.graphics.getWidth()/2, Gdx.graphics.getHeight());
 
+                ((Game)Gdx.app.getApplicationListener()).setScreen(prevScreen);
+                dispose();
             }
 
         });
