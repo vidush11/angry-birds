@@ -153,6 +153,9 @@ import github.com.Game_Classes.*;
 import github.com.Game_Classes.InputController;
 import github.com.Main;
 
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Vector;
@@ -162,31 +165,30 @@ import github.com.Game_Classes.Projectile;
 import github.com.Game_Classes.SlingShot;
 
 import github.com.Main;
-
 import static java.lang.Thread.sleep;
 
-public class Level_1 implements Screen {
+public class Level_1 implements Screen, Serializable {
 
-    private World world;
-    private Box2DDebugRenderer debugRenderer;
-    private OrthographicCamera oCamera;
-    private Main game;
-    private Body box;
-    private BodyDef bird_body = new BodyDef();
+    private static final String SAVE_FILE_PATH = "level_1_save.ser";
+    private transient World world;
+    private transient Box2DDebugRenderer debugRenderer;
+    private transient OrthographicCamera oCamera;
+    private transient Main game;
+    private transient Body box;
+    private transient BodyDef bird_body = new BodyDef();
 
-    private Body currBird;
-    private Body prevBird;
+    private transient Body currBird;
+    private transient Body prevBird;
     private Bird currBIRD;
     private Bird prevBIRD;
-
-    private Stage stage;
-    private Sprite boxSprite;
-    private SpriteBatch batch;
-    private Array<Body> bodies = new Array<>();
-    private Texture background;
-    private Viewport viewport;
+    private transient Stage stage;
+    private transient Sprite boxSprite;
+    private transient SpriteBatch batch;
+    private transient Array<Body> bodies = new Array<>();
+    private transient Texture background;
+    private transient Viewport viewport;
     private Vector2 movement;
-    private ShapeRenderer shape;
+    private transient ShapeRenderer shape;
 
     private LinkedList<Bird> BirdQueue;
     private ArrayList<Piggy> PigList;
@@ -197,14 +199,12 @@ public class Level_1 implements Screen {
     private boolean shoot = false;
     private boolean shootSound = false;
     private boolean powerUp=false;
-
-    private boolean options = false;
     private AtomicBoolean worldEnd= new AtomicBoolean(false);
     private boolean end=false;
-    private AtomicBoolean delay=new AtomicBoolean(false);
-    private boolean delayOnce= false;
-
-    private Screen screen=this;
+    private AtomicBoolean delay= new AtomicBoolean(false);
+    private boolean delayOnce=false;
+    private boolean options = false;
+    private transient Screen screen = this;
 
     private Projectile projectile = new Projectile(-10, 0, 0, 0, 0);
     private int score;
@@ -212,6 +212,7 @@ public class Level_1 implements Screen {
     private final float TIMESTEP = 1 / 60f;
     private final int VELOCITYITERATIONS = 8;
     private final int POSITIONITERATIONS = 3;
+    private float MAX_SPEED=6;
 
     public int x=1;
     public Level_1(Main game) {
@@ -242,7 +243,20 @@ public class Level_1 implements Screen {
             public boolean keyDown(int keycode) {
                 if (keycode == Input.Keys.ESCAPE) {
                     ((Game) Gdx.app.getApplicationListener()).setScreen(new LevelMenu(game));
-//                    dispose();
+                }
+
+                // Save game state when 'S' is pressed
+                if (keycode == Input.Keys.S) {
+                    saveGameState();
+                    return true;
+
+                }
+
+                // Load game state when 'L' is pressed
+                if (keycode == Input.Keys.L) {
+                    loadGameState();
+                    return true;
+
                 }
 
                 return true;
@@ -267,7 +281,7 @@ public class Level_1 implements Screen {
                 else if (24<=x && x<=31.5 && 15.5<=y &&y<=23.5){
                     options=true;
                 }
-                else if(prevBird!=null && !((userData)prevBird.getUserData()).dead.get() ){
+                else if(prevBird.getUserData()!=null & !((userData)prevBird.getUserData()).dead.get() ){
                     powerUp=true;
                 }
                 return true;
@@ -350,7 +364,10 @@ public class Level_1 implements Screen {
 
         //Ground declaration
         Ground ground = new Ground(world,0,-15);
+        ground= new Ground(world, 0,25);
 
+        Wall wall= new Wall(world,30,0);
+        wall=new Wall(world,-30,0);
         //Bird
         BirdQueue.add(new Bird(world, -21.65f, -15f, 3f, 3f,"./img/pigs/RedBird.png"));
 
@@ -383,18 +400,18 @@ public class Level_1 implements Screen {
         PigList.add(new Piggy(world, 6.5f, -7.8f, 3f, 3f,"img/pigs/green.png"));
         PigList.add(new Piggy(world, 12.5f, -7.8f, 3f, 3f,"img/pigs/green.png"));
         PigList.add(new Piggy(world, 18.5f, -7.8f, 3f, 3f,"img/pigs/green.png"));
-        PigList.add(new Piggy(world, 28.5f, -2.5f, 3f, 3f,"img/pigs/green.png"));
+        PigList.add(new Piggy(world, 26.5f, -2.5f, 3f, 3f,"img/pigs/green.png"));
 
 
         blocks.add(new BuildingBlock(world, 6.5f, -10.5f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Stone elements/elementStone025.png"));
         blocks.add(new BuildingBlock(world, 12.5f, -10.5f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Stone elements/elementStone025.png"));
         blocks.add(new BuildingBlock(world, 18.5f, -10.5f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Stone elements/elementStone025.png"));
-        blocks.add(new BuildingBlock(world, 28.5f, -8.5f, 1f, 9f, BuildingBlock.Type.wood,"img/Stone elements/elementStone025.png"));
+        blocks.add(new BuildingBlock(world, 26.5f, -8.5f, 1f, 9f, BuildingBlock.Type.wood,"img/Stone elements/elementStone025.png"));
 
         blocks.add(new BuildingBlock(world, 6.5f, -8f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
         blocks.add(new BuildingBlock(world, 12.5f, -8f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
         blocks.add(new BuildingBlock(world, 18.5f, -8f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
-        blocks.add(new BuildingBlock(world, 28.5f, -6f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
+        blocks.add(new BuildingBlock(world, 26.5f, -6f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
 
 
         ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
@@ -574,5 +591,104 @@ public class Level_1 implements Screen {
             }
             flag.set(true);
         }
+    }
+
+    // Method to save the game state
+    private void saveGameState() {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(Files.newOutputStream(Paths.get(SAVE_FILE_PATH)));
+            // Serialize core game state
+            out.writeObject(this);
+            System.out.println("Game state saved successfully!");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    // Method to load the game state
+    private void loadGameState() {
+        try (ObjectInputStream in = new ObjectInputStream(Files.newInputStream(Paths.get(SAVE_FILE_PATH)))) {
+
+            // Deserialize the saved game state
+            Level_1 savedGame = (Level_1) in.readObject();
+
+            world.dispose();
+            world = new World(new Vector2(0, -10f), true);
+
+            Ground ground= new Ground(world,0,-15);
+            ground= new Ground(world, 0,25);
+
+            Wall wall= new Wall(world,30,0);
+            wall=new Wall(world,-30,0);
+            makeSlingShot();
+
+            this.BirdQueue = savedGame.BirdQueue;
+            this.PigList = savedGame.PigList;
+            this.blocks = savedGame.blocks;
+
+            this.bodies.clear();
+            world.getBodies(bodies);
+            this.currBIRD = savedGame.currBIRD;
+            this.prevBIRD = savedGame.prevBIRD;
+            for(Bird bird: BirdQueue){
+                bird.remakeBody(world);
+            }
+            for(Piggy pig: PigList){
+                pig.remakeBody(world);
+            }
+            for(BuildingBlock block: blocks){
+                block.remakeBody(world);
+            }
+            if (currBIRD != null){
+                currBIRD.remakeBody(world);
+                this.currBird = currBIRD.getBody();
+            }
+            if (prevBIRD != null){
+                prevBIRD.remakeBody(world);
+                this.prevBird = prevBIRD.getBody();
+            }
+
+            this.shoot = savedGame.shoot;
+            this.shootSound = savedGame.shootSound;
+            this.movement = savedGame.movement;
+
+            this.powerUp = savedGame.powerUp;
+            this.worldEnd.set(savedGame.worldEnd.get());
+            this.end = savedGame.end;
+            this.options = savedGame.options;
+            this.score = savedGame.score;
+            screen = this;
+
+            this.initial = savedGame.initial;
+            this.final_pos = savedGame.final_pos;
+
+            show();
+            System.out.println("Game state loaded successfully!");
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Error loading game state: " + e.getMessage());
+        }
+    }
+    private void makeSlingShot(){
+        BodyDef bodydef = new BodyDef();
+        //slingshot
+        bodydef.type = BodyDef.BodyType.StaticBody;
+        bodydef.position.set(-20, -8);
+
+        PolygonShape boxShape = new PolygonShape();
+        boxShape.setAsBox(5, 1);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = boxShape;
+        fixtureDef.friction = .5f;
+        fixtureDef.restitution = 0.5f;
+        fixtureDef.density = 1f;
+        Body slingShot = world.createBody(bodydef);
+        slingShot.createFixture(fixtureDef);
+        boxSprite = new Sprite(new Texture("./img/SlingShot.png"));
+        boxSprite.setSize(20, 10);
+        boxSprite.setOrigin(boxSprite.getWidth() / 2, boxSprite.getHeight() / 2);
+        slingShot.setUserData(new userData(boxSprite,"slingshot"));
+
+        boxShape.dispose();
     }
 }

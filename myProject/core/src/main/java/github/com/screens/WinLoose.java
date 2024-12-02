@@ -174,7 +174,7 @@ public class WinLoose implements Screen {
                 starSprite3.setSize(100 + 0.5f * (i-200), 100 + .5f * (i-200));
 
             }
-            System.out.println("STARS: "+stars);
+//            System.out.println("STARS: "+stars);
             for (int i=0; i<stars; i++){
                 starSprites.get(i).draw(batch);
             }

@@ -7,11 +7,13 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.sun.tools.javac.jvm.Code;
 import github.com.Main;
 
-public class Wall {
-    BodyDef bodyDef;
-    ChainShape shape;
-    FixtureDef fixtureDef;
-    Body wall;
+import java.io.Serializable;
+
+public class Wall implements Serializable {
+    transient BodyDef bodyDef;
+    transient ChainShape shape;
+    transient FixtureDef fixtureDef;
+    transient Body wall;
 
     public Wall(World world, int x, int y) {
         bodyDef = new BodyDef();
@@ -35,7 +37,7 @@ public class Wall {
         wall= world.createBody(bodyDef);
         wall.createFixture(fixtureDef);
 
-        wall.setUserData(new userData(null, "ground"));
+        wall.setUserData(new userData(null, "wall"));
 
         shape.dispose();
     }
