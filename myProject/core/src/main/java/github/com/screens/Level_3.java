@@ -47,8 +47,8 @@ public class Level_3 implements Screen, Serializable {
     private transient Box2DDebugRenderer debugRenderer;
     private transient OrthographicCamera oCamera;
     private transient Main game;
-    private Body box;
-    private BodyDef bird_body = new BodyDef();
+    private transient Body box;
+    private transient BodyDef bird_body = new BodyDef();
 
     private transient Body currBird;
     private transient Body prevBird;
@@ -59,7 +59,7 @@ public class Level_3 implements Screen, Serializable {
     private transient SpriteBatch batch;
     private transient Array<Body> bodies = new Array<>();
     private transient Texture background;
-    private Viewport viewport;
+    private transient Viewport viewport;
     private Vector2 movement;
     private transient ShapeRenderer shape;
 
@@ -119,21 +119,21 @@ public class Level_3 implements Screen, Serializable {
                 }
                 // Save game state when 'S' is pressed
 
-//                if (keycode == Input.Keys.S) {
-//                    saveGameState();
-//                    return true;
-//
-//                }
-//
-//
-//
-//                // Load game state when 'L' is pressed
-//
-//                if (keycode == Input.Keys.L) {
-//                    loadGameState();
-//                    return true;
-//
-//                }
+                if (keycode == Input.Keys.S) {
+                    saveGameState();
+                    return true;
+
+                }
+
+
+
+                // Load game state when 'L' is pressed
+
+                if (keycode == Input.Keys.L) {
+                    loadGameState();
+                    return true;
+
+                }
 
                 return true;
             }
@@ -335,7 +335,7 @@ public class Level_3 implements Screen, Serializable {
 
 //        box.applyForceToCenter(movement, true);
         batch.begin();
-        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
+//        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
 
 //        background.setSize
         world.getBodies(bodies);
@@ -487,6 +487,102 @@ public class Level_3 implements Screen, Serializable {
         }
     }
     // Method to save the game state
+    private void saveGameState() {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(Files.newOutputStream(Paths.get(SAVE_FILE_PATH)));
+            // Serialize core game state
+            out.writeObject(this);
+            System.out.println("Game state saved successfully!");
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    // Method to load the game state
+    private void loadGameState() {
+        try (ObjectInputStream in = new ObjectInputStream(Files.newInputStream(Paths.get(SAVE_FILE_PATH)))) {
 
+            // Deserialize the saved game state
+            Level_3 savedGame = (Level_3) in.readObject();
+
+            world.dispose();
+            world = new World(new Vector2(0, -10f), true);
+
+            Ground ground= new Ground(world,0,-15);
+            ground= new Ground(world, 0,25);
+
+            Wall wall= new Wall(world,30,0);
+            wall=new Wall(world,-30,0);
+            makeSlingShot();
+
+            this.BirdQueue = savedGame.BirdQueue;
+            this.PigList = savedGame.PigList;
+            this.blocks = savedGame.blocks;
+
+            this.bodies.clear();
+            world.getBodies(bodies);
+            this.currBIRD = savedGame.currBIRD;
+            this.prevBIRD = savedGame.prevBIRD;
+            for(Bird bird: BirdQueue){
+                bird.remakeBody(world);
+            }
+            for(Piggy pig: PigList){
+                pig.remakeBody(world);
+            }
+            for(BuildingBlock block: blocks){
+                block.remakeBody(world);
+            }
+            if (currBIRD != null){
+                currBIRD.remakeBody(world);
+                this.currBird = currBIRD.getBody();
+            }
+            if (prevBIRD != null){
+                prevBIRD.remakeBody(world);
+                this.prevBird = prevBIRD.getBody();
+            }
+
+            this.shoot = savedGame.shoot;
+            this.shootSound = savedGame.shootSound;
+            this.movement = savedGame.movement;
+
+            this.powerUp = savedGame.powerUp;
+            this.worldEnd.set(savedGame.worldEnd.get());
+            this.end = savedGame.end;
+            this.options = savedGame.options;
+            this.score = savedGame.score;
+            screen = this;
+
+            this.initial = savedGame.initial;
+            this.final_pos = savedGame.final_pos;
+
+            show();
+            System.out.println("Game state loaded successfully!");
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Error loading game state: " + e.getMessage());
+        }
+    }
+    private void makeSlingShot(){
+        BodyDef bodydef = new BodyDef();
+        //slingshot
+        bodydef.type = BodyDef.BodyType.StaticBody;
+        bodydef.position.set(-20, -8);
+
+        PolygonShape boxShape = new PolygonShape();
+        boxShape.setAsBox(5, 1);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = boxShape;
+        fixtureDef.friction = .5f;
+        fixtureDef.restitution = 0.5f;
+        fixtureDef.density = 1f;
+        Body slingShot = world.createBody(bodydef);
+        slingShot.createFixture(fixtureDef);
+        boxSprite = new Sprite(new Texture("./img/SlingShot.png"));
+        boxSprite.setSize(20, 10);
+        boxSprite.setOrigin(boxSprite.getWidth() / 2, boxSprite.getHeight() / 2);
+        slingShot.setUserData(new userData(boxSprite,"slingshot"));
+
+        boxShape.dispose();
+    }
 
 }

@@ -234,7 +234,10 @@ public class Level_2 implements Screen, Serializable {
     public void initialize(){
         //Ground declaration
         ground = new Ground(world,0,-15);
+        ground= new Ground(world, 0,25);
 
+        Wall wall= new Wall(world,30,0);
+        wall=new Wall(world,-30,0);
         //Bird
         BirdQueue.add(new Bird(world, -21.65f, -15f, 3f, 3f,"./img/pigs/RedBird.png"));
         BirdQueue.add(new Bird(world, -24.65f, -15f, 3f, 3f,"./img/pigs/RedBird.png"));
@@ -299,7 +302,7 @@ public class Level_2 implements Screen, Serializable {
 
 
         batch.begin();
-        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
+//        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
 
 //        background.setSize
         world.getBodies(bodies);
@@ -473,8 +476,11 @@ public class Level_2 implements Screen, Serializable {
             world.dispose();
             world = new World(new Vector2(0, -10f), true);
 
-            ground = new Ground(world,0,-15);
+            ground= new Ground(world,0,-15);
+            ground= new Ground(world, 0,25);
 
+            Wall wall= new Wall(world,30,0);
+            wall=new Wall(world,-30,0);
             makeSlingShot();
 
             this.BirdQueue = savedGame.BirdQueue;

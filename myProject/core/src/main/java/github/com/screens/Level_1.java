@@ -267,7 +267,7 @@ public class Level_1 implements Screen {
                 else if (24<=x && x<=31.5 && 15.5<=y &&y<=23.5){
                     options=true;
                 }
-                else if(prevBird!=null && !((userData)prevBird.getUserData()).dead.get() ){
+                else if(prevBird.getUserData()!=null & !((userData)prevBird.getUserData()).dead.get() ){
                     powerUp=true;
                 }
                 return true;
@@ -350,7 +350,10 @@ public class Level_1 implements Screen {
 
         //Ground declaration
         Ground ground = new Ground(world,0,-15);
+        ground= new Ground(world, 0,25);
 
+        Wall wall= new Wall(world,30,0);
+        wall=new Wall(world,-30,0);
         //Bird
         BirdQueue.add(new Bird(world, -21.65f, -15f, 3f, 3f,"./img/pigs/RedBird.png"));
 
@@ -383,18 +386,18 @@ public class Level_1 implements Screen {
         PigList.add(new Piggy(world, 6.5f, -7.8f, 3f, 3f,"img/pigs/green.png"));
         PigList.add(new Piggy(world, 12.5f, -7.8f, 3f, 3f,"img/pigs/green.png"));
         PigList.add(new Piggy(world, 18.5f, -7.8f, 3f, 3f,"img/pigs/green.png"));
-        PigList.add(new Piggy(world, 28.5f, -2.5f, 3f, 3f,"img/pigs/green.png"));
+        PigList.add(new Piggy(world, 26.5f, -2.5f, 3f, 3f,"img/pigs/green.png"));
 
 
         blocks.add(new BuildingBlock(world, 6.5f, -10.5f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Stone elements/elementStone025.png"));
         blocks.add(new BuildingBlock(world, 12.5f, -10.5f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Stone elements/elementStone025.png"));
         blocks.add(new BuildingBlock(world, 18.5f, -10.5f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Stone elements/elementStone025.png"));
-        blocks.add(new BuildingBlock(world, 28.5f, -8.5f, 1f, 9f, BuildingBlock.Type.wood,"img/Stone elements/elementStone025.png"));
+        blocks.add(new BuildingBlock(world, 26.5f, -8.5f, 1f, 9f, BuildingBlock.Type.wood,"img/Stone elements/elementStone025.png"));
 
         blocks.add(new BuildingBlock(world, 6.5f, -8f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
         blocks.add(new BuildingBlock(world, 12.5f, -8f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
         blocks.add(new BuildingBlock(world, 18.5f, -8f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
-        blocks.add(new BuildingBlock(world, 28.5f, -6f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
+        blocks.add(new BuildingBlock(world, 26.5f, -6f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
 
 
         ImageButton.ImageButtonStyle imageButtonStyle = new ImageButton.ImageButtonStyle();
