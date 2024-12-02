@@ -7,9 +7,9 @@ This contains the project for course CSE-201 (Advanced Programming). In this we 
 2. set the root as idea project<br>
 3. set gradle configuration as:
   
-  ![Gradle Project: myProject:lwjgl3 <br>Run:run](imae.png)
+  ![Gradle Project: myProject:lwjgl3 Run:run](image.png)
 
-click on run
+<i>Click on Run</i>
 
 
 repo: https://github.com/vidush11/angry-birds
