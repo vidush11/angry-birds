@@ -1,14 +1,13 @@
-# angry-birds
+<h1>angry-birds</h1>
 
 This contains the project for course CSE-201 (Advanced Programming). In this we have made the angry-birds game.
 
-1. clone the repository
-<br>
-2. set the root as idea project
-<br>
+<h2>How to run?</h2>
+1. clone the repository<br>
+2. set the root as idea project<br>
 3. set gradle configuration as:
   
-  ![alt text](image.png)
+  ![Gradle Project: myProject:lwjgl3 <br>Run:run](imae.png)
 
 click on run
 
