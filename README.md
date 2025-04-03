@@ -24,7 +24,7 @@ Gradle Project: myProject:lwjgl3
 <br>
 5) We are calculating score based on number of birds used and objects destroyed and assigning stars likewise.
 
-![Configuration](config.png)
+<img src="config.png" width="500px">
 <h3>Repo:vidush11/angry-birds</h3>
 
 
