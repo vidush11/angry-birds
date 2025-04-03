@@ -81,7 +81,7 @@ public class LevelMenu implements Screen {
 //        game.screens.add(new Level_3(game));
 //        game.screens.add(new Level_4(game));
 
-        System.out.println("OKKKK");
+//        System.out.println("OKKKK");
         l1.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new Level_1(game));
@@ -141,7 +141,7 @@ public class LevelMenu implements Screen {
         stage.addActor(table);
         table.setFillParent(true);
 
-        table.debug();
+//        table.debug();
 //
 ////        list= new List(skin);
 ////        list.setItems("one", "two","three");

@@ -217,7 +217,7 @@ public class Level_1 implements Screen, Serializable {
     public int x=1;
     public Level_1(Main game) {
         this.game = game;
-        this.background = Main.assetManager.get("img/Background_level_1.png");
+        this.background = new Texture("img/bg6.jpg");
         this.stage = new Stage();
         this.movement = new Vector2(0, 0);
         BirdQueue = new LinkedList<>();
@@ -281,7 +281,7 @@ public class Level_1 implements Screen, Serializable {
                 else if (24<=x && x<=31.5 && 15.5<=y &&y<=23.5){
                     options=true;
                 }
-                else if(prevBird.getUserData()!=null & !((userData)prevBird.getUserData()).dead.get() ){
+                else if(prevBird!=null && prevBird.getUserData()!=null && !((userData)prevBird.getUserData()).dead.get() ){
                     powerUp=true;
                 }
                 return true;
@@ -353,7 +353,7 @@ public class Level_1 implements Screen, Serializable {
 
             @Override
             public boolean mouseMoved(int screenX, int screenY) {
-                System.out.println("x: " + (screenX - Gdx.graphics.getWidth() / 2) + ", y:" + (-screenY + Gdx.graphics.getHeight() / 2));
+//                System.out.println("x: " + (screenX - Gdx.graphics.getWidth() / 2) + ", y:" + (-screenY + Gdx.graphics.getHeight() / 2));
                 return true;
             }
 
@@ -403,10 +403,10 @@ public class Level_1 implements Screen, Serializable {
         PigList.add(new Piggy(world, 26.5f, -2.5f, 3f, 3f,"img/pigs/green.png"));
 
 
-        blocks.add(new BuildingBlock(world, 6.5f, -10.5f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Stone elements/elementStone025.png"));
-        blocks.add(new BuildingBlock(world, 12.5f, -10.5f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Stone elements/elementStone025.png"));
-        blocks.add(new BuildingBlock(world, 18.5f, -10.5f, 1f, 4.5f, BuildingBlock.Type.wood,"img/Stone elements/elementStone025.png"));
-        blocks.add(new BuildingBlock(world, 26.5f, -8.5f, 1f, 9f, BuildingBlock.Type.wood,"img/Stone elements/elementStone025.png"));
+        blocks.add(new BuildingBlock(world, 6.5f, -10.5f, 1f, 4.5f, BuildingBlock.Type.metal,"img/Stone elements/elementStone025.png"));
+        blocks.add(new BuildingBlock(world, 12.5f, -10.5f, 1f, 4.5f, BuildingBlock.Type.metal,"img/Stone elements/elementStone025.png"));
+        blocks.add(new BuildingBlock(world, 18.5f, -10.5f, 1f, 4.5f, BuildingBlock.Type.metal,"img/Stone elements/elementStone025.png"));
+        blocks.add(new BuildingBlock(world, 26.5f, -8.5f, 1f, 9f, BuildingBlock.Type.metal,"img/Stone elements/elementStone025.png"));
 
         blocks.add(new BuildingBlock(world, 6.5f, -8f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
         blocks.add(new BuildingBlock(world, 12.5f, -8f, 4.5f, 1f, BuildingBlock.Type.wood,"img/Wood elements/elementWood015.png"));
@@ -442,13 +442,11 @@ public class Level_1 implements Screen, Serializable {
         shape.setProjectionMatrix(oCamera.combined);
         batch.setProjectionMatrix(oCamera.combined);
 
-        if (shoot) {
-            drawTrajectory();
-        }
+
 //        box.applyForceToCenter(movement, true);
         batch.begin();
 
-//        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
+        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
 //        background.setSize
         world.getBodies(bodies);
         for (Body body : bodies) {
@@ -466,6 +464,9 @@ public class Level_1 implements Screen, Serializable {
         stage.act(delta);
         stage.draw();
 
+        if (shoot) {
+            drawTrajectory();
+        }
         if (!world.isLocked()){
             for (Body body : bodies) {
                 if (body.getUserData() != null && body.getUserData() instanceof userData) {
@@ -497,19 +498,19 @@ public class Level_1 implements Screen, Serializable {
                 if (currBird!=null) score+=5000;
 
                 System.out.println("SCORE: "+score);
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 70000,true));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 70000,true,"level_1"));
                 dispose();
             }
         }
         else {
-            if (BirdQueue.isEmpty() && prevBird!=null &&prevBird.getUserData()==null && currBird==null){ //no birds left and curr bird also dead
+            if (BirdQueue.isEmpty() && currBird==null){ //no birds left and curr bird also dead
                 if (!delayOnce){
                     Thread t1 = new Thread(new Level_1.Dhagga(delay));
                     t1.start();
                     delayOnce=true;
                 }
                 if (delay.get()) {
-                    ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 70000, false));
+                    ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 70000, false, "level 1"));
                     dispose();
                 }
             }

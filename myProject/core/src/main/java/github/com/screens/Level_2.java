@@ -91,7 +91,7 @@ public class Level_2 implements Screen, Serializable {
     public int x=1;
     public Level_2(Main game) {
         this.game = game;
-        this.background = new Texture("img/bg5.jpg");
+        this.background = new Texture("img/bg4.png");
         this.stage = new Stage();
         this.movement = new Vector2(0, 0);
         BirdQueue = new LinkedList<>();
@@ -223,7 +223,7 @@ public class Level_2 implements Screen, Serializable {
 
             @Override
             public boolean mouseMoved(int screenX, int screenY) {
-                System.out.println("x: " + (screenX - Gdx.graphics.getWidth() / 2) + ", y:" + (-screenY + Gdx.graphics.getHeight() / 2));
+//                System.out.println("x: " + (screenX - Gdx.graphics.getWidth() / 2) + ", y:" + (-screenY + Gdx.graphics.getHeight() / 2));
                 return true;
             }
 
@@ -302,7 +302,7 @@ public class Level_2 implements Screen, Serializable {
 
 
         batch.begin();
-//        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
+        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
 
 //        background.setSize
         world.getBodies(bodies);
@@ -357,19 +357,19 @@ public class Level_2 implements Screen, Serializable {
                 if (currBird!=null) score+=5000;
 
                 System.out.println("SCORE: "+score);
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 75000,true));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 75000,true, "level_2"));
                 dispose();
             }
         }
         else {
-            if (BirdQueue.isEmpty() && prevBird!=null &&prevBird.getUserData()==null && currBird==null){ //no birds left and curr bird also dead
+            if (BirdQueue.isEmpty() && currBird==null){ //no birds left and curr bird also dead
                 if (!delayOnce){
                     Thread t1 = new Thread(new Level_2.Dhagga(delay));
                     t1.start();
                     delayOnce=true;
                 }
                 if (delay.get()) {
-                    ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 75000, false));
+                    ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 75000, false, "level_2"));
                     dispose();
                 }
             }

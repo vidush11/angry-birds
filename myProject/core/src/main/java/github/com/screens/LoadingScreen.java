@@ -37,7 +37,7 @@ public class LoadingScreen implements Screen {
         queueAssets();
 
         // Load assets for background and logo
-        backgroundTexture = new Texture("img/loading_screen.png");  // Resizable background
+        backgroundTexture = new Texture("img/bg9.jpg");  // Resizable background
         fadeImageTexture = new Texture("img/logo.png");          // Fading image
 
         // Set logo image position dynamically based on screen size

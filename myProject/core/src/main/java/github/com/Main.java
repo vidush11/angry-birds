@@ -48,7 +48,7 @@ public class Main extends Game {
         sound2 = Gdx.audio.newSound(Gdx.files.internal("sounds/shoot.mp3"));
 
         setScreen(new LoadingScreen(this));
-        music.setVolume(.1f);
+        music.setVolume(0f);
         music.setLooping(true);
         music.play();
     }

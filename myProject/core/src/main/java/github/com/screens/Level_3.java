@@ -227,7 +227,7 @@ public class Level_3 implements Screen, Serializable {
 
             @Override
             public boolean mouseMoved(int screenX, int screenY) {
-                System.out.println("x: " + (screenX - Gdx.graphics.getWidth() / 2) + ", y:" + (-screenY + Gdx.graphics.getHeight() / 2));
+//                System.out.println("x: " + (screenX - Gdx.graphics.getWidth() / 2) + ", y:" + (-screenY + Gdx.graphics.getHeight() / 2));
                 return true;
             }
 
@@ -335,7 +335,7 @@ public class Level_3 implements Screen, Serializable {
 
 //        box.applyForceToCenter(movement, true);
         batch.begin();
-//        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
+        batch.draw(background, (float) -stage.getViewport().getScreenWidth() /20, (float) -stage.getViewport().getScreenHeight() /20, (float) stage.getViewport().getScreenWidth() /10, (float) stage.getViewport().getScreenHeight() /10);
 
 //        background.setSize
         world.getBodies(bodies);
@@ -390,19 +390,19 @@ public class Level_3 implements Screen, Serializable {
                 }
                 if (currBird!=null) score+=5000;
 
-                ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 120000,true));
+                ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 120000,true,"level_3"));
                 dispose();
             }
         }
         else {
-            if (BirdQueue.isEmpty() && prevBird!=null &&prevBird.getUserData()==null && currBird==null){ //no birds left and curr bird also dead
+            if (BirdQueue.isEmpty() && currBird==null){ //no birds left and curr bird also dead
                 if (!delayOnce){
                     Thread t1 = new Thread(new Dhagga(delay));
                     t1.start();
                     delayOnce=true;
                 }
                 if (delay.get()) {
-                    ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 120000, false));
+                    ((Game) Gdx.app.getApplicationListener()).setScreen(new WinLoose(game, score, 120000, false, "level_3"));
                     dispose();
                 }
             }

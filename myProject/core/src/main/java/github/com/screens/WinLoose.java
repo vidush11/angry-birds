@@ -42,8 +42,8 @@ public class WinLoose implements Screen {
     private Label.LabelStyle headingstyle;
     private Label message1;
     private Label message2;
-
-    public WinLoose(Main game, int points, int max_points, boolean win) {
+    private String level;
+    public WinLoose(Main game, int points, int max_points, boolean win, String level) {
         this.game = game;
         this.points=points;
         this.max_points=max_points;
@@ -52,7 +52,7 @@ public class WinLoose implements Screen {
         this.starSprites=new ArrayList<>();
         white=new BitmapFont(Gdx.files.internal("font/white.fnt"), false);
         headingstyle = new Label.LabelStyle(white, Color.BLACK);
-
+        this.level=level;
     }
 
 
@@ -80,7 +80,7 @@ public class WinLoose implements Screen {
         message1.setPosition(stage.getWidth()/2-message1.getWidth()/2, stage.getHeight()-80);
         message2.setPosition(stage.getWidth()/2-message2.getWidth()/2,stage.getHeight()/2-50);
         batch= new SpriteBatch();
-        Texture backgoundTexture = new Texture("img/bg1.jpg");
+        Texture backgoundTexture = new Texture("img/bg2.jpg");
         background = new Sprite(backgoundTexture);
         background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
@@ -95,8 +95,19 @@ public class WinLoose implements Screen {
 
         retry.addListener(new ClickListener(){
             public void clicked(InputEvent event, float x, float y) {
-                ((Game)Gdx.app.getApplicationListener()).setScreen(new Level_1(game));
-                dispose();
+                if (WinLoose.this.level.equals("level_1")) {
+                    ((Game) Gdx.app.getApplicationListener()).setScreen(new Level_1(game));
+                    dispose();
+                }
+                else if (WinLoose.this.level.equals("level_2")) {
+                    ((Game) Gdx.app.getApplicationListener()).setScreen(new Level_2(game));
+                    dispose();
+                }
+                else if (WinLoose.this.level.equals("level_3")) {
+                    ((Game) Gdx.app.getApplicationListener()).setScreen(new Level_3(game));
+                    dispose();
+                }
+
             }
         });
 

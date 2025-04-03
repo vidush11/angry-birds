@@ -22,6 +22,7 @@ public class Bird extends PhysicsActor implements Serializable {
 
     public Bird(World world, float x, float y, float width, float height, String s) {
         super(world, x, y, s, width, height, false);
+        this.getBody().getFixtureList().get(0).setDensity(5f);
         type=s;
         Filter filter=super.getBody().getFixtureList().get(0).getFilterData();
         filter.categoryBits=Main.BIT_BIRD;

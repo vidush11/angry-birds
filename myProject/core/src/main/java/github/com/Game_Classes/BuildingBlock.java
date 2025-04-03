@@ -40,7 +40,16 @@ public class BuildingBlock implements Serializable {
         fixtureDef.shape = shape;
         fixtureDef.friction = .5f;
         fixtureDef.restitution = 0.5f;
-        fixtureDef.density = 1f;
+        if (type==Type.glass){
+            fixtureDef.density = 1f;
+
+        } else if (type==Type.metal){
+            fixtureDef.density = 1f;
+
+        } else if (type==Type.wood){
+            fixtureDef.density = 1f;
+
+        }
         block= world.createBody(bodyDef);
         block.createFixture(fixtureDef);
 
