@@ -56,7 +56,10 @@ public class LoadingScreen implements Screen {
         // If assets are fully loaded, transition to the Splash screen
         updateLoadingBar(delta);
         updateFadeImage(delta);
-        if(progress == 1 ) {
+
+        boolean isLoaded = game.assetManager.update();
+
+        if(progress == 1 && isLoaded) {
             if (game.assetManager.update()) {
                 game.setScreen(new MainMenu(game));
 //                game.setScreen(game.screens.get(1));
@@ -111,6 +114,7 @@ public class LoadingScreen implements Screen {
         if (progress > 1f) progress = 1f;
     }
 
+
     @Override
     public void resize(int width, int height) {}
 
@@ -126,6 +130,7 @@ public class LoadingScreen implements Screen {
         Main.assetManager.load("img/woodenBlock.png", Texture.class );
         Main.assetManager.load("img/ground.png", Texture.class );
     }
+
 
     @Override
     public void pause() {}

@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import github.com.Main;
-import jdk.jfr.internal.consumer.StringParser;
+//import jdk.jfr.internal.consumer.StringParser;
 
 import javax.swing.*;
 //import com.sun.org.apache.xpath.internal.operations.String;

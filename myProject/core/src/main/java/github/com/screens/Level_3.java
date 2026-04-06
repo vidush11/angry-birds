@@ -241,9 +241,9 @@ public class Level_3 implements Screen, Serializable {
         Ground ground = new Ground(world,0,-15);
         ground= new Ground(world, 0,25);
         //Bird
-        BirdQueue.add(new Bird(world, -21.65f, -15f, 3f, 3f,"./img/pigs/RedBird.png"));
-        BirdQueue.add(new Bird(world, -24.65f, -15f, 3f, 3f,"./img/pigs/RedBird.png"));
-        BirdQueue.add(new Bird(world, -27.65f, -15f, 3f, 3f,"./img/pigs/RedBird.png"));
+        BirdQueue.add(new Bird(world, -21.65f, -15f, 3f, 3f,"img/pigs/RedBird.png"));
+        BirdQueue.add(new Bird(world, -24.65f, -15f, 3f, 3f,"img/pigs/RedBird.png"));
+        BirdQueue.add(new Bird(world, -27.65f, -15f, 3f, 3f,"img/pigs/RedBird.png"));
 
 
         BodyDef bodydef = new BodyDef();
@@ -261,7 +261,7 @@ public class Level_3 implements Screen, Serializable {
         fixtureDef.density = 1f;
         Body slingShot = world.createBody(bodydef);
         slingShot.createFixture(fixtureDef);
-        boxSprite = new Sprite(new Texture("./img/SlingShot.png"));
+        boxSprite = new Sprite(new Texture("img/SlingShot.png"));
         boxSprite.setSize(20, 10);
         boxSprite.setOrigin(boxSprite.getWidth() / 2, boxSprite.getHeight() / 2);
         slingShot.setUserData(new userData(boxSprite,"slingshot"));
@@ -577,7 +577,7 @@ public class Level_3 implements Screen, Serializable {
         fixtureDef.density = 1f;
         Body slingShot = world.createBody(bodydef);
         slingShot.createFixture(fixtureDef);
-        boxSprite = new Sprite(new Texture("./img/SlingShot.png"));
+        boxSprite = new Sprite(new Texture("img/SlingShot.png"));
         boxSprite.setSize(20, 10);
         boxSprite.setOrigin(boxSprite.getWidth() / 2, boxSprite.getHeight() / 2);
         slingShot.setUserData(new userData(boxSprite,"slingshot"));
